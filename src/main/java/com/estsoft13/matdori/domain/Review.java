@@ -1,5 +1,6 @@
 package com.estsoft13.matdori.domain;
 
+import com.estsoft13.matdori.dto.AddReviewRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,12 +34,12 @@ public class Review {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "rest_id", nullable = false)
-    private Restaurant restaurant;
+    //@ManyToOne
+    //@JoinColumn(name = "rest_id", nullable = false)
+    //private Restaurant restaurant;
 
     @Column(name = "rating", nullable = false)
-    private double rating;
+    private Double rating;
 
     /* 이 부분은 생각이 필요해보임
 
@@ -46,18 +47,34 @@ public class Review {
     @Column(name = "waiting_time", nullable = false)
     private int waitingTime;
 
-    //30분 단위로
+    // FE에서 값 받아오는 방법 알아봐야 할 듯
     @Column(name = "visit_time", nullable = false)
     private int visitTime;
      */
 
+    /*
+
+    // 추후 예정
     @Column(name = "filename", nullable = false)
     private String filename; // 파일 이름
 
     @Column(name = "filepath", nullable = false)
     private String filepath; // 파일이 저장된 경로
+     */
 
     @CreatedDate
     @Column(name = "created_at")
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
+
+    public Review(AddReviewRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.rating = requestDto.getRating();
+    }
+
+    public void update(String title, String content, Double rating) {
+        this.title = title;
+        this.content = content;
+        this.rating = rating;
+    }
 }
