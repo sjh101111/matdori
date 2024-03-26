@@ -34,23 +34,21 @@ public class Review {
     @Column(name = "content", nullable = false)
     private String content;
 
-    //@ManyToOne
-    //@JoinColumn(name = "rest_id", nullable = false)
-    //private Restaurant restaurant;
+    @ManyToOne
+    @JoinColumn(name = "rest_id", nullable = false)
+    private Restaurant restaurant;
 
     @Column(name = "rating", nullable = false)
     private Double rating;
 
-    /* 이 부분은 생각이 필요해보임
 
-    // 10분 단위로 FE에서 int 받는게 좋아보임
+
     @Column(name = "waiting_time", nullable = false)
     private int waitingTime;
 
-    // FE에서 값 받아오는 방법 알아봐야 할 듯
     @Column(name = "visit_time", nullable = false)
-    private int visitTime;
-     */
+    private String visitTime;
+
 
     /*
 
@@ -70,6 +68,8 @@ public class Review {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.rating = requestDto.getRating();
+        this.waitingTime = requestDto.getWaitingTime();
+        this.visitTime = requestDto.getVisitTime();
     }
 
     public void update(String title, String content, Double rating) {
