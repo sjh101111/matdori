@@ -1,10 +1,12 @@
 package com.estsoft13.matdori.service;
 
 import com.estsoft13.matdori.domain.Comment;
+import com.estsoft13.matdori.domain.Meeting;
 import com.estsoft13.matdori.domain.Review;
 import com.estsoft13.matdori.dto.AddCommentRequestDto;
 import com.estsoft13.matdori.dto.CommentResponseDto;
 import com.estsoft13.matdori.repository.CommentRepository;
+import com.estsoft13.matdori.repository.MeetingRepository;
 import com.estsoft13.matdori.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -18,14 +20,15 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ReviewRepository reviewRepository;
-    public Comment findById(Long id) {
-       return commentRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("NOT FOUND ID"+id)
-        );
+    private final MeetingRepository meetingRepository;
+
+    public List<CommentResponseDto> getAllCommentsOfReview(Long reviewId) {
+        return commentRepository.findByReview_Id(reviewId).stream()
+                .map(x -> new CommentResponseDto(x)).toList();
     }
 
-    public List<CommentResponseDto> getAllComments(Long reviewId) {
-        return commentRepository.findByReview_Id(reviewId).stream()
+    public List<CommentResponseDto> getAllCommentsOfMeeting(Long meetingId) {
+        return commentRepository.findByMeeting_Id(meetingId).stream()
                 .map(x -> new CommentResponseDto(x)).toList();
     }
 
@@ -37,17 +40,39 @@ public class CommentService {
         return commentRepository.save(newComment).toResponse();
     }
 
+    public CommentResponseDto createCommentToMeeting(Long meetingId,AddCommentRequestDto requestDto) {
+        Meeting meeting = meetingRepository.findById(meetingId).orElseThrow(
+                () -> new EntityNotFoundException("Review not found with id" + meetingId));
+
+        Comment newComment = new Comment(meeting, requestDto.getContent());
+        return commentRepository.save(newComment).toResponse();
+    }
+
     @Transactional
-    public CommentResponseDto updateComment(Long reviewId, Long commentId, AddCommentRequestDto requestDto) {
+    public CommentResponseDto updateCommentOfReview(Long reviewId, Long commentId, AddCommentRequestDto requestDto) {
         Comment comment = commentRepository.findByIdAndReview_Id(commentId, reviewId).orElseThrow(
                 () -> new EntityNotFoundException("Review not found with id" + reviewId));
         comment.update(requestDto.getContent());
         return comment.toResponse();
     }
 
-    public void deleteComment(Long reviewId, Long commentId) {
+    @Transactional
+    public CommentResponseDto updateCommentOfMeeting(Long meetingId, Long commentId, AddCommentRequestDto requestDto) {
+        Comment comment = commentRepository.findByIdAndMeeting_Id(commentId, meetingId).orElseThrow(
+                () -> new EntityNotFoundException("Review not found with id" + meetingId));
+        comment.update(requestDto.getContent());
+        return comment.toResponse();
+    }
+
+    public void deleteCommentOfReivew(Long reviewId, Long commentId) {
         Comment comment = commentRepository.findByIdAndReview_Id(commentId, reviewId).orElseThrow(
                 () -> new EntityNotFoundException("Review not found with id" + reviewId));
+        commentRepository.delete(comment);
+    }
+
+    public void deleteCommentOfMeeting(Long meetingId, Long commentId) {
+        Comment comment = commentRepository.findByIdAndMeeting_Id(commentId, meetingId).orElseThrow(
+                () -> new EntityNotFoundException("Review not found with id" + meetingId));
         commentRepository.delete(comment);
     }
 }

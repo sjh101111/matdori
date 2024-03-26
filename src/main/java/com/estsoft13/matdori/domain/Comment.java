@@ -42,6 +42,11 @@ public class Comment {
         this.content = content;
     }
 
+    public Comment(Meeting meeting, String content) {
+        this.meeting = meeting;
+        this.content = content;
+    }
+
      @ManyToOne
      @JoinColumn(name = "user_id")
      private User user;
