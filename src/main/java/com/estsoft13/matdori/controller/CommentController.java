@@ -3,6 +3,11 @@ package com.estsoft13.matdori.controller;
 import com.estsoft13.matdori.dto.AddCommentRequestDto;
 import com.estsoft13.matdori.dto.CommentResponseDto;
 import com.estsoft13.matdori.service.CommentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +15,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Comment CRUD", description = "댓글 관리 api")
 @RestController
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
 
+    @Operation(summary = "댓글 전부 표기", description = "특정 리뷰에 작성된 댓글 전부 표기")
+    @ApiResponse(responseCode = "200", description = "요청 성공", content = @Content(mediaType = "application/json"))
+    @Parameter(name = "id", description = "리뷰 상세페이지 ID", example = "1")
     @GetMapping("/api/comments/{reviewId}")
     public ResponseEntity<List<CommentResponseDto>> getAllCommentsOfReview(@PathVariable Long reviewId) {
         return ResponseEntity.ok(commentService.getAllCommentsOfReview(reviewId));
