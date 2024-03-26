@@ -9,8 +9,10 @@ create table review (
 
 create table comment (
                          id BIGINT AUTO_INCREMENT primary key,
-                         review_id BIGINT not null,
+                         review_id BIGINT,
+                         meeting_id BIGINT,
                          content varchar(255) not null,
                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                         FOREIGN KEY (review_id) REFERENCES review(id)
+                         FOREIGN KEY (review_id) REFERENCES review(id),
+
 );
