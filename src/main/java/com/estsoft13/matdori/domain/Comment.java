@@ -1,5 +1,6 @@
 package com.estsoft13.matdori.domain;
 
+import com.estsoft13.matdori.dto.CommentResponseDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,18 +25,38 @@ public class Comment {
     @Column(name = "created_at", nullable = false)
     @CreatedDate
     private LocalDateTime createdAt;
-/**
- @ManyToOne
- @JoinColumn(name = "user_id")
- private User user;
 
- @ManyToOne
- @JoinColumn(name = "review_id)
- private Review review;
+    @Builder
+    public Comment(String content, LocalDateTime createdAt) {
+        this.content = content;
+        this.createdAt = createdAt;
+    }
 
- @ManyToOne
- @JoinColumn(name = "meeting_id)
- private Meeting meeting;
- */
+    public CommentResponseDto toResponse() {
+        return CommentResponseDto.builder()
+                .content(content).createdAt(createdAt).build();
+    }
+
+    public Comment(Review review, String content) {
+        this.review = review;
+        this.content = content;
+    }
+
+     @ManyToOne
+     @JoinColumn(name = "user_id")
+     private User user;
+
+     @ManyToOne
+     @JoinColumn(name = "review_id")
+     private Review review;
+
+     @ManyToOne
+     @JoinColumn(name = "meeting_id")
+     private Meeting meeting;
+
+    public void update(String content) {
+        this.content = content;
+    }
+
 }
 
