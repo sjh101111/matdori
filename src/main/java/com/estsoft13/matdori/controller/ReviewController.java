@@ -3,6 +3,7 @@ package com.estsoft13.matdori.controller;
 import com.estsoft13.matdori.dto.AddReviewRequestDto;
 import com.estsoft13.matdori.dto.ReviewResponseDto;
 import com.estsoft13.matdori.dto.UpdateReviewRequestDto;
+import com.estsoft13.matdori.dto.UpdateReviewResponseDto;
 import com.estsoft13.matdori.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,8 @@ public class ReviewController {
 
     // 리뷰 UPDATE
     @PutMapping("/api/review/{reviewId}")
-    public ReviewResponseDto updateReview(@PathVariable Long reviewId, @RequestBody UpdateReviewRequestDto requestDto) {
+    public UpdateReviewResponseDto updateReview(@PathVariable Long reviewId,
+                                                @RequestBody UpdateReviewRequestDto requestDto) {
         return reviewService.updateReview(reviewId, requestDto);
     }
 }

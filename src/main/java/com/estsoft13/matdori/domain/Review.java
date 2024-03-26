@@ -41,8 +41,6 @@ public class Review {
     @Column(name = "rating", nullable = false)
     private Double rating;
 
-
-
     @Column(name = "waiting_time", nullable = false)
     private int waitingTime;
 
@@ -51,7 +49,6 @@ public class Review {
 
 
     /*
-
     // 추후 예정
     @Column(name = "filename", nullable = false)
     private String filename; // 파일 이름
@@ -72,9 +69,12 @@ public class Review {
         this.visitTime = requestDto.getVisitTime();
     }
 
-    public void update(String title, String content, Double rating) {
+    public void update(String title, String content, Double rating,
+                       int waitingTime, String visitTime) {
         this.title = title;
         this.content = content;
         this.rating = rating;
+        this.waitingTime = waitingTime;
+        this.visitTime = visitTime;
     }
 }
