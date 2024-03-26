@@ -5,13 +5,13 @@ import com.estsoft13.matdori.domain.Review;
 import com.estsoft13.matdori.dto.AddReviewRequestDto;
 import com.estsoft13.matdori.dto.ReviewResponseDto;
 import com.estsoft13.matdori.dto.UpdateReviewRequestDto;
+import com.estsoft13.matdori.dto.UpdateReviewResponseDto;
 import com.estsoft13.matdori.repository.RestaurantRepository;
 import com.estsoft13.matdori.repository.ReviewRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -22,6 +22,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final RestaurantRepository restaurantRepository;
 
+    // 모든 리뷰 조회 서비스
     @Transactional
     public List<ReviewResponseDto> getReviews() {
         return reviewRepository.findAll()
@@ -30,6 +31,7 @@ public class ReviewService {
                 .toList();
     }
 
+    // 리뷰 생성 서비스
     @Transactional
     public ReviewResponseDto createReview(AddReviewRequestDto requestDto, Long restaurantId) {
         // 식당 찾기 및 예외 처리
@@ -40,9 +42,27 @@ public class ReviewService {
         Review review = new Review(requestDto);
         review.setRestaurant(restaurant);  // Review 엔티티에 식당 설정
         reviewRepository.save(review);
+
+        updateRestaurantAvgRating(restaurant.getId());
+
         return new ReviewResponseDto(review);
     }
 
+    // 리뷰 등록,수정,삭제시 사용 될 식당 평점 계산 메소드
+    private void updateRestaurantAvgRating(Long restaurantId) {
+        List<Review> reviews = reviewRepository.findByRestaurantId(restaurantId);
+        Double avgRating = reviews.stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0); // 리뷰가 없으면 0.0으로 설정
+
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 식당의 존재 하지 않습니다. = " + restaurantId));
+        restaurant.setAvgRating(avgRating);// 식당 평점 update
+        restaurantRepository.save(restaurant);
+    }
+
+    // 리뷰 단건 조회
     @Transactional
     public ReviewResponseDto getReview(Long reviewId) {
         return reviewRepository.findById(reviewId)
@@ -50,17 +70,41 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalArgumentException("리뷰 ID가 존재하지 않습니다."));
     }
 
+    // 리뷰 삭제
+    @Transactional
     public void delete(Long reviewId) {
-        reviewRepository.deleteById(reviewId);
+        Review review = reviewRepository.findById(reviewId)
+                        .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없습니다."));
+        Long restaurantId = review.getRestaurant().getId();
+        reviewRepository.deleteById(reviewId); // 리뷰 삭제
+
+        updateRestaurantAvgRating(restaurantId); // 식당 평점 update
     }
 
+    // 리뷰 수정
     @Transactional
-    public ReviewResponseDto updateReview(Long reviewId,  UpdateReviewRequestDto requestDto) {
+    public UpdateReviewResponseDto updateReview(Long reviewId, UpdateReviewRequestDto requestDto) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰 ID가 존재하지 않습니다."));
 
-        review.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getRating());
-        return new ReviewResponseDto(review);
+        Long oldRestaurantId = review.getRestaurant().getId();
+        review.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getRating(), requestDto.getWaitingTime(),
+                requestDto.getVisitTime());
 
+        Long newRestaurantId = requestDto.getRestaurantId();
+        // 수정된 식당의 id로 변경
+        if (newRestaurantId != null && !newRestaurantId.equals(oldRestaurantId)) {
+            Restaurant newRestaurant = restaurantRepository.findById(newRestaurantId)
+                    .orElseThrow(() -> new EntityNotFoundException("Restaurant not found with id " + newRestaurantId));
+            review.setRestaurant(newRestaurant);
+        }
+        // 원래 식당의 평점 재계산
+        updateRestaurantAvgRating(oldRestaurantId);
+
+        // 새 식당의 평점 재계산 (식당이 변경되었을 경우)
+        if (newRestaurantId != null && !newRestaurantId.equals(oldRestaurantId)) {
+            updateRestaurantAvgRating(newRestaurantId);
+        }
+        return new UpdateReviewResponseDto(review);
     }
 }
