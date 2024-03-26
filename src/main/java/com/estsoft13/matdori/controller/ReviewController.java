@@ -24,7 +24,7 @@ public class ReviewController {
     // 리뷰 게시
     @PostMapping("/api/review")
     public ReviewResponseDto createReview(@RequestBody AddReviewRequestDto requestDto) {
-        return reviewService.createReview(requestDto);
+        return reviewService.createReview(requestDto, requestDto.getRestaurantId());
     }
 
     // 리뷰 하나 조회
