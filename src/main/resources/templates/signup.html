@@ -8,13 +8,13 @@
 <body class="gradient-custom">
 <section class="d-flex vh-100">
   <div class="container-fluid row justify-content-center align-content-center">
-    <div class="card" style="border-radius: 1rem;">
+    <div class="card" th:style="'border-radius: 1rem;'">
       <div class="card-body p-5 text-center">
         <h2 class="text-black">LOGO</h2>
         <p class="text-bg-dark-50 mt-2">가입을 통해 맛집 정보와 같이 갈 사람 찾을 수 있습니다.</p>
 
         <div class = "mb-2">
-          <form>
+          <form th:action="@{/signup}" method="post">
             <div class="mb-3 text-left">
               <label class="form-label text-black"><strong>Username</strong></label>
               <input type="text" class="form-control" name="username" placeholder="Enter your username">
@@ -30,12 +30,12 @@
 
             <button type="submit" class="btn btn-primary ui-state-focus">Sign up</button><br><br>
             <p>-------------------- 또는 --------------------</p>
-            <a href="forgot.html">PW 찾기</a><br>
+            <a th:href="@{/forgot}">PW 찾기</a><br>
           </form>
         </div>
         <form>
           <p><strong> 이미 계정이 있으신가요?</strong></p>
-         <button class="btn btn-secondary"> <a href="login.html" style="color: white">Login</a></button>
+         <button class="btn btn-secondary"><a th:href="@{/login}" style="color: white">Login</a></button>
         </form>
       </div>
     </div>
