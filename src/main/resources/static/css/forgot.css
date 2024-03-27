@@ -22,13 +22,16 @@ form {
     margin: auto;
 }
 
-input[type="text"], input[type="submit"] {
+input[type="text"] {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-input[type="submit"] {
+button{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     background-color: #007bff;
     color: white;
     cursor: pointer;
