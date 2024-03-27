@@ -19,6 +19,9 @@ public class ReviewResponseDto {
     private Restaurant restaurant;
     private int waitingTime;
     private String visitTime;
+    private String imgName;
+    private String imgPath;
+
 
     public ReviewResponseDto(Review review) {
         this.id = review.getId();
@@ -29,5 +32,7 @@ public class ReviewResponseDto {
         this.waitingTime = review.getWaitingTime();
         this.visitTime = review.getVisitTime();
         this.createdAt = review.getCreatedAt();
+        this.imgName = review.getImgName();
+        this.imgPath = review.getImgPath();
     }
 }
