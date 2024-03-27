@@ -1,3 +1,5 @@
+//TEST용 JS 파일입니다.
+
 const postReviewButton = document.getElementById('post-review-btn');
 
 if (postReviewButton) {
@@ -13,8 +15,7 @@ if (postReviewButton) {
                 restaurantId: document.getElementById('restaurant').value,
                 rating: document.getElementById('rating').value,
                 waitingTime: document.getElementById('waitingTime').value,
-                visitTime: document.getElementById('visitTime').value
-
+                visitTime: document.getElementById('visitTime').value,
             }),
         }).then(response => {
             if (response.ok) {

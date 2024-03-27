@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>리뷰 작성</h1>
-
+<form action="/api/review" method="post" enctype="multipart/form-data">
   <!-- 리뷰 제목 입력 -->
   <div>
     <label for="title">제목</label>
@@ -67,11 +67,18 @@
     <textarea id="content" th:value="*{review.content}"></textarea>
   </div>
 
+
+  <div>
+    <label for="imgFile" class="form-label">이미지 업로드</label>
+    <input type="file" class="form-control" id="imgFile" name="imgFile">
+  </div>
+
+
   <!-- 제출 버튼 -->
   <div>
     <button type="button" id="post-review-btn">리뷰 등록</button>
   </div>
-
-<script src="/js/review.js"></script>
+</form>
+<script src="/js/review-test.js"></script>
 </body>
 </html>
