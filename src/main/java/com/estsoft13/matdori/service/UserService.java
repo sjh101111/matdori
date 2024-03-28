@@ -6,7 +6,6 @@ import com.estsoft13.matdori.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,9 +24,11 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-//    public Optional<String> findPasswordByUsernameAndEmail(String username, String email){
-//        return userRepository.findByUsernameAndEmail(username, email)
-//                .map(User :: getPassword);
-//    }
+    public String findPasswordByUsernameAndEmail(String username, String email){
+        return userRepository.findByUsernameAndEmail(username, email)
+                .map(User::getPassword)
+                .orElse(null);
+    }
+
 }
 
