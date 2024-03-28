@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
     private UserService userService;
 
     @GetMapping("/login")
     public String login() {
         return "login";   //login.html
     }
+
     @PostMapping("/login")
     public String login(@RequestParam("email") String email,
                         @RequestParam("password") String password) {

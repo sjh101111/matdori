@@ -135,4 +135,9 @@ public class ReviewService {
         }
         return new UpdateReviewResponseDto(review);
     }
+
+    public Review findById(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
+        return review;
+    }
 }

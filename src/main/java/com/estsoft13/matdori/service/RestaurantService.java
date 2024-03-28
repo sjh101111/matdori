@@ -3,7 +3,6 @@ package com.estsoft13.matdori.service;
 import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.dto.AddRestaurantRequestDto;
 import com.estsoft13.matdori.dto.RestaurantResponseDto;
-import com.estsoft13.matdori.dto.ReviewResponseDto;
 import com.estsoft13.matdori.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
