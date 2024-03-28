@@ -9,6 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -46,12 +48,6 @@ public class Review {
 
     @Column(name = "visit_time", nullable = false)
     private String visitTime;
-
-    @Column(name = "img_name")
-    private String imgName; // 파일 이름
-
-    @Column(name = "img_path")
-    private String imgPath;
 
     @CreatedDate
     @Column(name = "created_at")

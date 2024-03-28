@@ -2,11 +2,10 @@ package com.estsoft13.matdori.service;
 
 import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.Review;
-import com.estsoft13.matdori.dto.AddReviewRequestDto;
-import com.estsoft13.matdori.dto.ReviewResponseDto;
-import com.estsoft13.matdori.dto.UpdateReviewRequestDto;
-import com.estsoft13.matdori.dto.UpdateReviewResponseDto;
+import com.estsoft13.matdori.domain.ReviewImage;
+import com.estsoft13.matdori.dto.*;
 import com.estsoft13.matdori.repository.RestaurantRepository;
+import com.estsoft13.matdori.repository.ReviewImageRepository;
 import com.estsoft13.matdori.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +25,7 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final RestaurantRepository restaurantRepository;
+    private final ReviewImageRepository reviewImageRepository;
 
     // 모든 리뷰 조회 서비스
     @Transactional
@@ -35,45 +36,53 @@ public class ReviewService {
                 .toList();
     }
 
-    // 리뷰 생성 서비스
+    // 리뷰 생성
     @Transactional
-    public ReviewResponseDto createReview(AddReviewRequestDto requestDto, Long restaurantId, MultipartFile imgFile) {
+    public ReviewResponseDto createReview(AddReviewRequestDto addReviewRequestDto, Long restaurantId,
+                                          List<MultipartFile> imgFiles) {
         // 식당 찾기 및 예외 처리
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 식당이 존재하지 않습니다."));
 
         // 새 리뷰 객체 생성 및 저장
-        Review review = new Review(requestDto);
+        Review review = new Review(addReviewRequestDto);
         review.setRestaurant(restaurant);  // Review 엔티티에 식당 설정
 
-        // img 파일 처리
-        if (imgFile != null && !imgFile.isEmpty()) {
-            String oriImgName = imgFile.getOriginalFilename();
-            String imgName = "";
-            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/"; // /static/files에 img 저장
+        ReviewResponseDto responseDto = new ReviewResponseDto(review);
+        List<String> imgPaths = new ArrayList<>();
 
-            // UUID 를 이용하여 파일명 새로 생성
-            // UUID - 서로 다른 객체들을 구별하기 위한 클래스
-            UUID uuid = UUID.randomUUID();
-            String savedFileName = uuid + "_" + oriImgName;
+        if (imgFiles != null && !imgFiles.isEmpty()) {
+            for (MultipartFile file : imgFiles) {
+                String oriImgName = file.getOriginalFilename();
+                String imgName = "";
+                String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/"; // /static/files에 img 저장
 
-            imgName = savedFileName;
+                // UUID 를 이용하여 파일명 새로 생성
+                // UUID - 서로 다른 객체들을 구별하기 위한 클래스
+                UUID uuid = UUID.randomUUID();
+                String savedFileName = uuid + "_" + oriImgName;
 
-            File saveFile = new File(projectPath, imgName);
-            try {
-                imgFile.transferTo(saveFile);
-            } catch (IOException e) {
-                e.printStackTrace();
+                imgName = savedFileName;
+
+                File saveFile = new File(projectPath, imgName);
+                try {
+                    file.transferTo(saveFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ReviewImage image = new ReviewImage("/files/"+ imgName, review);
+                imgPaths.add(image.getImgPath());
+
+               // review.setReviewImage(image);
+                reviewImageRepository.save(image);
             }
-            review.setImgName(imgName);
-            review.setImgPath("/files/" + imgName);
         }
-
+        responseDto.setImgPaths(imgPaths);
         reviewRepository.save(review);
 
         updateRestaurantAvgRating(restaurant.getId());
 
-        return new ReviewResponseDto(review);
+        return responseDto;
     }
 
     // 리뷰 등록,수정,삭제시 사용 될 식당 평점 계산 메소드
@@ -93,9 +102,18 @@ public class ReviewService {
     // 리뷰 단건 조회
     @Transactional
     public ReviewResponseDto getReview(Long reviewId) {
-        return reviewRepository.findById(reviewId)
+        ReviewResponseDto responseDto = reviewRepository.findById(reviewId)
                 .map(ReviewResponseDto::new)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰 ID가 존재하지 않습니다."));
+
+        List<ReviewImage> images = reviewImageRepository.findAllByReviewId(reviewId);
+        List<String> paths = new ArrayList<>();
+        for(ReviewImage image: images) {
+            String imgPath = image.getImgPath();
+            paths.add(imgPath);
+        }
+        responseDto.setImgPaths(paths);
+        return responseDto;
     }
 
     // 리뷰 삭제

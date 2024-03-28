@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+
     @Override
     // img 렌더링 관련
     //정적 리소스 요청에 대해 기본 경로를 설정해주는 방법
