@@ -12,8 +12,12 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +37,7 @@ public class ReviewService {
 
     // 리뷰 생성 서비스
     @Transactional
-    public ReviewResponseDto createReview(AddReviewRequestDto requestDto, Long restaurantId) {
+    public ReviewResponseDto createReview(AddReviewRequestDto requestDto, Long restaurantId, MultipartFile imgFile) {
         // 식당 찾기 및 예외 처리
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 식당이 존재하지 않습니다."));
@@ -41,6 +45,30 @@ public class ReviewService {
         // 새 리뷰 객체 생성 및 저장
         Review review = new Review(requestDto);
         review.setRestaurant(restaurant);  // Review 엔티티에 식당 설정
+
+        // img 파일 처리
+        if (imgFile != null && !imgFile.isEmpty()) {
+            String oriImgName = imgFile.getOriginalFilename();
+            String imgName = "";
+            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/"; // /static/files에 img 저장
+
+            // UUID 를 이용하여 파일명 새로 생성
+            // UUID - 서로 다른 객체들을 구별하기 위한 클래스
+            UUID uuid = UUID.randomUUID();
+            String savedFileName = uuid + "_" + oriImgName;
+
+            imgName = savedFileName;
+
+            File saveFile = new File(projectPath, imgName);
+            try {
+                imgFile.transferTo(saveFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            review.setImgName(imgName);
+            review.setImgPath("/files/" + imgName);
+        }
+
         reviewRepository.save(review);
 
         updateRestaurantAvgRating(restaurant.getId());
@@ -106,5 +134,10 @@ public class ReviewService {
             updateRestaurantAvgRating(newRestaurantId);
         }
         return new UpdateReviewResponseDto(review);
+    }
+
+    public Review findById(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
+        return review;
     }
 }

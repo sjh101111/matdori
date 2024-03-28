@@ -47,15 +47,11 @@ public class Review {
     @Column(name = "visit_time", nullable = false)
     private String visitTime;
 
+    @Column(name = "img_name")
+    private String imgName; // 파일 이름
 
-    /*
-    // 추후 예정
-    @Column(name = "filename", nullable = false)
-    private String filename; // 파일 이름
-
-    @Column(name = "filepath", nullable = false)
-    private String filepath; // 파일이 저장된 경로
-     */
+    @Column(name = "img_path")
+    private String imgPath;
 
     @CreatedDate
     @Column(name = "created_at")

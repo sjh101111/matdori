@@ -7,6 +7,7 @@ import com.estsoft13.matdori.dto.UpdateReviewResponseDto;
 import com.estsoft13.matdori.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,9 +24,22 @@ public class ReviewController {
     }
 
     // 리뷰 게시
+    /*
     @PostMapping("/api/review")
-    public ReviewResponseDto createReview(@RequestBody AddReviewRequestDto requestDto) {
-        return reviewService.createReview(requestDto, requestDto.getRestaurantId());
+    public ReviewResponseDto createReview(@RequestBody AddReviewRequestDto requestDto,
+                                          @RequestParam("imgFile") MultipartFile imgFile) {
+
+        return reviewService.createReview(requestDto, requestDto.getRestaurantId(), imgFile);
+    }
+     */
+
+    // 리뷰 게시
+    // html에서 json으로 받지 않고 form-data를 생성해 던져줬음
+    @PostMapping("/api/review")
+    public ReviewResponseDto createReview(@ModelAttribute AddReviewRequestDto requestDto,
+                                          @RequestParam(value = "imgFile") MultipartFile imgFile) {
+
+        return reviewService.createReview(requestDto, requestDto.getRestaurantId(), imgFile);
     }
 
     // 리뷰 하나 조회
@@ -42,8 +56,7 @@ public class ReviewController {
 
     // 리뷰 UPDATE
     @PutMapping("/api/review/{reviewId}")
-    public UpdateReviewResponseDto updateReview(@PathVariable Long reviewId,
-                                                @RequestBody UpdateReviewRequestDto requestDto) {
+    public UpdateReviewResponseDto updateReview(@PathVariable Long reviewId, @RequestBody UpdateReviewRequestDto requestDto) {
         return reviewService.updateReview(reviewId, requestDto);
     }
 }
