@@ -12,19 +12,18 @@
 </div>
 <button type="button" id="commentBtn">댓글 작성</button>
 
-<h2>댓글 목록</h2>
-<div th:each="comment : ${comments}" th:data-comment-id="${comment.id}">
-    <div>
-        <p><strong>작성자:</strong> <span th:text="${comment.username}">유저이름</span></p>
-        <p><strong>댓글:</strong>
-            <span th:text="${comment.content}" id="comment-content">댓글 내용</span>
-            <input type="text" id="comment-edit-field" th:value="${comment.content}" style="display: none;">
-        </p>
-        <p>작성일: <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
-        <button type="button" class="edit-comment-btn">수정</button>
-        <button type="button" class="save-comment-btn" style="display: none;">저장</button>
-        <button type="button" class="delete-comment-btn" th:data-comment-id="${comment.id}">삭제</button>
-
+<div id="comments-list">
+    <h2>댓글 목록</h2>
+    <div th:each="comment : ${comments}" th:data-comment-id="${comment.id}">
+            <p><strong>작성자:</strong> <span th:text="${comment.username}">유저이름</span></p>
+            <p><strong>댓글:</strong>
+                <span th:text="${comment.content}" class="comment-content">댓글 내용</span>
+                <input type="text" class="comment-edit-field" name="content" th:value="${comment.content}" style="display: none;">
+            </p>
+            <p>작성일: <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+            <button type="button" class="edit-comment-btn">수정</button>
+            <button type="button" class="save-comment-btn" style="display: none;">저장</button>
+            <button type="button" class="delete-comment-btn" >삭제</button>
     </div>
 </div>
 <script src="/js/comment.js"></script>
