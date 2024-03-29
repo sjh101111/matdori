@@ -33,7 +33,7 @@
       <div><strong>방문시간:</strong> <span th:text="${review.visitTime}">리뷰 방문시간</span></div>
       <div>
         <strong>리뷰 이미지:</strong>
-        <img th:src="@{${review.imgPath}}" alt="리뷰 이미지">
+        <img th:each="image : ${images}" th:src="@{${image.imgPath}}" alt="리뷰 이미지">
       </div>
 
     </div>

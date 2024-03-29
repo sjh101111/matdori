@@ -1,13 +1,12 @@
 package com.estsoft13.matdori.controller;
 
-import com.estsoft13.matdori.dto.AddReviewRequestDto;
-import com.estsoft13.matdori.dto.ReviewResponseDto;
-import com.estsoft13.matdori.dto.UpdateReviewRequestDto;
-import com.estsoft13.matdori.dto.UpdateReviewResponseDto;
+import com.estsoft13.matdori.domain.ReviewImage;
+import com.estsoft13.matdori.dto.*;
 import com.estsoft13.matdori.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
@@ -24,22 +23,13 @@ public class ReviewController {
     }
 
     // 리뷰 게시
-    /*
+    // html에서 json으로 받지 않고 form-data를 생성해 전달
+    // 이미지가 없어도 리뷰 등록 가능
     @PostMapping("/api/review")
-    public ReviewResponseDto createReview(@RequestBody AddReviewRequestDto requestDto,
-                                          @RequestParam("imgFile") MultipartFile imgFile) {
+    public ReviewResponseDto createReview(@ModelAttribute AddReviewRequestDto addReviewRequestDto,
+                                          @RequestParam(value = "imgFiles", required = false) List<MultipartFile> imgFiles) {
 
-        return reviewService.createReview(requestDto, requestDto.getRestaurantId(), imgFile);
-    }
-     */
-
-    // 리뷰 게시
-    // html에서 json으로 받지 않고 form-data를 생성해 던져줬음
-    @PostMapping("/api/review")
-    public ReviewResponseDto createReview(@ModelAttribute AddReviewRequestDto requestDto,
-                                          @RequestParam(value = "imgFile") MultipartFile imgFile) {
-
-        return reviewService.createReview(requestDto, requestDto.getRestaurantId(), imgFile);
+        return reviewService.createReview(addReviewRequestDto, addReviewRequestDto.getRestaurantId(), imgFiles);
     }
 
     // 리뷰 하나 조회

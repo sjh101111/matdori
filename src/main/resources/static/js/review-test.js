@@ -14,7 +14,11 @@ if (postReviewButton) {
         formData.append('rating', document.getElementById('rating').value);
         formData.append('waitingTime', document.getElementById('waitingTime').value);
         formData.append('visitTime', document.getElementById('visitTime').value);
-        formData.append('imgFile', document.getElementById('imgFile').files[0]);  // 이미지 파일 추가
+        //formData.append('imgFiles', document.getElementById('imgFiles').files);
+        const files = document.getElementById('imgFiles').files;
+        for(let i = 0; i < files.length; i++) {
+            formData.append('imgFiles', files[i]);
+        }
 
         // fetch 요청
         fetch(`/api/review`, {

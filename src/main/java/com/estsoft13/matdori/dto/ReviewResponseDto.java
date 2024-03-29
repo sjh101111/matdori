@@ -5,10 +5,14 @@ import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ReviewResponseDto {
     private Long id;
@@ -19,8 +23,7 @@ public class ReviewResponseDto {
     private Restaurant restaurant;
     private int waitingTime;
     private String visitTime;
-    private String imgName;
-    private String imgPath;
+    private List<String> imgPaths = new ArrayList<>();
 
 
     public ReviewResponseDto(Review review) {
@@ -32,7 +35,5 @@ public class ReviewResponseDto {
         this.waitingTime = review.getWaitingTime();
         this.visitTime = review.getVisitTime();
         this.createdAt = review.getCreatedAt();
-        this.imgName = review.getImgName();
-        this.imgPath = review.getImgPath();
     }
 }
