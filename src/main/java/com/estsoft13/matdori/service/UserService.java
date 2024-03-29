@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -31,6 +32,10 @@ public class UserService {
         return userRepository.findByUsernameAndEmail(username, email)
                 .map(User::getPassword)
                 .orElse(null);
+    }
+
+    public boolean isEmailUnique(String email){
+        return userRepository.findByEmail(email).isEmpty();
     }
 
 }
