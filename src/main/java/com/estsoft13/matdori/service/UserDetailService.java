@@ -19,4 +19,8 @@ public class UserDetailService implements UserDetailsService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0df646fa9343bb994e56af96e78c7935b0a9271d
