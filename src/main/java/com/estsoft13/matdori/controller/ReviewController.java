@@ -45,8 +45,15 @@ public class ReviewController {
     }
 
     // 리뷰 UPDATE
+    /*
     @PutMapping("/api/review/{reviewId}")
     public UpdateReviewResponseDto updateReview(@PathVariable Long reviewId, @RequestBody UpdateReviewRequestDto requestDto) {
         return reviewService.updateReview(reviewId, requestDto);
+    }
+     */
+    @PutMapping("/api/review/{reviewId}")
+    public UpdateReviewResponseDto updateReview(@PathVariable Long reviewId, @ModelAttribute UpdateReviewRequestDto requestDto,
+                                                @RequestParam(value = "imgFiles", required = false) List<MultipartFile> imgFiles) {
+        return reviewService.updateReview(reviewId, requestDto, imgFiles);
     }
 }

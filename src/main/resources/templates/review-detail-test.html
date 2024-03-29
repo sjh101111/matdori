@@ -37,6 +37,9 @@
         <strong>리뷰 이미지:</strong>
         <img th:each="image : ${images}" th:src="@{${image.imgPath}}" alt="리뷰 이미지">
       </div>
+      <button type="button" id="modify-btn"
+              th:onclick="|location.href='@{/add-review?reviewId={reviewId}(reviewId=${review.id})}'|"
+              class="btn btn-primary btn-sm">수정</button>
 
     </div>
   </div>

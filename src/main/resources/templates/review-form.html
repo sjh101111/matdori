@@ -7,8 +7,12 @@
   <title>리뷰 작성</title>
 </head>
 <body>
-<h1>리뷰 작성</h1>
+<input type="hidden" id="reviewId" th:value="${review.id}">
+<h1 th:if="${review.id != null}" th:text="'리뷰 수정'">리뷰 수정</h1>
+<h1 th:if="${review.id == null}" th:text="'리뷰 등록'">리뷰 등록</h1>
+
 <form action="/api/review" method="post" enctype="multipart/form-data">
+
   <!-- 리뷰 제목 입력 -->
   <div>
     <label for="title">제목</label>
@@ -74,7 +78,8 @@
 
   <!-- 제출 버튼 -->
   <div>
-    <button type="button" id="post-review-btn">리뷰 등록</button>
+    <button th:if="${review.id} == null" type="button" id="post-review-btn">리뷰 등록</button>
+    <button th:if="${review.id} != null" type="button" id="modi-review-btn">리뷰 수정</button>
   </div>
 </form>
 <script src="/js/review-test.js"></script>
