@@ -38,10 +38,13 @@ public class UserController {
 
     @PostMapping("/signup")
     public String signup(@ModelAttribute("userDto") UserDto userDto) {
-        userService.saveUser(userDto);
-        return "/login";
+        if (!userService.isEmailUnique(userDto.getEmail())) {
+            return "/signup";
+        } else {
+            userService.saveUser(userDto);
+            return "/login";
+        }
     }
-
     @GetMapping("/forgot")
     public String forgot() {
         return  "forgot";    // forgot.html

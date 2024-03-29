@@ -17,15 +17,15 @@
           <form th:action="@{/signup}" method="post">
             <div class="mb-3 text-left">
               <label class="form-label text-black"><strong>Username</strong></label>
-              <input type="text" class="form-control" name="username" placeholder="Enter your username">
+              <input type="text" class="form-control" name="username" placeholder="Enter your username" required>
             </div>
             <div class="mb-3 text-left">
               <label class="form-label text-black"><strong>Email</strong></label>
-              <input type="email" class="form-control" name="email" placeholder="Enter your email">
+              <input type="email" class="form-control" name="email" placeholder="Enter your email" required>
             </div>
             <div class="mb-3 text-left">
               <label class="form-label text-black"><strong>Password</strong></label>
-              <input type="password" class="form-control" name="password" placeholder="Enter your password">
+              <input type="password" class="form-control" name="password" placeholder="Enter your password" required>
             </div>
 
             <button type="submit" class="btn btn-primary ui-state-focus">Sign up</button><br><br>
