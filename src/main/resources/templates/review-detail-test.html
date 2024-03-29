@@ -27,6 +27,8 @@
 
     <div class="review">
       <div><strong>제목:</strong> <span th:text="${review.title}">리뷰 제목</span></div>
+      <div><strong>작성자:</strong> <span th:text="${review.username}">리뷰 내용</span></div>
+      <div><strong>작성시간:</strong> <span th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">리뷰 내용</span></div>
       <div><strong>내용:</strong> <span th:text="${review.content}">리뷰 내용</span></div>
       <div><strong>평점:</strong> <span th:text="${review.rating}">리뷰 평점</span></div>
       <div><strong>대기시간:</strong> <span th:text="${review.waitingTime}">리뷰 대기시간</span></div>
