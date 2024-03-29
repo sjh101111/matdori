@@ -3,12 +3,16 @@ package com.estsoft13.matdori.service;
 import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.Review;
 import com.estsoft13.matdori.domain.ReviewImage;
+import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.*;
 import com.estsoft13.matdori.repository.RestaurantRepository;
 import com.estsoft13.matdori.repository.ReviewImageRepository;
 import com.estsoft13.matdori.repository.ReviewRepository;
+import com.estsoft13.matdori.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +30,13 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final RestaurantRepository restaurantRepository;
     private final ReviewImageRepository reviewImageRepository;
+    private final UserRepository userRepository;
+
+    private User getAuthenticatedUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
 
     // 모든 리뷰 조회 서비스
     @Transactional
@@ -40,13 +51,18 @@ public class ReviewService {
     @Transactional
     public ReviewResponseDto createReview(AddReviewRequestDto addReviewRequestDto, Long restaurantId,
                                           List<MultipartFile> imgFiles) {
+
+        Review review = new Review(addReviewRequestDto);
+
         // 식당 찾기 및 예외 처리
+        // Review 엔티티에 식당 설정
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 식당이 존재하지 않습니다."));
+        review.setRestaurant(restaurant);
 
-        // 새 리뷰 객체 생성 및 저장
-        Review review = new Review(addReviewRequestDto);
-        review.setRestaurant(restaurant);  // Review 엔티티에 식당 설정
+        // 로그인된 유저의 정보 찾기 및 리뷰 객체에 설정
+        User user = getAuthenticatedUser();
+        review.setUser(user);
 
         ReviewResponseDto responseDto = new ReviewResponseDto(review);
         List<String> imgPaths = new ArrayList<>();
@@ -154,8 +170,15 @@ public class ReviewService {
         return new UpdateReviewResponseDto(review);
     }
 
+    /*
     public Review findById(Long reviewId) {
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
         return review;
+    }
+     */
+    public ReviewResponseDto findById(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
+        ReviewResponseDto responseDto = new ReviewResponseDto(review);
+        return responseDto;
     }
 }

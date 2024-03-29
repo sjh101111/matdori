@@ -23,12 +23,9 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*
-    USER 기능 완료된 후 수정 예정
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-     */
 
     @Column(name = "title", nullable = false)
     private String title;

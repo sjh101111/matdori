@@ -17,6 +17,7 @@ import java.util.List;
 public class ReviewResponseDto {
     private Long id;
     private String title;
+    private String username;
     private String content;
     private Double rating;
     private LocalDateTime createdAt;
@@ -24,6 +25,7 @@ public class ReviewResponseDto {
     private int waitingTime;
     private String visitTime;
     private List<String> imgPaths = new ArrayList<>();
+
 
 
     public ReviewResponseDto(Review review) {
@@ -35,5 +37,6 @@ public class ReviewResponseDto {
         this.waitingTime = review.getWaitingTime();
         this.visitTime = review.getVisitTime();
         this.createdAt = review.getCreatedAt();
+        this.username = review.getUser().getEnteredUsername();
     }
 }

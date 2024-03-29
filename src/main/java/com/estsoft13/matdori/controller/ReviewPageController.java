@@ -4,6 +4,7 @@ import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.Review;
 import com.estsoft13.matdori.domain.ReviewImage;
 import com.estsoft13.matdori.dto.RestaurantResponseDto;
+import com.estsoft13.matdori.dto.ReviewResponseDto;
 import com.estsoft13.matdori.repository.ReviewImageRepository;
 import com.estsoft13.matdori.repository.ReviewRepository;
 import com.estsoft13.matdori.service.RestaurantService;
@@ -37,8 +38,9 @@ public class ReviewPageController {
 
     @GetMapping("/review/{reviewId}")
     public String showReviewDetail(@PathVariable Long reviewId, Model model) {
-        Review review = reviewService.findById(reviewId);
-        model.addAttribute("review", review);
+        //Review review = reviewService.findById(reviewId);
+        ReviewResponseDto responseDto = reviewService.findById(reviewId);
+        model.addAttribute("review", responseDto);
 
         List<ReviewImage> images = reviewImageRepository.findAllByReviewId(reviewId);
         model.addAttribute("images", images);
