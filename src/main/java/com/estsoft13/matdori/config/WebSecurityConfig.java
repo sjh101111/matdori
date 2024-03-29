@@ -1,25 +1,41 @@
-// SecurityConfig.java
+package com.estsoft13.matdori.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
-//@Configuration
-//@EnableWebSecurity
-//public class WebSecurityConfig{
-//
-//    @Bean
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "/home").permitAll() // 홈 페이지는 모든 사용자에게 허용
-//                .anyRequest().authenticated() // 그 외의 요청은 인증된 사용자에게만 허용
-//                .and()
-//                .formLogin()
-//                .loginPage("/login") // 로그인 페이지 설정
-//                .permitAll() // 로그인 페이지는 모든 사용자에게 허용
-//                .and()
-//                .logout()
-//                .permitAll(); // 로그아웃은 모든 사용자에게 허용
-//    }
-//}
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
+@EnableWebSecurity
+@Configuration
+public class WebSecurityConfig {
+    @Bean
+    public WebSecurityCustomizer configure() { // 스프링시큐리티 비활성화
+        return web -> web.ignoring().requestMatchers(toH2Console())
+                .requestMatchers("/static/**","/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"
+                        ,"/error");
+    }
+
+    // 특정 http 요청에 대한 웹 기반 보안 구성
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(auth ->
+                        auth.requestMatchers("/login", "/signup", "/forgot","/user").permitAll()
+                                .anyRequest().authenticated())
+                .formLogin(auth -> auth.loginPage("/login")
+                        .usernameParameter("email")
+                        .defaultSuccessUrl("/comments/1"))
+                .logout(auth -> auth.logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true))
+                .csrf(auth -> auth.disable());
+        return httpSecurity.build();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
