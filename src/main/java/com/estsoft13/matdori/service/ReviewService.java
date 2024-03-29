@@ -86,10 +86,10 @@ public class ReviewService {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                ReviewImage image = new ReviewImage("/files/"+ imgName, review);
+                ReviewImage image = new ReviewImage("/files/" + imgName, review);
                 imgPaths.add(image.getImgPath());
 
-               // review.setReviewImage(image);
+                // review.setReviewImage(image);
                 reviewImageRepository.save(image);
             }
         }
@@ -124,7 +124,7 @@ public class ReviewService {
 
         List<ReviewImage> images = reviewImageRepository.findAllByReviewId(reviewId);
         List<String> paths = new ArrayList<>();
-        for(ReviewImage image: images) {
+        for (ReviewImage image : images) {
             String imgPath = image.getImgPath();
             paths.add(imgPath);
         }
@@ -136,8 +136,9 @@ public class ReviewService {
     @Transactional
     public void delete(Long reviewId) {
         Review review = reviewRepository.findById(reviewId)
-                        .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없습니다."));
+                .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없습니다."));
         Long restaurantId = review.getRestaurant().getId();
+        reviewImageRepository.deleteByReview(review); //리뷰 삭제전 연결된 리뷰 이미지 삭제
         reviewRepository.deleteById(reviewId); // 리뷰 삭제
 
         updateRestaurantAvgRating(restaurantId); // 식당 평점 update
@@ -145,19 +146,22 @@ public class ReviewService {
 
     // 리뷰 수정
     @Transactional
-    public UpdateReviewResponseDto updateReview(Long reviewId, UpdateReviewRequestDto requestDto) {
+    public UpdateReviewResponseDto updateReview(Long reviewId, UpdateReviewRequestDto requestDto, List<MultipartFile> imgFiles) {
+
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰 ID가 존재하지 않습니다."));
 
         Long oldRestaurantId = review.getRestaurant().getId();
+        //새로운 내용으로 review 업데이트
         review.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getRating(), requestDto.getWaitingTime(),
                 requestDto.getVisitTime());
 
         Long newRestaurantId = requestDto.getRestaurantId();
-        // 수정된 식당의 id로 변경
+        // 식당이 수정 됐다면
         if (newRestaurantId != null && !newRestaurantId.equals(oldRestaurantId)) {
             Restaurant newRestaurant = restaurantRepository.findById(newRestaurantId)
                     .orElseThrow(() -> new EntityNotFoundException("Restaurant not found with id " + newRestaurantId));
+            //수정된 식당의 id로 변경
             review.setRestaurant(newRestaurant);
         }
         // 원래 식당의 평점 재계산
@@ -167,15 +171,39 @@ public class ReviewService {
         if (newRestaurantId != null && !newRestaurantId.equals(oldRestaurantId)) {
             updateRestaurantAvgRating(newRestaurantId);
         }
-        return new UpdateReviewResponseDto(review);
+        // 이미지 처리
+        UpdateReviewResponseDto responseDto = new UpdateReviewResponseDto(review);
+        List<String> imgPaths = new ArrayList<>();
+        reviewImageRepository.deleteByReview(review);
+        if (imgFiles != null && !imgFiles.isEmpty()) {
+            for (MultipartFile file : imgFiles) {
+                String oriImgName = file.getOriginalFilename();
+                String imgName = "";
+                String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/"; // /static/files에 img 저장
+
+                // UUID 를 이용하여 파일명 새로 생성
+                // UUID - 서로 다른 객체들을 구별하기 위한 클래스
+                UUID uuid = UUID.randomUUID();
+                String savedFileName = uuid + "_" + oriImgName;
+
+                imgName = savedFileName;
+
+                File saveFile = new File(projectPath, imgName);
+                try {
+                    file.transferTo(saveFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ReviewImage image = new ReviewImage("/files/" + imgName, review);
+                imgPaths.add(image.getImgPath());
+                // review.setReviewImage(image);
+                reviewImageRepository.save(image);
+            }
+            responseDto.setImgPaths(imgPaths);
+        }
+        return responseDto;
     }
 
-    /*
-    public Review findById(Long reviewId) {
-        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
-        return review;
-    }
-     */
     public ReviewResponseDto findById(Long reviewId) {
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
         ReviewResponseDto responseDto = new ReviewResponseDto(review);
