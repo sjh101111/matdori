@@ -29,6 +29,7 @@ public class UserController {
             return "redirect:/login";
         }
     }
+
     @GetMapping("/signup")
     public String signup(Model model) {
             model.addAttribute("userDto", new UserDto());
@@ -52,5 +53,4 @@ public class UserController {
         String password =userService.findPasswordByUsernameAndEmail(username, email);
         return password != null ? password : "사용자 정보가 없습니다.";
     }
-
 }
