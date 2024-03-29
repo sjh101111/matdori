@@ -22,7 +22,7 @@ public class Comment {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -37,14 +37,16 @@ public class Comment {
                 .content(content).createdAt(createdAt).build();
     }
 
-    public Comment(Review review, String content) {
+    public Comment(Review review, String content, User user) {
         this.review = review;
         this.content = content;
+        this.user = user;
     }
 
-    public Comment(Meeting meeting, String content) {
+    public Comment(Meeting meeting, String content, User user) {
         this.meeting = meeting;
         this.content = content;
+        this.user = user;
     }
 
      @ManyToOne
