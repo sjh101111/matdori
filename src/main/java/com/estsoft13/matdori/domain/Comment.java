@@ -34,7 +34,9 @@ public class Comment {
 
     public CommentResponseDto toResponse() {
         return CommentResponseDto.builder()
-                .content(content).createdAt(createdAt).build();
+                .content(content).createdAt(createdAt).username(user.getEnteredUsername())
+                .id(id)
+                .build();
     }
 
     public Comment(Review review, String content, User user) {

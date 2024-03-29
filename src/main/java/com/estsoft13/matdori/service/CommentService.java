@@ -29,7 +29,6 @@ public class CommentService {
     private final MeetingRepository meetingRepository;
     private final UserRepository userRepository;
 
-    private User authenticatedUser;
     private User getAuthenticatedUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(username)
