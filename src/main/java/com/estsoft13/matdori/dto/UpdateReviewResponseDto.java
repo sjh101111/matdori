@@ -4,10 +4,14 @@ import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class UpdateReviewResponseDto {
     private Long id;
@@ -18,6 +22,7 @@ public class UpdateReviewResponseDto {
     private Long restaurantId;
     private int waitingTime;
     private String visitTime;
+    private List<String> imgPaths = new ArrayList<>();
 
     public UpdateReviewResponseDto(Review review) {
         this.id = review.getId();
