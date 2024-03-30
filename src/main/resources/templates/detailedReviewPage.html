@@ -34,6 +34,10 @@
                 </div>
                 <span class="restaddress" th:text="${review.restaurant.address}">식당 주소</span>
             </div>
+            <button type="button" id="modify-btn"
+                    th:onclick="|location.href='@{/add-review?reviewId={reviewId}(reviewId=${review.id})}'|"
+                    class="modifyReviewBtn">modify
+            </button>
         </div>
     </div>
     <!-- -->

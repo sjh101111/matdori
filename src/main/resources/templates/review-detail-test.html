@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>식당 및 리뷰 정보</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="restaurant-info">
+    <h1>식당 정보</h1>
+    <div>
+        <strong>이름:</strong> <span th:text="${review.restaurant.name}">식당 이름</span>
+    </div>
+    <div>
+        <strong>카테고리:</strong> <span th:text="${review.restaurant.category}">식당 카테고리</span>
+    </div>
+    <div>
+        <strong>주소:</strong> <span th:text="${review.restaurant.address}">식당 주소</span>
+    </div>
+    <div>
+        <strong>평점:</strong> <span th:text="${review.restaurant.avgRating}">식당 평점</span>
+    </div>
+</div>
+
+<div class="reviews">
+    <h2>리뷰 </h2>
+
+    <div class="review">
+        <div><strong>제목:</strong> <span th:text="${review.title}">리뷰 제목</span></div>
+        <div><strong>작성자:</strong> <span th:text="${review.username}">리뷰 내용</span></div>
+        <div><strong>작성시간:</strong> <span th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">리뷰 내용</span></div>
+        <div><strong>내용:</strong> <span th:text="${review.content}">리뷰 내용</span></div>
+        <div><strong>평점:</strong> <span th:text="${review.rating}">리뷰 평점</span></div>
+        <div><strong>대기시간:</strong> <span th:text="${review.waitingTime}">리뷰 대기시간</span></div>
+        <div><strong>방문시간:</strong> <span th:text="${review.visitTime}">리뷰 방문시간</span></div>
+        <div>
+            <strong>리뷰 이미지:</strong>
+            <img th:each="image : ${images}" th:src="@{${image.imgPath}}" alt="리뷰 이미지">
+        </div>
+        <button type="button" id="modify-btn"
+                th:onclick="|location.href='@{/add-review?reviewId={reviewId}(reviewId=${review.id})}'|"
+                class="btn btn-primary btn-sm">수정</button>
+
+    </div>
+</div>
+</div>
+</body>
+</html>
