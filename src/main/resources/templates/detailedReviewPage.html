@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <title>식당 및 리뷰 정보</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/detailedReview.css">
+</head>
+<body>
+<main>
+    <div class="reviewuser-box">
+        <div class="reviewuser-body">
+            <div class=usersymbol></div>
+            <div class="userInfo">
+                <div class="userBox">
+                    <span class="username" th:text="${review.getUsername()}">유저 이름</span>
+                    <span class="createdAt"
+                          th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
+                </div>
+                <span class="userGrade">foodie adventurer</span>
+            </div>
+            <div class="restaurant-info">
+                <div class="withoutadress">
+                    <span th:text="${review.restaurant.name}">식당 이름</span>
+
+                    <span class="restcategory" th:text="${review.restaurant.category}">식당 카테고리</span>
+
+                    <span th:text="${review.restaurant.avgRating}">식당 평점</span>
+                </div>
+                <span class="restaddress" th:text="${review.restaurant.address}">식당 주소</span>
+            </div>
+            <button type="button" id="modify-btn"
+                    th:onclick="|location.href='@{/add-review?reviewId={reviewId}(reviewId=${review.id})}'|"
+                    class="modifyReviewBtn">modify
+            </button>
+        </div>
+    </div>
+    <!-- -->
+    <div class="reviews">
+        <div class="review">
+            <div><span class="reviewtitle" th:text="${review.title}">Title</span></div>
+            <div class="withouttitleandimages">
+                <span th:text="${review.rating}">리뷰 평점</span>
+                <span class="watingtime" th:text="${review.waitingTime}">리뷰 대기시간</span>
+                <span th:text="${review.visitTime}">리뷰 방문시간</span>
+            </div>
+            <div>
+                <span class="reviewcontent" th:text="${review.content}">리뷰 내용</span></div>
+            <img class="images" th:each="image : ${images}" th:src="@{${image.imgPath}}" alt="리뷰 이미지">
+        </div>
+
+    </div>
+    </div>
+    <!-- -->
+    <sesstion class="comment">
+        <div class="createcomment">
+            <label for="content">Write your comment</label>
+            <div class="entercommentbox">
+                <textarea required placeholder="Type here..." class="entercomment" id="content"
+                          name="content"></textarea>
+                <button class="commentBtn" type="button" id="commentBtn">Comment</button>
+            </div>
+        </div>
+
+        <div class="commentlist" id="comments-list">
+            <div th:each="comment : ${comments}" th:data-comment-id="${comment.id}">
+                <div class="commentuser">
+                    <div class=usersymbol></div>
+                    <div class="userInfo">
+                        <div class="userBox">
+                            <span class="username" th:text="${comment.username}">유저 이름</span>
+                            <span class="createdAt"
+                                  th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}">작성 시간</span>
+                        </div>
+                        <span class="userGrade">foodie adventurer</span>
+                    </div>
+                </div>
+                <span th:text="${comment.content}" class="comment-content">댓글 내용</span>
+                <input type="text" class="comment-edit-field" name="content" th:value="${comment.content}" required
+                       placeholder="Type here..." style="display: none;">
+                <button type="button" class="edit-comment-btn">edit</button>
+                <button type="button" class="save-comment-btn" style="display: none;">edit save</button>
+                <button type="button" class="delete-comment-btn">delete</button>
+            </div>
+        </div>
+    </sesstion>
+</main>
+<script src="/js/comment.js"></script>
+<script src="/js/review-test.js"></script>
+
+
+</body>
+</html>
