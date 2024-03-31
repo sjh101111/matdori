@@ -27,7 +27,7 @@ public class WebSecurityConfig {
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .usernameParameter("email")
-                        .defaultSuccessUrl("/add-review"))
+                        .defaultSuccessUrl("/add-meeting"))
                 .logout(auth -> auth.logoutSuccessUrl("/login")
                         .invalidateHttpSession(true))
                 .csrf(auth -> auth.disable());
