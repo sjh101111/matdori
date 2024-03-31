@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -63,5 +64,25 @@ public class ReviewPageController {
         model.addAttribute("isOwner", isOwner);
 
         return "detailedReviewPage";
+    }
+
+    @GetMapping("/reviews")
+    public String showReviews(Model model) {
+        List<Review> reviews = reviewService.findAll();
+        List<ReviewResponseDto> responseDtoes = new ArrayList<>();
+        for (Review review : reviews) {
+            ReviewResponseDto reviewResponseDto = new ReviewResponseDto(review);
+            Long reviewId = review.getId();
+            List<ReviewImage> reviewImages = reviewImageService.findAllByReviewId(reviewId);
+            List<String> imgPaths = new ArrayList<>();
+            for (ReviewImage reviewImage : reviewImages) {
+                imgPaths.add(reviewImage.getImgPath());
+            }
+            reviewResponseDto.setImgPaths(imgPaths);
+            responseDtoes.add(reviewResponseDto);
+        }
+
+        model.addAttribute("reviews", responseDtoes);
+        return "review-community-test";
     }
 }
