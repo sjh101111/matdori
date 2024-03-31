@@ -36,7 +36,7 @@ public class ReviewPageController {
         List<Restaurant> restaurants = restaurantService.findAll();
         model.addAttribute("restaurants", restaurants);
 
-        if(reviewId == null) {
+        if (reviewId == null) {
             model.addAttribute("review", new Review());
         } else {
             Review review = reviewService.findById(reviewId);
@@ -83,6 +83,29 @@ public class ReviewPageController {
         }
 
         model.addAttribute("reviews", responseDtoes);
+        return "review-community-test";
+    }
+
+    // 검색기능 ->  검색시 리뷰의 타이틀, 내용, 관련 식당에 키워드가 있으면 표시
+    // /reviews/에서 검색 시 /search?keyword={keyword}로 이동
+    @GetMapping("/search")
+    public String searchByKeyword(@RequestParam("keyword") String keyword, Model model) {
+        List<Review> searchResults = reviewService.findByTitleContainingOrContentContainingOrRestaurantNameContaining(keyword, keyword, keyword);
+        List<ReviewResponseDto> responseDtoes = new ArrayList<>();
+        for (Review review : searchResults) {
+            ReviewResponseDto reviewResponseDto = new ReviewResponseDto(review);
+            Long reviewId = review.getId();
+            List<ReviewImage> reviewImages = reviewImageService.findAllByReviewId(reviewId);
+            List<String> imgPaths = new ArrayList<>();
+            for (ReviewImage reviewImage : reviewImages) {
+                imgPaths.add(reviewImage.getImgPath());
+            }
+            reviewResponseDto.setImgPaths(imgPaths);
+            responseDtoes.add(reviewResponseDto);
+        }
+        model.addAttribute("reviews", responseDtoes);
+        model.addAttribute("keyword", keyword);
+
         return "review-community-test";
     }
 }

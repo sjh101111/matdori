@@ -195,4 +195,10 @@ public class ReviewService {
         List<Review> reviews = reviewRepository.findAll();
         return reviews;
     }
+
+    // 검색기능 ->  검색시 리뷰의 타이틀, 내용, 관련 식당에 키워드가 있으면 표시
+    public List<Review> findByTitleContainingOrContentContainingOrRestaurantNameContaining(String keyword, String keyword1, String keyword2) {
+        List<Review> reviews = reviewRepository.findByTitleContainingOrContentContainingOrRestaurantNameContaining(keyword, keyword1, keyword2);
+        return reviews;
+    }
 }
