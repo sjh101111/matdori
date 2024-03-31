@@ -7,8 +7,25 @@ document.getElementById('commentBtn').addEventListener('click', function() {
         return;
     }
     let reviewId = window.location.pathname.split('/')[2];
+    let meetingId = window.location.pathname.split('/')[2];
+    let apiPath;
+    let boardType;
+    if (document.getElementById("reviewcomment")) {
+        boardType = "review";
+    } else {
+        boardType = "meeting";
+    }
+
+    if (boardType === "review") {
+        apiPath = `/api/comment/review/${reviewId}`;
+    } else if (boardType === "meeting") {
+        apiPath = `/api/comment/meeting/${meetingId}`;
+    }
+    console.log(reviewId);
+    console.log(meetingId);console.log(apiPath);
+
     // 서버에 댓글 내용을 전송하는 AJAX 요청
-    fetch(`/api/comment/review/${reviewId}`, { // 실제 댓글을 생성하는 API URL로 변경해주세요.
+    fetch(apiPath, { // 실제 댓글을 생성하는 API URL로 변경해주세요.
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -80,10 +97,23 @@ document.getElementById('comments-list').addEventListener('click', function(even
         const editField = commentDiv.querySelector('.comment-edit-field');
         const commentContent = commentDiv.querySelector('.comment-content');
         const editButton = commentDiv.querySelector('.edit-comment-btn');
+        let apiPath;
 
         // fetch 요청으로 변경사항 저장
         let reviewId = window.location.pathname.split('/')[2];
-        fetch(`/api/comment/review/${reviewId}/${commentId}`, {
+        let meetingId = window.location.pathname.split('/')[2];
+        let boardType;
+        if (document.getElementById("reviewcomment")) {
+            boardType = "review";
+        } else {
+            boardType = "meeting";
+        }
+        if (boardType === "review") {
+            apiPath = `/api/comment/review/${reviewId}/${commentId}`;
+        } else if (boardType === "meeting") {
+            apiPath = `/api/comment/meeting/${meetingId}/${commentId}`;
+        }
+        fetch(apiPath, {
             method: 'PUT',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({content: editField.value}),
@@ -109,10 +139,23 @@ document.getElementById('comments-list').addEventListener('click', function(even
     else if (event.target.classList.contains('delete-comment-btn')) {
         const commentDiv = event.target.closest('div[data-comment-id]');
         // 삭제 관련 로직 여기에 구현...
+        let apiPath;
+        let boardType;
         const commentId = commentDiv.getAttribute('data-comment-id');
         let reviewId = window.location.pathname.split('/')[2];
+        let meetingId = window.location.pathname.split('/')[2];
+        if (document.getElementById("reviewcomment")) {
+            boardType = "review";
+        } else {
+            boardType = "meeting";
+        }
+        if (boardType === "review") {
+            apiPath = `/api/comment/review/${reviewId}/${commentId}`;
+        } else if (boardType === "meeting") {
+            apiPath = `/api/comment/meeting/${meetingId}/${commentId}`;
+        }
 
-        fetch(`/api/comment/review/${reviewId}/${commentId}`, {
+        fetch(apiPath, {
             method: 'DELETE',
         }).then(response => {
             if (response.ok) {
@@ -153,10 +196,22 @@ document.querySelectorAll('.save-comment-btn').forEach(function (button) {
         const editField = commentDiv.querySelector('.comment-edit-field');
         const commentContent = commentDiv.querySelector('.comment-content');
         const editButton = commentDiv.querySelector('.edit-comment-btn');
-
+        let apiPath;
+        let boardType;
         // fetch 요청으로 변경사항 저장
         let reviewId = window.location.pathname.split('/')[2];
-        fetch(`/api/comment/review/${reviewId}/${commentId}`, {
+        let meetingId = window.location.pathname.split('/')[2];
+        if (document.getElementById("reviewcomment")) {
+            boardType = "review";
+        } else {
+            boardType = "meeting";
+        }
+        if (boardType === "review") {
+            apiPath = `/api/comment/review/${reviewId}/${commentId}`;
+        } else if (boardType === "meeting") {
+            apiPath = `/api/comment/meeting/${meetingId}/${commentId}`;
+        }
+        fetch(apiPath, {
             method: 'PUT',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({content: editField.value}),
@@ -185,8 +240,21 @@ document.querySelectorAll('.delete-comment-btn').forEach(function (button) {
         const commentDiv = button.closest('div');
         const commentId = commentDiv.getAttribute('data-comment-id');
         let reviewId = window.location.pathname.split('/')[2];
+        let meetingId = window.location.pathname.split('/')[2];
+        let apiPath;
+        let boardType;
+        if (document.getElementById("reviewcomment")) {
+            boardType = "review";
+        } else {
+            boardType = "meeting";
+        }
+        if (boardType === "review") {
+            apiPath = `/api/comment/review/${reviewId}/${commentId}`;
+        } else if (boardType === "meeting") {
+            apiPath = `/api/comment/meeting/${meetingId}/${commentId}`;
+        }
 
-        fetch(`/api/comment/review/${reviewId}/${commentId}`, {
+        fetch(apiPath, {
             method: 'DELETE',
         }).then(response => {
             if (response.ok) {

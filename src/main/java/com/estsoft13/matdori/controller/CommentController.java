@@ -35,41 +35,41 @@ public class CommentController {
     }
 
     @PostMapping("/api/comment/review/{reviewId}")
-    public ResponseEntity<CommentResponseDto>  createCommentToReview(@PathVariable Long reviewId, @RequestBody AddCommentRequestDto requestDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(commentService.createCommentToReview(reviewId, requestDto)) ;
+    public ResponseEntity<CommentResponseDto> createCommentToReview(@PathVariable Long reviewId, @RequestBody AddCommentRequestDto requestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(commentService.createCommentToReview(reviewId, requestDto));
     }
 
-    @PostMapping("/api/comment/meeting{meetingId}")
-    public ResponseEntity<CommentResponseDto>  createCommentToMeeting(@PathVariable Long meetingId ,@RequestBody AddCommentRequestDto requestDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(commentService.createCommentToMeeting(meetingId, requestDto)) ;
+    @PostMapping("/api/comment/meeting/{meetingId}")
+    public ResponseEntity<CommentResponseDto> createCommentToMeeting(@PathVariable Long meetingId, @RequestBody AddCommentRequestDto requestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(commentService.createCommentToMeeting(meetingId, requestDto));
     }
 
     @PutMapping("/api/comment/review/{reviewId}/{commentId}")
     public ResponseEntity<CommentResponseDto> updateCommentOfReview(@PathVariable Long reviewId,
-                                                            @PathVariable Long commentId,
-                                                            @RequestBody AddCommentRequestDto requestDto) {
+                                                                    @PathVariable Long commentId,
+                                                                    @RequestBody AddCommentRequestDto requestDto) {
 
         return ResponseEntity.ok(commentService.updateCommentOfReview(reviewId, commentId, requestDto));
     }
 
     @PutMapping("/api/comment/meeting/{meetingId}/{commentId}")
     public ResponseEntity<CommentResponseDto> updateCommentOfMeeting(@PathVariable Long meetingId,
-                                                            @PathVariable Long commentId,
-                                                            @RequestBody AddCommentRequestDto requestDto) {
+                                                                     @PathVariable Long commentId,
+                                                                     @RequestBody AddCommentRequestDto requestDto) {
 
         return ResponseEntity.ok(commentService.updateCommentOfMeeting(meetingId, commentId, requestDto));
     }
 
     @DeleteMapping("api/comment/review/{reviewId}/{commentId}")
     public ResponseEntity<Void> deleteCommentOfReview(@PathVariable Long reviewId,
-                                              @PathVariable Long commentId) {
+                                                      @PathVariable Long commentId) {
         commentService.deleteCommentOfReivew(reviewId, commentId);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("api/comment/meeting/{meetingId}/{commentId}")
     public ResponseEntity<Void> deleteCommentOfMeeting(@PathVariable Long meetingId,
-                                              @PathVariable Long commentId) {
+                                                       @PathVariable Long commentId) {
         commentService.deleteCommentOfMeeting(meetingId, commentId);
         return ResponseEntity.ok().build();
     }
