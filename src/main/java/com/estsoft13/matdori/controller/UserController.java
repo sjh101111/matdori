@@ -3,10 +3,16 @@ package com.estsoft13.matdori.controller;
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.UserDto;
 import com.estsoft13.matdori.service.UserService;
+import com.estsoft13.matdori.util.GeneratePassword;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,10 +36,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response,
+                SecurityContextHolder.getContext().getAuthentication());
+        return "redirect:/login";
+    }
+
     @GetMapping("/signup")
     public String signup(Model model) {
-            model.addAttribute("userDto", new UserDto());
-            return  "signup";    // signup.html
+        model.addAttribute("userDto", new UserDto());
+        return "signup";    // signup.html
     }
 
     @PostMapping("/signup")
@@ -45,15 +58,30 @@ public class UserController {
             return "/login";
         }
     }
+
     @GetMapping("/forgot")
     public String forgot() {
-        return  "forgot";    // forgot.html
+        return "forgot";    // forgot.html
     }
 
     @PostMapping("/forgot")
-    @ResponseBody
-    public String forgot(@RequestParam("username") String username, @RequestParam("email") String email) {
-        String password =userService.findPasswordByUsernameAndEmail(username, email);
-        return password != null ? password : "사용자 정보가 없습니다.";
+    public String resetPassword(@RequestParam("username") String username, @RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+        User user = userService.findByUsernameAndEmail(username, email);
+        if (user != null) {
+            String newPassword = generateRandomPassword();
+            userService.resetPassword(user, newPassword);
+            redirectAttributes.addFlashAttribute("msg","임시 비밀번호가 생성되었습니다. 로그인 후 변경해주세요!");
+            redirectAttributes.addAttribute("newPassword", newPassword);
+            return "redirect:/login";
+
+        } else {
+            redirectAttributes.addFlashAttribute("error","해당 정보가 없습니다!");
+            return "/";
+        }
     }
+
+    private String generateRandomPassword() {
+        return GeneratePassword.generateRandomPassword(8);
+    }
+
 }
