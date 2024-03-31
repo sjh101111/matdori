@@ -18,7 +18,7 @@
             <div class=usersymbol></div>
             <div class="userInfo">
                 <div class="userBox">
-                    <span class="username" th:text="${review.getUsername()}">유저 이름</span>
+                    <span class="username" th:text="${review.user.username}">유저 이름</span>
                     <span class="createdAt"
                           th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
                 </div>
@@ -34,11 +34,17 @@
                 </div>
                 <span class="restaddress" th:text="${review.restaurant.address}">식당 주소</span>
             </div>
+
+            <input type="hidden" id="review-id" th:value="${review.id}">
             <div th:if = "${isOwner}">
             <button type="button" id="modify-btn"
                     th:onclick="|location.href='@{/add-review?reviewId={reviewId}(reviewId=${review.id})}'|"
                     class="modifyReviewBtn">modify
             </button>
+            </div>
+
+            <div th:if = "${isOwner}">
+                <button type="button" id="delete-btn" class="deleteReviewBtn">delete</button>
             </div>
         </div>
     </div>

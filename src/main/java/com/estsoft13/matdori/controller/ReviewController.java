@@ -1,12 +1,10 @@
 package com.estsoft13.matdori.controller;
 
-import com.estsoft13.matdori.domain.ReviewImage;
 import com.estsoft13.matdori.dto.*;
 import com.estsoft13.matdori.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
@@ -56,4 +54,5 @@ public class ReviewController {
                                                 @RequestParam(value = "imgFiles", required = false) List<MultipartFile> imgFiles) {
         return reviewService.updateReview(reviewId, requestDto, imgFiles);
     }
+
 }

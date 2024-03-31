@@ -1,6 +1,7 @@
 package com.estsoft13.matdori.repository;
 
 import com.estsoft13.matdori.domain.Comment;
+import com.estsoft13.matdori.domain.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     Optional<Comment> findByIdAndReview_Id(Long id, Long reviewId);
     List<Comment> findByMeeting_Id(Long meetingId);
     Optional<Comment> findByIdAndMeeting_Id(Long id, Long meetingId);
+
+    void deleteByReview(Review review);
 }
