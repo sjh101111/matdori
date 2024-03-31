@@ -68,3 +68,16 @@ if (modiReviewButton) {
         });
     });
 }
+
+const deleteReviewButton = document.getElementById('delete-btn');
+if (deleteReviewButton) {
+    deleteReviewButton.addEventListener('click', event => {
+        let meetingId = document.getElementById('meeting-id').value;
+        fetch(`/api/meeting/${meetingId}`, {
+            method: 'DELETE'
+        }).then(() => {
+            alert('삭제가 완료되었습니다');
+            //location.replace('/');
+        });
+    });
+}

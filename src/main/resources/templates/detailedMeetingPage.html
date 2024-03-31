@@ -40,6 +40,10 @@
                         class="modifyReviewBtn">modify
                 </button>
             </div>
+            <input type="hidden" id="meeting-id" th:value="${meeting.id}">
+            <div th:if="${isOwner}">
+                <button type="button" id="delete-btn" class="deleteReviewBtn">delete</button>
+            </div>
         </div>
     </div>
     <!-- -->
@@ -47,14 +51,14 @@
         <div class="review">
             <div><span class="reviewtitle" th:text="${meeting.title}">Title</span></div>
             <div class="withouttitleandimages">
-<!--                <span th:text="${meeting.visitTime}">미팅 방문시간</span>-->
+                <!--                <span th:text="${meeting.visitTime}">미팅 방문시간</span>-->
             </div>
             <div>
                 <span class="reviewcontent" th:text="${meeting.content}">미팅 내용</span></div>
         </div>
 
     </div>
-    </div>
+
     <!-- -->
     <section class="comment" id="meetingcomment">
         <div class="createcomment">
