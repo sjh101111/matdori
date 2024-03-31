@@ -5,40 +5,13 @@
 
 <head>
   <meta charset="UTF-8">
-<th:block layout:fragment="css">
-  <style>
-    .carousel-inner > .item {
-      height: 350px;
-    }
-    .margin{
-      margin-bottom:30px;
-    }
-    .banner{
-      height: 300px;
-      position: absolute; top:0; left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .card-text{
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    a:hover{
-      text-decoration:none;
-    }
-    .center{
-      text-align:center;
-    }
-    .carousel-item{
-      padding-bottom:60px;
-    }
-
-  </style></head>
-</th:block>
-
 
 <div layout:fragment="content" style="min-width: 700px; max-width: 900px; margin: 50px auto 100px auto;">
+
+  <form action="/search" method="GET">
+    <input type="text" name="keyword" placeholder="검색...">
+    <button type="submit">검색</button>
+  </form>
 
   <div class="row">
     <th:block th:each="review : ${reviews}">
@@ -54,7 +27,7 @@
 
             <div class="card-body">
               <div><strong>제목: </strong> <span th:text="${review.title}">리뷰 타이틀</span></div>
-              <div><strong>평점: </strong> <span th:text="${review.title}">리뷰 평점</span></div>
+              <div><strong>평점: </strong> <span th:text="${review.rating}">리뷰 평점</span></div>
               <div><strong>작성자: </strong> <span th:text="${review.username}">작성자</span></div>
             </div>
           </a>
