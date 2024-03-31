@@ -24,7 +24,7 @@ public class ReviewResponseDto {
     private Restaurant restaurant;
     private int waitingTime;
     private String visitTime;
-    private List<String> imgPaths = new ArrayList<>();
+    private List<String> imgPaths;
 
 
 

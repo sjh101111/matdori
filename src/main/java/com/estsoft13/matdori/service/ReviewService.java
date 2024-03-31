@@ -190,4 +190,9 @@ public class ReviewService {
             reviewImageRepository.save(image);
         }
     }
+
+    public List<Review> findAll() {
+        List<Review> reviews = reviewRepository.findAll();
+        return reviews;
+    }
 }
