@@ -28,14 +28,17 @@ public class UserService {
                 orElseThrow(() -> new IllegalArgumentException("User not found: " + email));
     }
 
-    public String findPasswordByUsernameAndEmail(String username, String email){
-        return userRepository.findByUsernameAndEmail(username, email)
-                .map(User::getPassword)
-                .orElse(null);
+    public User findByUsernameAndEmail(String email, String username) {
+        return userRepository.findByUsernameAndEmail(email, username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found by: " + email + " and "+ username));
     }
 
     public boolean isEmailUnique(String email){
         return userRepository.findByEmail(email).isEmpty();
     }
 
+    public void resetPassword(User user, String newPassword){
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }

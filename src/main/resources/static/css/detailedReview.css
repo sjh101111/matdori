@@ -83,7 +83,18 @@ body {
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+}
 
+.deleteReviewBtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 <!-- -->

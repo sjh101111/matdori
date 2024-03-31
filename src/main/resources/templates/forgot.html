@@ -7,15 +7,13 @@
     <link th:href="@{/css/forgot.css}" rel="stylesheet">
 </head>
 <body>
-<form th:action="@{/forgot}" method="post">
-    <h1>회원 정보 페이지</h1>
-    <label><strong>Username</strong></label>
-    <input type = "text" name = "username" placeholder = "Enter your username">
-    <label><strong>Email</strong></label>
-    <input type="text" name="email" placeholder="Enter your email">
-<!--    <button th:onclick="|javascript:passwordFind()|">찾기</button>-->
-    <button>찾기</button>
-</form>
-<!--<script src="/js/passwordFind.js"></script>-->
+    <form th:action="@{/forgot}" method="post">
+        <h1>회원 정보 페이지</h1>
+        <label><strong>Username</strong></label>
+        <input type = "text" id="username" name = "username" placeholder = "Enter your username" required>
+        <label><strong>Email</strong></label>
+        <input type="text" id="email" name="email" placeholder="Enter your email" required>
+        <button type="submit">찾기</button>
+    </form>
 </body>
 </html>

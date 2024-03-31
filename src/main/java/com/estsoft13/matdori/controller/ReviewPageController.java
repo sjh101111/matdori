@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,10 +36,10 @@ public class ReviewPageController {
         List<Restaurant> restaurants = restaurantService.findAll();
         model.addAttribute("restaurants", restaurants);
 
-        if(reviewId == null) {
+        if (reviewId == null) {
             model.addAttribute("review", new Review());
         } else {
-            ReviewResponseDto review = reviewService.findById(reviewId);
+            Review review = reviewService.findById(reviewId);
             model.addAttribute("review", review);
         }
 
@@ -48,8 +49,8 @@ public class ReviewPageController {
     @GetMapping("/review/{reviewId}")
     public String showReviewDetail(@PathVariable Long reviewId, Model model, @AuthenticationPrincipal User user) {
         //Review review = reviewService.findById(reviewId);
-        ReviewResponseDto responseDto = reviewService.findById(reviewId);
-        model.addAttribute("review", responseDto);
+        Review review = reviewService.findById(reviewId);
+        model.addAttribute("review", review);
 
         List<ReviewImage> images = reviewImageService.findAllByReviewId(reviewId);
         model.addAttribute("images", images);
@@ -59,9 +60,52 @@ public class ReviewPageController {
 
         // 현재 로그인한 유저가 글을 등록한 유저인지 확인 후 글을 수정할 수 있게끔
         Long userId = user.getId();
-        boolean isOwner = responseDto.getId().equals(userId);
+        boolean isOwner = review.getUser().getId().equals(userId);
         model.addAttribute("isOwner", isOwner);
 
         return "detailedReviewPage";
+    }
+
+    @GetMapping("/reviews")
+    public String showReviews(Model model) {
+        List<Review> reviews = reviewService.findAll();
+        List<ReviewResponseDto> responseDtoes = new ArrayList<>();
+        for (Review review : reviews) {
+            ReviewResponseDto reviewResponseDto = new ReviewResponseDto(review);
+            Long reviewId = review.getId();
+            List<ReviewImage> reviewImages = reviewImageService.findAllByReviewId(reviewId);
+            List<String> imgPaths = new ArrayList<>();
+            for (ReviewImage reviewImage : reviewImages) {
+                imgPaths.add(reviewImage.getImgPath());
+            }
+            reviewResponseDto.setImgPaths(imgPaths);
+            responseDtoes.add(reviewResponseDto);
+        }
+
+        model.addAttribute("reviews", responseDtoes);
+        return "review-community-test";
+    }
+
+    // 검색기능 ->  검색시 리뷰의 타이틀, 내용, 관련 식당에 키워드가 있으면 표시
+    // /reviews/에서 검색 시 /search?keyword={keyword}로 이동
+    @GetMapping("/search")
+    public String searchByKeyword(@RequestParam("keyword") String keyword, Model model) {
+        List<Review> searchResults = reviewService.findByTitleContainingOrContentContainingOrRestaurantNameContaining(keyword, keyword, keyword);
+        List<ReviewResponseDto> responseDtoes = new ArrayList<>();
+        for (Review review : searchResults) {
+            ReviewResponseDto reviewResponseDto = new ReviewResponseDto(review);
+            Long reviewId = review.getId();
+            List<ReviewImage> reviewImages = reviewImageService.findAllByReviewId(reviewId);
+            List<String> imgPaths = new ArrayList<>();
+            for (ReviewImage reviewImage : reviewImages) {
+                imgPaths.add(reviewImage.getImgPath());
+            }
+            reviewResponseDto.setImgPaths(imgPaths);
+            responseDtoes.add(reviewResponseDto);
+        }
+        model.addAttribute("reviews", responseDtoes);
+        model.addAttribute("keyword", keyword);
+
+        return "review-community-test";
     }
 }
