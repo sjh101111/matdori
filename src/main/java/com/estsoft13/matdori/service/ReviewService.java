@@ -5,10 +5,7 @@ import com.estsoft13.matdori.domain.Review;
 import com.estsoft13.matdori.domain.ReviewImage;
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.*;
-import com.estsoft13.matdori.repository.RestaurantRepository;
-import com.estsoft13.matdori.repository.ReviewImageRepository;
-import com.estsoft13.matdori.repository.ReviewRepository;
-import com.estsoft13.matdori.repository.UserRepository;
+import com.estsoft13.matdori.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +28,7 @@ public class ReviewService {
     private final RestaurantRepository restaurantRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     private User getAuthenticatedUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -68,30 +66,7 @@ public class ReviewService {
         List<String> imgPaths = new ArrayList<>();
 
         if (imgFiles != null && !imgFiles.isEmpty()) {
-            for (MultipartFile file : imgFiles) {
-                String oriImgName = file.getOriginalFilename();
-                String imgName = "";
-                String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/"; // /static/files에 img 저장
-
-                // UUID 를 이용하여 파일명 새로 생성
-                // UUID - 서로 다른 객체들을 구별하기 위한 클래스
-                UUID uuid = UUID.randomUUID();
-                String savedFileName = uuid + "_" + oriImgName;
-
-                imgName = savedFileName;
-
-                File saveFile = new File(projectPath, imgName);
-                try {
-                    file.transferTo(saveFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ReviewImage image = new ReviewImage("/files/" + imgName, review);
-                imgPaths.add(image.getImgPath());
-
-                // review.setReviewImage(image);
-                reviewImageRepository.save(image);
-            }
+            saveFileName(imgFiles, imgPaths, review);
         }
         responseDto.setImgPaths(imgPaths);
         reviewRepository.save(review);
@@ -138,6 +113,8 @@ public class ReviewService {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없습니다."));
         Long restaurantId = review.getRestaurant().getId();
+
+        commentRepository.deleteByReview(review); // 리뷰 삭제 전 연결된 댓글 삭제
         reviewImageRepository.deleteByReview(review); //리뷰 삭제전 연결된 리뷰 이미지 삭제
         reviewRepository.deleteById(reviewId); // 리뷰 삭제
 
@@ -176,37 +153,41 @@ public class ReviewService {
         List<String> imgPaths = new ArrayList<>();
         reviewImageRepository.deleteByReview(review);
         if (imgFiles != null && !imgFiles.isEmpty()) {
-            for (MultipartFile file : imgFiles) {
-                String oriImgName = file.getOriginalFilename();
-                String imgName = "";
-                String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/"; // /static/files에 img 저장
-
-                // UUID 를 이용하여 파일명 새로 생성
-                // UUID - 서로 다른 객체들을 구별하기 위한 클래스
-                UUID uuid = UUID.randomUUID();
-                String savedFileName = uuid + "_" + oriImgName;
-
-                imgName = savedFileName;
-
-                File saveFile = new File(projectPath, imgName);
-                try {
-                    file.transferTo(saveFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ReviewImage image = new ReviewImage("/files/" + imgName, review);
-                imgPaths.add(image.getImgPath());
-                // review.setReviewImage(image);
-                reviewImageRepository.save(image);
-            }
+            saveFileName(imgFiles, imgPaths, review);
             responseDto.setImgPaths(imgPaths);
         }
         return responseDto;
     }
 
-    public ReviewResponseDto findById(Long reviewId) {
+    public Review findById(Long reviewId) {
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
-        ReviewResponseDto responseDto = new ReviewResponseDto(review);
-        return responseDto;
+        return review;
+    }
+
+    // 업로든된 이미지들의 파일 경로 저장
+    public void saveFileName(List<MultipartFile> imgFiles, List<String> imgPaths, Review review) {
+        for (MultipartFile file : imgFiles) {
+            String oriImgName = file.getOriginalFilename();
+            String imgName = "";
+            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/"; // /static/files에 img 저장
+
+            // UUID 를 이용하여 파일명 새로 생성
+            // UUID - 서로 다른 객체들을 구별하기 위한 클래스
+            UUID uuid = UUID.randomUUID();
+            String savedFileName = uuid + "_" + oriImgName;
+
+            imgName = savedFileName;
+
+            File saveFile = new File(projectPath, imgName);
+            try {
+                file.transferTo(saveFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ReviewImage image = new ReviewImage("/files/" + imgName, review);
+            imgPaths.add(image.getImgPath());
+            // review.setReviewImage(image);
+            reviewImageRepository.save(image);
+        }
     }
 }

@@ -38,7 +38,7 @@ public class ReviewPageController {
         if(reviewId == null) {
             model.addAttribute("review", new Review());
         } else {
-            ReviewResponseDto review = reviewService.findById(reviewId);
+            Review review = reviewService.findById(reviewId);
             model.addAttribute("review", review);
         }
 
@@ -48,8 +48,8 @@ public class ReviewPageController {
     @GetMapping("/review/{reviewId}")
     public String showReviewDetail(@PathVariable Long reviewId, Model model, @AuthenticationPrincipal User user) {
         //Review review = reviewService.findById(reviewId);
-        ReviewResponseDto responseDto = reviewService.findById(reviewId);
-        model.addAttribute("review", responseDto);
+        Review review = reviewService.findById(reviewId);
+        model.addAttribute("review", review);
 
         List<ReviewImage> images = reviewImageService.findAllByReviewId(reviewId);
         model.addAttribute("images", images);
@@ -59,7 +59,7 @@ public class ReviewPageController {
 
         // 현재 로그인한 유저가 글을 등록한 유저인지 확인 후 글을 수정할 수 있게끔
         Long userId = user.getId();
-        boolean isOwner = responseDto.getId().equals(userId);
+        boolean isOwner = review.getUser().getId().equals(userId);
         model.addAttribute("isOwner", isOwner);
 
         return "detailedReviewPage";
