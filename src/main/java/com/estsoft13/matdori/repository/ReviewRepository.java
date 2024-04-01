@@ -8,5 +8,11 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByRestaurantId(Long restaurantId);
 
-    List<Review> findByTitleContainingOrContentContainingOrRestaurantNameContaining(String keyword, String keyword1, String keyword2);
+    List<Review> findByTitleContainingOrContentContainingOrRestaurantNameContainingOrRestaurantCategoryContaining(String keyword, String keyword1, String keyword2, String keyword3);
+
+    List<Review> findAllByOrderByCreatedAt();
+
+    List<Review> findAllByOrderByRatingDesc();
+
+    List<Review> findAllByOrderByViewCountDesc();
 }

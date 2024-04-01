@@ -27,7 +27,7 @@ if (postReviewButton) {
             if (response.ok) {
                 alert('등록 완료되었습니다');
                 // 성공시 페이지 리디렉션
-                //location.replace(`/someSuccessPage`);
+                location.replace(`/reviews`);
             } else {
                 alert('등록 실패. 다시 시도해 주세요.');
             }
