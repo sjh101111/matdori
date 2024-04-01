@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/mainMeeting.css">
+</head>
+<body>
+<header>
+    <div th:replace="~{header.html::currentuser}"></div>
+    <div th:replace="~{header.html::meetingSearch}"></div>
+</header>
+<div class="meetings=box">
+    <th:block th:each="meeting : ${searchmeetings}">
+                <div class="meetings">
+                    <span class="meetingtitle" th:text="${meeting.title}">Title</span>
+                    <span class="meetingcontent" th:text="${meeting.content}">미팅 내용</span>
+                    <span class="createdAtmeeting"
+                          th:text="${#temporals.format(meeting.created_at, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
+                </div>
+    </th:block>
+</div>
+</body>
+
+</html>

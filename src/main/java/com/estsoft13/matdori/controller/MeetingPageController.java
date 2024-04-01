@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 public class MeetingPageController {
@@ -30,7 +32,7 @@ public class MeetingPageController {
         List<Restaurant> restaurants = restaurantService.findAll();
         model.addAttribute("restaurants", restaurants);
 
-        if(meetingId == null) {
+        if (meetingId == null) {
             model.addAttribute("meeting", new Meeting());
         } else {
             MeetingResponseDto meeting = meetingService.findById(meetingId);
@@ -55,5 +57,26 @@ public class MeetingPageController {
         model.addAttribute("isOwner", isOwner);
 
         return "detailedMeetingPage";
+    }
+
+    @GetMapping("/meetings")
+    public String showAllMeeitngs(Model model) {
+        List<MeetingResponseDto> meetings = meetingService.getMeetings();
+        model.addAttribute("meetings", meetings);
+        return "mainMeetingPage";
+    }
+
+    @GetMapping("/searchMeetings")
+    public String searchMeeting(@RequestParam("keyword") String keyword, Model model) {
+        List<Meeting> searchResults = meetingService.searchMeeting(keyword, keyword, keyword);
+        List<MeetingResponseDto> responseDtos = new ArrayList<>();
+        for (Meeting meeting : searchResults) {
+            MeetingResponseDto meetingResponseDto = new MeetingResponseDto(meeting);
+            responseDtos.add(meetingResponseDto);
+        }
+
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("searchmeetings", responseDtos);
+        return "meetingSearch";
     }
 }

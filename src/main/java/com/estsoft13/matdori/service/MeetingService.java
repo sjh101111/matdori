@@ -74,5 +74,10 @@ public class MeetingService {
         meetingRepository.deleteById(meetingId);
     }
 
+    public List<Meeting> searchMeeting(String keyword1, String keyword2, String keyword3) {
+        return meetingRepository.findByTitleContainingOrContentContainingOrRestaurant_NameContaining(
+                        keyword1, keyword2, keyword3);
+    }
+
 }
 
