@@ -87,6 +87,7 @@ body {
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+    margin-right: 10px;
 }
 
 .deleteReviewBtn {
@@ -99,6 +100,10 @@ body {
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+}
+
+.modianddel {
+    display: flex;
 }
 
 <!-- -->
@@ -217,6 +222,87 @@ body {
     cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
 }
 
+/*
+header {
+    display: flex;
+}
+/**/
+
+.user-container {
+    display: flex;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 12px;
+    max-width: 371px;
+}
+
+.createdAt {
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.48);
+}
+
+.userBox {
+    display: flex;
+    align-items: center;
+}
+
+.userGrade {
+    color: rgba(0, 0, 0, 0.48);
+}
+
+.userInfo {
+    height: 40px;
+    min-width: 153px;
+    max-width: 323px;
+    margin-left: 6px;
+}
+
+.usersymbol {
+    color: aqua;
+    width: 40px;
+    background-color: blue;
+}
+
+.searchbtn {
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 50px;
+    height: 30px;
+}
+
+.searchinput {
+    border-style: none;
+}
+
+.searchstyle {
+    border-radius: 8px;
+    border-width: 0.6px;
+    border-style: solid;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 12px 8px 8px;
+    border-color: rgba(0,0,0,0.38);
+    width: 450px;
+}
+
+.meetingsearch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.searchform {
+    margin-bottom: 6px;
+}
 
 
 

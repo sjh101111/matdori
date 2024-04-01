@@ -53,7 +53,7 @@ public class MeetingPageController {
 
         // 현재 로그인한 유저가 글을 등록한 유저인지 확인 후 글을 수정할 수 있게끔
         Long userId = user.getId();
-        boolean isOwner = responseDto.getId().equals(userId);
+        boolean isOwner = responseDto.getUser_id().equals(userId);
         model.addAttribute("isOwner", isOwner);
 
         return "detailedMeetingPage";

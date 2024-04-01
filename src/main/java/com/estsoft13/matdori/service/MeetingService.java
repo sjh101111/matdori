@@ -6,6 +6,7 @@ import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.AddMeetingRequestDto;
 import com.estsoft13.matdori.dto.MeetingResponseDto;
 import com.estsoft13.matdori.dto.UpdateMeetingDto;
+import com.estsoft13.matdori.repository.CommentRepository;
 import com.estsoft13.matdori.repository.MeetingRepository;
 import com.estsoft13.matdori.repository.RestaurantRepository;
 import com.estsoft13.matdori.repository.UserRepository;
@@ -25,6 +26,8 @@ public class MeetingService {
     private final MeetingRepository meetingRepository;
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
+    private final CommentRepository commentRepository;
+
 
     private User getAuthenticatedUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -32,6 +35,7 @@ public class MeetingService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
+    @Transactional
     public List<MeetingResponseDto> getMeetings() {
         return meetingRepository.findAll().stream()
                 .map(MeetingResponseDto::new)
@@ -53,6 +57,7 @@ public class MeetingService {
         return new MeetingResponseDto(meetingRepository.save(meeting));
     }
 
+    @Transactional
     public MeetingResponseDto findById(Long meetingId) {
         Meeting meeting = meetingRepository.findById(meetingId).orElseThrow(() -> new IllegalArgumentException("미팅 id가 존재하지 않습니다."));
         return new MeetingResponseDto(meeting);
@@ -70,10 +75,13 @@ public class MeetingService {
         return meeting.toResponse(newRestaurant);
     }
 
+    @Transactional
     public void deleteMeeting(Long meetingId) {
+        commentRepository.deleteByMeeting_Id(meetingId);
         meetingRepository.deleteById(meetingId);
     }
 
+    @Transactional
     public List<Meeting> searchMeeting(String keyword1, String keyword2, String keyword3) {
         return meetingRepository.findByTitleContainingOrContentContainingOrRestaurant_NameContaining(
                         keyword1, keyword2, keyword3);

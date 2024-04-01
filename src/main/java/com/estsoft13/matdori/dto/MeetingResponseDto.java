@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 public class MeetingResponseDto {
     private Long id;
 
+    private Long user_id;
+
     private String title;
 
     private String content;
@@ -41,6 +43,7 @@ public class MeetingResponseDto {
 
     public MeetingResponseDto(Meeting meeting) {
         this.id = meeting.getId();
+        this.user_id = meeting.getUser().getId();
         this.username = meeting.getUser().getEnteredUsername();
         this.title = meeting.getTitle();
         this.location = meeting.getLocation();

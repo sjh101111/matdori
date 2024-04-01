@@ -13,16 +13,30 @@
     <div th:replace="~{header.html::currentuser}"></div>
     <div th:replace="~{header.html::meetingSearch}"></div>
 </header>
-<div class="meetings=box">
+<div class="meetings-box">
     <th:block th:each="meeting : ${searchmeetings}">
-                <div class="meetings">
-                    <span class="meetingtitle" th:text="${meeting.title}">Title</span>
-                    <span class="meetingcontent" th:text="${meeting.content}">미팅 내용</span>
-                    <span class="createdAtmeeting"
-                          th:text="${#temporals.format(meeting.created_at, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
-                </div>
+        <div class="meetings">
+            <div class="meeting-box" th:data-meeting-id="${meeting.id}">
+                <span class="meetingtitle" th:text="${meeting.title}">Title</span>
+                <span class="meetingcontent" th:text="${meeting.content}">미팅 내용</span>
+                <span class="createdAtmeeting"
+                      th:text="${#temporals.format(meeting.created_at, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
+            </div>
+        </div>
     </th:block>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 모든 'clickable' 클래스를 가진 div 요소에 대해 이벤트 리스너 추가
+        document.querySelectorAll('.meeting-box').forEach(function (div) {
+            div.addEventListener('click', function () {
+                const meetingId = this.getAttribute('data-meeting-id');
+                window.location.href = `/meeting/${meetingId}`; // 페이지 리다이렉션
+            });
+        });
+    });
+</script>
 </body>
 
 </html>
