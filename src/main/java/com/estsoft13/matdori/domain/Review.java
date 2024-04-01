@@ -46,6 +46,9 @@ public class Review {
     @Column(name = "visit_time", nullable = false)
     private String visitTime;
 
+    @Column(name = "view_count", columnDefinition = "integer default 0", nullable = false)
+    private int viewCount;
+
     @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime createdAt;

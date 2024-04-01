@@ -25,6 +25,7 @@ public class ReviewResponseDto {
     private int waitingTime;
     private String visitTime;
     private List<String> imgPaths;
+    private int viewCount;
 
 
 
@@ -38,5 +39,6 @@ public class ReviewResponseDto {
         this.visitTime = review.getVisitTime();
         this.createdAt = review.getCreatedAt();
         this.username = review.getUser().getEnteredUsername();
+        this.viewCount = review.getViewCount();
     }
 }

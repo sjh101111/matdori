@@ -50,6 +50,10 @@ public class ReviewPageController {
     public String showReviewDetail(@PathVariable Long reviewId, Model model, @AuthenticationPrincipal User user) {
         //Review review = reviewService.findById(reviewId);
         Review review = reviewService.findById(reviewId);
+        //조회수 up
+        reviewService.countUpViewCount(reviewId);
+        review.setViewCount(review.getViewCount()+1);
+
         model.addAttribute("review", review);
 
         List<ReviewImage> images = reviewImageService.findAllByReviewId(reviewId);
@@ -67,8 +71,19 @@ public class ReviewPageController {
     }
 
     @GetMapping("/reviews")
-    public String showReviews(Model model) {
-        List<Review> reviews = reviewService.findAll();
+    public String showReviews(@RequestParam(required = false) String sort, Model model) {
+        //List<Review> reviews = reviewService.findAll();
+        List<Review> reviews;
+        if("rating".equals(sort)) {
+            reviews = reviewService.findAllByOrderByRatingDesc();
+        } else if ("viewCount".equals(sort)) {
+            reviews = reviewService.findAllByOrderByViewCountDesc();
+        } else if ("latest".equals(sort)){
+            reviews = reviewService.findAllByOrderByCreatedAtDesc();
+        } else {
+            reviews = reviewService.findAll();
+        }
+
         List<ReviewResponseDto> responseDtoes = new ArrayList<>();
         for (Review review : reviews) {
             ReviewResponseDto reviewResponseDto = new ReviewResponseDto(review);
@@ -90,7 +105,7 @@ public class ReviewPageController {
     // /reviews/에서 검색 시 /search?keyword={keyword}로 이동
     @GetMapping("/search")
     public String searchByKeyword(@RequestParam("keyword") String keyword, Model model) {
-        List<Review> searchResults = reviewService.findByTitleContainingOrContentContainingOrRestaurantNameContaining(keyword, keyword, keyword);
+        List<Review> searchResults = reviewService.findByTitleContainingOrContentContainingOrRestaurantNameContainingOrRestaurantCategoryContaining(keyword, keyword, keyword, keyword);
         List<ReviewResponseDto> responseDtoes = new ArrayList<>();
         for (Review review : searchResults) {
             ReviewResponseDto reviewResponseDto = new ReviewResponseDto(review);
@@ -108,4 +123,20 @@ public class ReviewPageController {
 
         return "review-community-test";
     }
+/*
+    @GetMapping("/reviews/sorting")
+    public String sortingReviews(@RequestParam(required = false) String sorting, Model model) {
+        List<Review> reviews;
+        if("latest".equals(sorting)) {
+            reviews = reviewService.findAllByOrderByCreatedAtDesc();
+        } else if ("rating".equals(sorting)) {
+            reviews = reviewService.findAllByOrderByRating();
+        } else {
+            reviews = reviewService.findAllByOrderByViewCount();
+        }
+        model.addAttribute("reviews", reviews);
+        return "review-community-test";
+    }
+
+ */
 }

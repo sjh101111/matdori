@@ -1,86 +1,143 @@
-<!-- ADD-REVIEW TEST용 HTML입니다 -->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>리뷰 작성</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글쓰기</title>
+  <style>
+    table {
+      margin: auto;
+    }
+    input[type="text"] {
+      border: 1.5px rgb(68, 136, 244) solid;
+      width: 500px;
+      height: 30px;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
+
+    input[type="number"] {
+      border: 1.5px rgb(68, 136, 244) solid;
+      width: 50px;
+      height: 30px;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
+
+    #visitTime{
+      border: 1.5px rgb(68, 136, 244) solid;
+      width: 100px;
+      height: 30px;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
+
+    #restaurant{
+      border: 1.5px rgb(68, 136, 244) solid;
+      width: 500px;
+      height: 30px;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
+
+    textarea {
+      border: 1.5px rgb(68, 136, 244) solid;
+      width: 500px;
+      height: 400px;
+      border-radius: 5px;
+      padding-left: 10px;
+      padding-top: 10px;
+      resize: none;
+    }
+    .header {
+      height: 30px;
+    }
+
+    #post-review-btn {
+      width: 100px;
+      height: 42px;
+      color: white;
+      background-color: rgba(255, 107, 0, 1);
+      border-radius: 8px;
+      border-style: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    #modi-review-btn {
+      width: 100px;
+      height: 42px;
+      color: white;
+      background-color: rgba(255, 107, 0, 1);
+      border-radius: 8px;
+      border-style: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+  </style>
 </head>
 <body>
-<input type="hidden" id="reviewId" th:value="${review.id}">
-<h1 th:if="${review.id != null}" th:text="'리뷰 수정'">리뷰 수정</h1>
-<h1 th:if="${review.id == null}" th:text="'리뷰 등록'">리뷰 등록</h1>
-
 <form action="/api/review" method="post" enctype="multipart/form-data">
+  <table>
+    <input type="hidden" id="reviewId" th:value="${review.id}">
+    <tr><td><h2 th:if="${review.id != null}" th:text="'리뷰 수정'">리뷰 수정</h2></td></tr>
+    <tr><td><h2 th:if="${review.id == null}" th:text="'리뷰 등록'">리뷰 등록</h2></td></tr>
 
-  <!-- 리뷰 제목 입력 -->
-  <div>
-    <label for="title">제목</label>
-    <input type="text" id="title" th:value="*{review.title}" />
-  </div>
+    <!-- 리뷰 제목 입력 -->
+    <tr><td class="header">Title</td></tr>
+    <tr><td><input type="text" id="title" th:value="*{review.title}" placeholder="제목을 입력하세요."></td></tr>
 
-  <!-- 대기 시간 입력 -->
-  <div>
-    <label for="waitingTime">대기 시간 (분 단위):</label>
-    <input type="number" id="waitingTime" name="waitTime" min="0" step="1" />
-  </div>
+    <!-- 대기 시간 입력 -->
+    <tr><td><label for="waitingTime">대기 시간 (10분 단위):</label></td></tr>
+    <tr><td><input type="number" id="waitingTime" name="waitTime" min="0" step="10"></td></td>
 
-  <!-- 방문 시간 선택 -->
-  <label for="visitTime">방문 시간</label>
-  <select id="visitTime" name="visitTime">
-    <option value="">시간 선택</option>
-    <!-- 스크립트에 의해 옵션이 여기에 삽입될 것입니다 -->
-  </select>
+    <!-- 방문 시간 입력 -->
+    <tr><td><label for="visitTime">방문 시간</label></td></tr>
+    <tr><td><select id="visitTime" name="visitTime">
+      <option value="">시간 선택</option>
+    </select></td></tr>
+    <script>
+      // 시간 옵션을 생성하기 위한 스크립트입니다.
+      document.addEventListener('DOMContentLoaded', function() {
+        var select = document.getElementById('visitTime');
+        for (var hour = 0; hour < 24; hour++) {
+          // 시간과 분을 처리합니다.
+          ['00', '30'].forEach(function(minute) {
+            var timeValue = (hour < 10 ? '0' + hour : hour) + ':' + minute;
+            var option = new Option(timeValue, timeValue);
+            select.add(option);
+          });
+        }
+        // '24:00' 옵션을 추가합니다.
+        select.add(new Option('24:00', '24:00'));
+      });
+    </script>
 
-  <script>
-    // 시간 옵션을 생성하기 위한 스크립트입니다.
-    document.addEventListener('DOMContentLoaded', function() {
-      var select = document.getElementById('visitTime');
-      for (var hour = 0; hour < 24; hour++) {
-        // 시간과 분을 처리합니다.
-        ['00', '30'].forEach(function(minute) {
-          var timeValue = (hour < 10 ? '0' + hour : hour) + ':' + minute;
-          var option = new Option(timeValue, timeValue);
-          select.add(option);
-        });
-      }
-      // '24:00' 옵션을 추가합니다.
-      select.add(new Option('24:00', '24:00'));
-    });
-  </script>
+    <!--  식당 입력 -->
+    <tr><td><label for="restaurant">식당 선택:</label></td><tr>
+    <tr><td><select id="restaurant" name="restaurantId">
+      <option value="" disabled selected>식당을 선택하세요</option>
+      <!-- 식당 목록을 동적으로 생성 -->
+      <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name} + ' / ' + ${restaurant.address}"></option>
+    </select></td></tr>
 
+    <!-- 점수 입력 -->
+    <tr><td><label for="rating">내 점수</label></td></tr>
+    <tr><td><input type="number" id="rating" th:value="*{review.rating}" min="0" max="10" step="1"></td></tr>
 
-<div>
-  <label for="restaurant">식당 선택:</label>
-  <select id="restaurant" name="restaurantId">
-    <option value="" disabled selected>식당을 선택하세요</option>
-    <!-- 식당 목록을 동적으로 생성 -->
-    <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name} + ' / ' + ${restaurant.address}"></option>
-  </select>
-</div>
+    <!-- 내용 입력 -->
+    <tr><td><label for="content">내용</label></td></tr>
+    <tr><td><textarea id="content" th:value="*{review.content}" placeholder="내용을 입력하세요."></textarea></td></tr>
 
+    <tr><td><label for="imgFiles" class="form-label">이미지 업로드</label></td></tr>
+    <tr><td><input type="file" class="form-control" id="imgFiles" name="imgFiles" multiple accept="image/*"></td></tr>
 
-  <div>
-    <label for="rating">점수</label>
-    <input type="number" id="rating" th:value="*{review.rating}">
-  </div>
-
-  <!-- 리뷰 내용 입력 -->
-  <div>
-    <label for="content">내용</label>
-    <textarea id="content" th:value="*{review.content}"></textarea>
-  </div>
-
-  <div>
-    <label for="imgFiles" class="form-label">이미지 업로드</label>
-    <input type="file" class="form-control" id="imgFiles" name="imgFiles" multiple accept="image/*">
-  </div>
-
-  <!-- 제출 버튼 -->
-  <div>
-    <button th:if="${review.id} == null" type="button" id="post-review-btn">리뷰 등록</button>
-    <button th:if="${review.id} != null" type="button" id="modi-review-btn">리뷰 수정</button>
-  </div>
+    <tr><td><button th:if="${review.id} == null" type="button" id="post-review-btn" class="postReviewBtn">리뷰 등록</button></td></tr>
+    <tr><td><button th:if="${review.id} != null" type="button" id="modi-review-btn">리뷰 수정</button></td></tr>
+  </table>
 </form>
 <script src="/js/review-test.js"></script>
 </body>

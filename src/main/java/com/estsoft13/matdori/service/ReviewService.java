@@ -196,9 +196,31 @@ public class ReviewService {
         return reviews;
     }
 
-    // 검색기능 ->  검색시 리뷰의 타이틀, 내용, 관련 식당에 키워드가 있으면 표시
-    public List<Review> findByTitleContainingOrContentContainingOrRestaurantNameContaining(String keyword, String keyword1, String keyword2) {
-        List<Review> reviews = reviewRepository.findByTitleContainingOrContentContainingOrRestaurantNameContaining(keyword, keyword1, keyword2);
+    // 검색기능 ->  검색시 리뷰의 타이틀, 내용, 식당 이름, 식당 업종 에 관련 키워드가 있으면 표시
+    public List<Review> findByTitleContainingOrContentContainingOrRestaurantNameContainingOrRestaurantCategoryContaining(String keyword, String keyword1, String keyword2, String keyword3) {
+        List<Review> reviews = reviewRepository.findByTitleContainingOrContentContainingOrRestaurantNameContainingOrRestaurantCategoryContaining(keyword, keyword1, keyword2, keyword3);
+        return reviews;
+    }
+
+    // 조회수
+    public void countUpViewCount(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
+        review.setViewCount(review.getViewCount()+1);
+        reviewRepository.save(review);
+    }
+
+    public List<Review> findAllByOrderByCreatedAtDesc() {
+        List<Review> reviews = reviewRepository.findAllByOrderByCreatedAt();
+        return  reviews;
+    }
+
+    public List<Review> findAllByOrderByRatingDesc() {
+        List<Review> reviews = reviewRepository.findAllByOrderByRatingDesc();
+        return  reviews;
+    }
+
+    public List<Review> findAllByOrderByViewCountDesc() {
+        List<Review> reviews = reviewRepository.findAllByOrderByViewCountDesc();
         return reviews;
     }
 }
