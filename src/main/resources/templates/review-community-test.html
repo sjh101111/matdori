@@ -8,9 +8,28 @@
 
 <div layout:fragment="content" style="min-width: 700px; max-width: 900px; margin: 50px auto 100px auto;">
 
+  <div>
   <form action="/search" method="GET">
-    <input type="text" name="keyword" placeholder="검색...">
+    <input type="text" name="keyword" placeholder="리뷰, 식당, 업종 검색...">
     <button type="submit">검색</button>
+  </form>
+  </div>
+  <!-- 최신순 정렬 버튼 -->
+  <form action="/reviews" method="GET" style="display:inline;">
+    <input type="hidden" name="sort" value="latest">
+    <button type="submit" class="btn btn-primary">최신순</button>
+  </form>
+
+  <!-- 평점순 정렬 버튼 -->
+  <form action="/reviews" method="GET" style="display:inline;">
+    <input type="hidden" name="sort" value="rating">
+    <button type="submit" class="btn btn-primary">평점순</button>
+  </form>
+
+  <!-- 조회순 정렬 버튼 -->
+  <form action="/reviews" method="GET" style="display:inline;">
+    <input type="hidden" name="sort" value="viewCount">
+    <button type="submit" class="btn btn-primary">조회순</button>
   </form>
 
   <div class="row">
@@ -29,6 +48,7 @@
               <div><strong>제목: </strong> <span th:text="${review.title}">리뷰 타이틀</span></div>
               <div><strong>평점: </strong> <span th:text="${review.rating}">리뷰 평점</span></div>
               <div><strong>작성자: </strong> <span th:text="${review.username}">작성자</span></div>
+              <div><strong>조회수: </strong> <span th:text="${review.viewCount}">조회수</span></div>
             </div>
           </a>
         </div>
