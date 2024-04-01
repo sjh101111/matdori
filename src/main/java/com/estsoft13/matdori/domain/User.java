@@ -70,6 +70,10 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
+
+    public User(String username) {
+        this.username = username;
+    }
 }
 
 /*public enum Role{

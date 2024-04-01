@@ -40,4 +40,6 @@ public class MeetingController {
         meetingService.deleteMeeting(meetingId);
         return ResponseEntity.ok().build();
     }
+
+    //헤더 유저정보
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{meetingSearch}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -13,16 +14,19 @@
 </head>
 <body>
 <main>
+    <!--    -->
     <div class="reviewuser-box">
         <div class="reviewuser-body">
-            <div class=usersymbol></div>
-            <div class="userInfo">
-                <div class="userBox">
-                    <span class="username" th:text="${review.user.username}">유저 이름</span>
-                    <span class="createdAt"
-                          th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
+            <div class="user-container">
+                <div class=usersymbol></div>
+                <div class="userInfo">
+                    <div class="userBox">
+                        <span class="username" th:text="${review.user.username}">유저 이름</span>
+                        <span class="createdAt"
+                              th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
+                    </div>
+                    <span class="userGrade">foodie adventurer</span>
                 </div>
-                <span class="userGrade">foodie adventurer</span>
             </div>
             <div class="restaurant-info">
                 <div class="withoutadress">
@@ -36,14 +40,14 @@
             </div>
 
             <input type="hidden" id="review-id" th:value="${review.id}">
-            <div th:if = "${isOwner}">
-            <button type="button" id="modify-btn"
-                    th:onclick="|location.href='@{/add-review?reviewId={reviewId}(reviewId=${review.id})}'|"
-                    class="modifyReviewBtn">modify
-            </button>
+            <div th:if="${isOwner}">
+                <button type="button" id="modify-btn"
+                        th:onclick="|location.href='@{/add-review?reviewId={reviewId}(reviewId=${review.id})}'|"
+                        class="modifyReviewBtn">modify
+                </button>
             </div>
 
-            <div th:if = "${isOwner}">
+            <div th:if="${isOwner}">
                 <button type="button" id="delete-btn" class="deleteReviewBtn">delete</button>
             </div>
         </div>

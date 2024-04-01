@@ -1,0 +1,35 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.user-container {
+    display: flex;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 12px;
+    max-width: 371px;
+}
+
+.createdAt {
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.48);
+}
+
+.userBox {
+    display: flex;
+    align-items: center;
+}
+
+.userGrade {
+    color: rgba(0, 0, 0, 0.48);
+}
+
+.userInfo {
+    height: 40px;
+    min-width: 153px;
+    max-width: 323px;
+    margin-left: 6px;
+}

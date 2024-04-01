@@ -40,7 +40,7 @@ public class MeetingResponseDto {
     }
 
     public MeetingResponseDto(Meeting meeting) {
-        this.id = meeting.getUser().getId();
+        this.id = meeting.getId();
         this.username = meeting.getUser().getEnteredUsername();
         this.title = meeting.getTitle();
         this.location = meeting.getLocation();
