@@ -17,6 +17,69 @@
 </header>
 <!-- 리뷰 제목 입력 -->
 <main>
+
+    <h1>Create Meeting</h1>
+    <div class="titleandres">
+        <div class="title">
+            <label for="title">Meeting Title</label>
+            <input type="text" class="inputtitle" id="title" th:value="*{meeting.title}"/>
+            <div class="resta">
+                <label for="restaurant">Restaurant:</label>
+                <select id="restaurant" name="restaurantId">
+                    <option value="" disabled selected>식당을 선택하세요</option>
+                    <!-- 식당 목록을 동적으로 생성 -->
+                    <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}"
+                            th:text="${restaurant.name} + ' / ' + ${restaurant.address}"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+        <div class="content-box">
+            <label for="title">Content</label>
+            <input type="text" class="content" id="content" th:value="*{meeting.content}"/>
+        </div>
+        <div class="locationandtime">
+            <div class="locationan">
+                <label for="title">Meeting Location</label>
+                <input type="text" id="location" th:value="*{meeting.location}"/>
+            </div>
+            <div class="visittime">
+                <label for="visitTime">Visit Time</label>
+                <select id="visitTime" name="visitTime">
+                    <option value="">시간 선택</option>
+                    <!-- 스크립트에 의해 옵션이 여기에 삽입될 것입니다 -->
+                </select>
+            </div>
+        </div>
+        <div class="btn">
+            <button th:if="${meeting.id} == null" type="button" class="createbtn" id="post-review-btn">모집 등록</button>
+            <button th:if="${meeting.id} != null" type="button" class="modifybtn" id="modi-review-btn">수정</button>
+        </div>
+
+        <!-- 방문 시간 선택 -->
+        <!--    <label for="visitTime">방문 시간</label>-->
+        <!--    <select id="visitTime" name="visitTime">-->
+        <!--        <option value="">시간 선택</option>-->
+        <!--        &lt;!&ndash; 스크립트에 의해 옵션이 여기에 삽입될 것입니다 &ndash;&gt;-->
+        <!--    </select>-->
+
+        <script>
+            // 시간 옵션을 생성하기 위한 스크립트입니다.
+            document.addEventListener('DOMContentLoaded', function () {
+                var select = document.getElementById('visitTime');
+                for (var hour = 0; hour < 24; hour++) {
+                    // 시간과 분을 처리합니다.
+                    ['00', '30'].forEach(function (minute) {
+                        var timeValue = (hour < 10 ? '0' + hour : hour) + ':' + minute;
+                        var option = new Option(timeValue, timeValue);
+                        select.add(option);
+                    });
+                }
+                // '24:00' 옵션을 추가합니다.
+                select.add(new Option('24:00', '24:00'));
+            });
+        </script>
+=======
 <h1>Create Meeting</h1>
 <div class="titleandres">
     <div class="title">
@@ -79,6 +142,7 @@
         select.add(new Option('24:00', '24:00'));
     });
 </script>
+
 </main>
 <script src="/js/meeting.js"></script>
 </body>

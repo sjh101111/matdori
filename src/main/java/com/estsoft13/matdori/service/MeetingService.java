@@ -28,7 +28,6 @@ public class MeetingService {
     private final RestaurantRepository restaurantRepository;
     private final CommentRepository commentRepository;
 
-
     private User getAuthenticatedUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(username)
@@ -42,6 +41,7 @@ public class MeetingService {
                 .toList();
     }
 
+    @Transactional
     public MeetingResponseDto getOneMeeting(Long meetingId) {
         return meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 식당이 존재하지 않습니다.")).toOneResponse();
