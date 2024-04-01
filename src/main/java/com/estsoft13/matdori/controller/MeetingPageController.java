@@ -79,4 +79,16 @@ public class MeetingPageController {
         model.addAttribute("searchmeetings", responseDtos);
         return "meetingSearch";
     }
+
+    @GetMapping("/review")
+    public String reviewPage(Model model) {
+        model.addAttribute("currentPage", "review");
+        return "review"; // review 페이지의 뷰 이름
+    }
+
+    @GetMapping("/meeting")
+    public String meetingPage(Model model) {
+        model.addAttribute("currentPage", "meeting");
+        return "meeting"; // meeting 페이지의 뷰 이름
+    }
 }
