@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Members</title>
+</head>
+<body>
+<h1>Manage Members</h1>
+<form action="/admin/manage" method="post">
+    <select name="userId">
+        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
+    </select>
+    <select name="newRole">
+        <option value="Associate">부회원</option>
+        <option value="Member">정회원</option>
+        <option value="Admin">관리자</option>
+    </select>
+    <button type="submit">변경</button>
+</form>
+</body>
+</html>
