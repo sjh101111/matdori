@@ -3,6 +3,7 @@ package com.estsoft13.matdori.service;
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.UserDto;
 import com.estsoft13.matdori.repository.UserRepository;
+import com.estsoft13.matdori.util.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,16 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final BCryptPasswordEncoder encoder;
-    public void saveUser(UserDto userDto){
+
+    public void saveUser(UserDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
+        user.setRole(Role.Associate);
         userRepository.save(user);
     }
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).
                 orElseThrow(() -> new IllegalArgumentException("User not found: " + email));
@@ -30,14 +34,15 @@ public class UserService {
 
     public User findByUsernameAndEmail(String email, String username) {
         return userRepository.findByUsernameAndEmail(email, username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found by: " + email + " and "+ username));
+                .orElseThrow(() -> new IllegalArgumentException("User not found by: " + email + " and " + username));
     }
 
-    public boolean isEmailUnique(String email){
+    public boolean isEmailUnique(String email) {
+
         return userRepository.findByEmail(email).isEmpty();
     }
 
-    public void resetPassword(User user, String newPassword){
+    public void resetPassword(User user, String newPassword) {
         user.setPassword(encoder.encode(newPassword));
         userRepository.save(user);
     }
