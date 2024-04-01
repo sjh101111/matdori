@@ -13,18 +13,22 @@
     <div th:replace="~{header.html::currentuser}"></div>
     <div th:replace="~{header.html::meetingSearch}"></div>
 </header>
+
 <main>
     <div class="meetings-box">
         <div class="meetings">
             <div class="meeting-box" th:each="meeting : ${searchmeetings}" th:data-meeting-id="${meeting.id}">
+
                 <span class="meetingtitle" th:text="${meeting.title}">Title</span>
                 <span class="meetingcontent" th:text="${meeting.content}">미팅 내용</span>
                 <span class="createdAtmeeting"
                       th:text="${#temporals.format(meeting.created_at, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
             </div>
         </div>
+
     </div>
 </main>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
