@@ -98,7 +98,7 @@ public class ReviewPageController {
         }
 
         model.addAttribute("reviews", responseDtoes);
-        return "review-community-test";
+        return "review-main";
     }
 
     // 검색기능 ->  검색시 리뷰의 타이틀, 내용, 관련 식당에 키워드가 있으면 표시
@@ -121,22 +121,7 @@ public class ReviewPageController {
         model.addAttribute("reviews", responseDtoes);
         model.addAttribute("keyword", keyword);
 
-        return "review-community-test";
-    }
-/*
-    @GetMapping("/reviews/sorting")
-    public String sortingReviews(@RequestParam(required = false) String sorting, Model model) {
-        List<Review> reviews;
-        if("latest".equals(sorting)) {
-            reviews = reviewService.findAllByOrderByCreatedAtDesc();
-        } else if ("rating".equals(sorting)) {
-            reviews = reviewService.findAllByOrderByRating();
-        } else {
-            reviews = reviewService.findAllByOrderByViewCount();
-        }
-        model.addAttribute("reviews", reviews);
-        return "review-community-test";
+        return "review-main";
     }
 
- */
 }
