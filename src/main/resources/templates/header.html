@@ -21,6 +21,15 @@
         </div>
     </div>
 
+    <nav th:fragment="movingPoint" class="movingPoint">
+        <ul>
+            <!-- 현재 "REVIEW" 페이지에 있지 않은 경우에만 "REVIEW" 링크를 표시 -->
+            <li th:if="${currentPage != 'review'}"><a th:href="@{/reviews}">Review Community</a></li>
+            <!-- 현재 "MEETING" 페이지에 있지 않은 경우에만 "MEETING" 링크를 표시 -->
+            <li th:if="${currentPage != 'meeting'}"><a th:href="@{/meetings}">Meeting Community</a></li>
+        </ul>
+    </nav>
+
     <div th:fragment="meetingSearch">
         <div class="meetingsearch">
             <form action="/searchMeetings" method="GET" class="searchform">
@@ -33,6 +42,33 @@
                 <span th:text="${keyword}"></span></div>
         </div>
     </div>
+
+    <div class="meetingHeaderButton" th:fragment="meetingHeaderButton">
+        <!-- 로그인 되어 있지 않을 때만 로그인과 회원가입 버튼 표시 -->
+        <div th:if="${currentUser.username == 'unknownUser'}">
+            <button type="button" th:onclick="|location.href='@{/login}'|" class="loginBtn">Login</button>
+            <button type="button" th:onclick="|location.href='@{/signup}'|" class="signupBtn">Signup</button>
+        </div>
+
+        <!-- 로그인 되어 있을 때 Create 버튼 표시, 페이지에 따라 다른 기능 수행 -->
+        <button type="button" th:if="${currentUser.username != 'unknownUser'}"
+                th:onclick="|location.href='@{/add-meeting}'|"
+                class="createbtn">Create</button>
+    </div>
+
+    <div class="reviewHeaderButton" th:fragment="reviewHeaderButton">
+        <!-- 로그인 되어 있지 않을 때만 로그인과 회원가입 버튼 표시 -->
+        <div th:if="${currentUser.username == 'unknownUser'}">
+            <button type="button" th:onclick="|location.href='@{/login}'|" class="loginBtn">Login</button>
+            <button type="button" th:onclick="|location.href='@{/signup}'|" class="signupBtn">Signup</button>
+        </div>
+
+        <!-- 로그인 되어 있을 때 Create 버튼 표시, 페이지에 따라 다른 기능 수행 -->
+        <button type="button" th:if="${currentUser.username != 'unknownUser'}"
+                th:onclick="|location.href='@{/add-meeting}'|"
+                class="createbtn">Create</button>
+    </div>
+
 </header>
 
 </body>

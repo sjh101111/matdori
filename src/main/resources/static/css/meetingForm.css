@@ -93,6 +93,7 @@ main {
 
 header {
     display: flex;
+    justify-content: space-between;
 }
 /**/
 
@@ -131,6 +132,7 @@ header {
 .usersymbol {
     color: aqua;
     width: 40px;
+    height: 40px;
     background-color: blue;
 }
 
@@ -170,3 +172,62 @@ header {
 
 .searchform {
     margin-bottom: 6px;
+}
+
+.loginandsignup {
+    display:flex;
+}
+
+.loginBtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.signupBtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+.movingPoint {
+    font-weight: bold;
+}
+
+.loginBtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.signupBtn {width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}

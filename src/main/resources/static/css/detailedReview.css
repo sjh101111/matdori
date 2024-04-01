@@ -69,6 +69,7 @@ body {
     color: aqua;
     width: 40px;
     background-color: blue;
+    height: 40px;
 }
 
 .restaddress {
@@ -305,6 +306,9 @@ header {
     margin-bottom: 6px;
 }
 
+movingPoint {
+    font-weight: bold;
+}
 
 
 
