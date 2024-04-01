@@ -26,6 +26,8 @@ public class MeetingResponseDto {
 
     private String username;
     private Restaurant restaurant;
+
+    private Long user_id;
     @Builder
     public MeetingResponseDto(Long id, String title, String content, Restaurant restaurant,
                               String location, LocalDateTime created_at, String username, String visitTime) {
@@ -41,6 +43,7 @@ public class MeetingResponseDto {
 
     public MeetingResponseDto(Meeting meeting) {
         this.id = meeting.getId();
+        this.user_id = meeting.getUser().getId();
         this.username = meeting.getUser().getEnteredUsername();
         this.title = meeting.getTitle();
         this.location = meeting.getLocation();

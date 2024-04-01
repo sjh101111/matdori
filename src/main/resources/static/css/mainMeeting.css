@@ -1,3 +1,7 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
 .meetingtitle {
     font-size: 32px;
     font-weight: bold;
@@ -23,16 +27,95 @@
 }
 
 .meetings {
-    display: flex;
-    justify-content: center;
-    /*flex-direction: column;*/
-    /*max-width: 1000px;*/
+    width: 1000px;
     align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .meeting-box {
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     margin-top: 32px;
     display: block;
+}
 
+/**/
+header {
+    display: flex;
+}
+/**/
+
+.user-container {
+    display: flex;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 12px;
+    max-width: 371px;
+}
+
+.createdAt {
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.48);
+}
+
+.userBox {
+    display: flex;
+    align-items: center;
+}
+
+.userGrade {
+    color: rgba(0, 0, 0, 0.48);
+}
+
+.userInfo {
+    height: 40px;
+    min-width: 153px;
+    max-width: 323px;
+    margin-left: 6px;
+}
+
+.usersymbol {
+    color: aqua;
+    width: 40px;
+    background-color: blue;
+}
+
+.searchbtn {
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 50px;
+    height: 30px;
+}
+
+.searchinput {
+    border-style: none;
+}
+
+.searchstyle {
+    border-radius: 8px;
+    border-width: 0.6px;
+    border-style: solid;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 12px 8px 8px;
+    border-color: rgba(0,0,0,0.38);
+    width: 450px;
+}
+
+.meetingsearch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.searchform {
+    margin-bottom: 6px;
 }

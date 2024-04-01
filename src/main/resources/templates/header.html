@@ -7,7 +7,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link href="/css/header.css">
+    <link th:href="@{/css/header.css}">
 </head>
 <body>
 <header>
@@ -15,20 +15,23 @@
         <div class="usersymbol"></div>
         <div class="userInfo">
             <div class="userBox">
-                <span class="username" th:text="${currentUser.getEnteredUsername()}">유저 이름</span>
+                <span class="username" th:text="${currentUser.username}">유저 이름</span>
             </div>
             <span class="userGrade">foodie adventurer</span>
         </div>
     </div>
 
-    <div th:fragment="meetingSearch" style="min-width: 700px; max-width: 900px; margin: 50px auto 100px auto;">
-
-        <form action="/searchMeetings" method="GET">
-            <input type="text" name="keyword" placeholder="검색...">
-            <button type="submit">검색</button>
-        </form>
-        <div>검색 키워드: <!--/*@thymesVar id="keyword" type=""*/-->
-        <span th:text="${keyword}"></span></div>
+    <div th:fragment="meetingSearch">
+        <div class="meetingsearch">
+            <form action="/searchMeetings" method="GET" class="searchform">
+                <div class="searchstyle">
+                    <input class="searchinput" type="text" name="keyword" placeholder="검색...">
+                    <button class="searchbtn" type="submit">검색</button>
+                </div>
+            </form>
+            <div>검색 키워드: <!--/*@thymesVar id="keyword" type=""*/-->
+                <span th:text="${keyword}"></span></div>
+        </div>
     </div>
 </header>
 
