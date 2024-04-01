@@ -1,7 +1,10 @@
 package com.estsoft13.matdori.domain;
 
+import com.estsoft13.matdori.util.Role;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,9 +57,9 @@ public class User implements UserDetails {
     @Column(name ="password", nullable = false)
     private String password;
 
-    /*@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name ="role", nullable = false)
-    private Role role;*/
+    private Role role;
     @Override
     public String getUsername() {
         return email;
@@ -71,8 +74,3 @@ public class User implements UserDetails {
         return password;
     }
 }
-
-/*public enum Role{
-    ADMIN,
-    USER
-}*/
