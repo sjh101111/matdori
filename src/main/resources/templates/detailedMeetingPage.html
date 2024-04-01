@@ -40,15 +40,17 @@
                 </div>
                 <span class="restaddress" th:text="${meeting.restaurant.address}">식당 주소</span>
             </div>
-            <div th:if="${isOwner}">
-                <button type="button" id="modify-btn"
-                        th:onclick="|location.href='@{/add-meeting?meetingId={meetingId}(meetingId=${meeting.id})}'|"
-                        class="modifyReviewBtn">modify
-                </button>
-            </div>
-            <input type="hidden" id="meeting-id" th:value="${meeting.id}">
-            <div th:if="${isOwner}">
-                <button type="button" id="delete-btn" class="deleteReviewBtn">delete</button>
+            <div class="modianddel">
+                <div th:if="${isOwner}">
+                    <button type="button" id="modify-btn"
+                            th:onclick="|location.href='@{/add-meeting?meetingId={meetingId}(meetingId=${meeting.id})}'|"
+                            class="modifyReviewBtn">modify
+                    </button>
+                </div>
+                <input type="hidden" id="meeting-id" th:value="${meeting.id}">
+                <div th:if="${isOwner}">
+                    <button type="button" id="delete-btn" class="deleteReviewBtn">delete</button>
+                </div>
             </div>
         </div>
     </div>

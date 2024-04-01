@@ -33,3 +33,13 @@ body {
     max-width: 323px;
     margin-left: 6px;
 }
+
+.usersymbol {
+    color: aqua;
+    width: 40px;
+    background-color: blue;
+}
+
+.searchform {
+    margin-bottom: 6px;
+}

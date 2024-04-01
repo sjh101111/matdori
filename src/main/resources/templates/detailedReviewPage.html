@@ -40,15 +40,17 @@
             </div>
 
             <input type="hidden" id="review-id" th:value="${review.id}">
-            <div th:if="${isOwner}">
-                <button type="button" id="modify-btn"
-                        th:onclick="|location.href='@{/add-review?reviewId={reviewId}(reviewId=${review.id})}'|"
-                        class="modifyReviewBtn">modify
-                </button>
-            </div>
+            <div class="modianddel">
+                <div th:if="${isOwner}">
+                    <button type="button" id="modify-btn"
+                            th:onclick="|location.href='@{/add-review?reviewId={reviewId}(reviewId=${review.id})}'|"
+                            class="modifyReviewBtn">modify
+                    </button>
+                </div>
 
-            <div th:if="${isOwner}">
-                <button type="button" id="delete-btn" class="deleteReviewBtn">delete</button>
+                <div th:if="${isOwner}">
+                    <button type="button" id="delete-btn" class="deleteReviewBtn">delete</button>
+                </div>
             </div>
         </div>
     </div>

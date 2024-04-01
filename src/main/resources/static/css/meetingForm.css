@@ -1,48 +1,96 @@
 body {
     font-family: 'Roboto', sans-serif;
+    /*width: 1000px;*/
 }
 
-.meetingtitle {
-    font-size: 32px;
+main {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    margin-top: 50px;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+}
+
+
+.content-box {
+    display: flex;
+    flex-direction: column;
+}
+.inputtitle {
+    width: 430px;
+}
+
+.content {
+    height: 200px;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+}
+
+.resta {
+    display: flex;
+    flex-direction: column;
+    margin-right: 150px;
+}
+
+.titleandres {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 32px;
+    justify-content: space-between;
+}
+
+.locationandtime {
+    display: flex;
+    margin-top: 32px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: flex;
+    float:right;
+}
+
+.createbtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.locationan {
+    display: flex;
+    flex-direction: column;
+    margin-right: 50px;
+}
+
+.visittime {
+    display: flex;
+    flex-direction: column;
+}
+
+.modifybtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
     font-weight: bold;
 }
 
-.meetingcontent {
-    display: block;
-    font-size: 24px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
-.createdAtmeeting {
-    font-size: 20px;
-    color: rgba(0, 0, 0, 0.48);
-    margin-bottom: 42px;
-    display: block;
-}
-
-.meetings-box {
-    display: flex;
-    justify-content: center;
-    /*width: 1000px;*/
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.meetings {
-    width: 1000px;
-    align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-}
-
-.meeting-box {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-    margin-top: 32px;
-    display: block;
-}
-
-/**/
 header {
     display: flex;
 }
