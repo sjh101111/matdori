@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 public class MeetingResponseDto {
     private Long id;
 
+    private Long user_id;
+
     private String title;
 
     private String content;
