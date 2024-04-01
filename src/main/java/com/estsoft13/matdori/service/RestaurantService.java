@@ -3,6 +3,8 @@ package com.estsoft13.matdori.service;
 import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.dto.AddRestaurantRequestDto;
 import com.estsoft13.matdori.dto.RestaurantResponseDto;
+import com.estsoft13.matdori.dto.UpdateRestRequestDto;
+import com.estsoft13.matdori.dto.UpdateRestResponseDto;
 import com.estsoft13.matdori.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,18 @@ public class RestaurantService {
 
     public List<Restaurant> findAll() {
         return restaurantRepository.findAll();
+    }
+
+    public void deleteRestaurant(Long restaurantId) {
+        restaurantRepository.deleteById(restaurantId);
+    }
+
+    @Transactional
+    public UpdateRestResponseDto updateRestaurant(Long restaurantId, UpdateRestRequestDto requestDto) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new IllegalArgumentException("식당 id를 찾을 수 없습니다. "));
+
+        restaurant.update(requestDto.getName(), requestDto.getAddress(), requestDto.getCategory());
+        return new UpdateRestResponseDto(restaurant);
     }
 }
