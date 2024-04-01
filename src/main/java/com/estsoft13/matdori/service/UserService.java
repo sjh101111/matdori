@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -38,12 +40,21 @@ public class UserService {
     }
 
     public boolean isEmailUnique(String email) {
-
         return userRepository.findByEmail(email).isEmpty();
     }
 
     public void resetPassword(User user, String newPassword) {
         user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public void upgradeRoles(Long userId, Role newRole) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당 회원이 존재하지 않습니다."));
+        user.setRole(newRole);
         userRepository.save(user);
     }
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 1000px">
+  <div class="py-5 text-center">
+    <h2>식당 목록</h2>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <!--
+      <button class="btn btn-primary float-end"
+              onclick="location.href='addForm.html'"
+              th:onclick="|location.href='@{/boards/add}'|"
+              type="button" th:text="#{page.addBoard}">식당 등록</button>
+             -->
+    </div>
+
+  </div>
+
+  <hr class="my-4">
+  <div>
+    <table class="table">
+      <button class="btn btn-primary float-end" onclick="location.href='rest-form.html'"th:onclick="|location.href='@{/add-restaurant}'|" type="button">식당 등록</button>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>이름</th>
+        <th>주소</th>
+        <th>업종</th>
+
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="restaurant : ${restaurants}">
+        <td><span th:text="${restaurant.id}">ID</span></td>
+        <td><span th:text="${restaurant.name}">이름</span></td>
+        <td><span th:text="${restaurant.address}">주소</span></td>
+        <td><span th:text="${restaurant.category}">업종</span></td>
+        <td><button type="button" th:data-id="${restaurant.id}" class="deleteRestBtn">delete</button></td>
+        <td><button type="button" id="modify-btn"
+                    th:onclick="|location.href='@{/add-restaurant?restaurantId={restaurantId}(restaurantId=${restaurant.id})}'|"
+                    class="btn btn-primary btn-sm">update</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div> <!-- /container -->
+<script src="/js/rest.js"></script>
+</body>
+</html>

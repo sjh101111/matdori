@@ -33,4 +33,10 @@ public class Restaurant {
         this.category = requestDto.getCategory();
         this.avgRating = requestDto.getAvgRating();
     }
+
+    public void update(String name, String address, String category) {
+        this.name = name;
+        this.address = address;
+        this.category = category;
+    }
 }
