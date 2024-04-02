@@ -13,6 +13,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findByReview_Id(Long reviewId);
     Optional<Comment> findByIdAndReview_Id(Long id, Long reviewId);
     List<Comment> findByMeeting_Id(Long meetingId);
+    Comment findByUser_Id(Long UserId);
     Optional<Comment> findByIdAndMeeting_Id(Long id, Long meetingId);
 
     void deleteByReview(Review review);

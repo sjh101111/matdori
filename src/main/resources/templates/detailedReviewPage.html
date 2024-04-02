@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="/css/detailedReview.css">
 </head>
 <body>
+<header>
+    <div th:replace="~{header.html::currentuser}"></div>
+    <div th:replace="~{header.html::movingPoint}"></div>
+    <div th:replace="~{header.html::reviewSearch}"></div>
+    <div th:replace="~{header.html::reviewHeaderButton}"></div>
+</header>
 <main>
     <!--    -->
     <div class="reviewuser-box">
@@ -97,16 +103,17 @@
                 <span th:text="${comment.content}" class="comment-content">댓글 내용</span>
                 <input type="text" class="comment-edit-field" name="content" th:value="${comment.content}" required
                        placeholder="Type here..." style="display: none;">
-                <button type="button" class="edit-comment-btn">edit</button>
+                <button th:if="${isCommentOwner}" type="button" class="edit-comment-btn">edit</button>
                 <button type="button" class="save-comment-btn" style="display: none;">edit save</button>
-                <button type="button" class="delete-comment-btn">delete</button>
+                <button th:if="${isCommentOwner}" type="button" class="delete-comment-btn">delete</button>
             </div>
         </div>
     </section>
 </main>
 <script src="/js/comment.js"></script>
-<script src="/js/review-test.js"></script>
-
+<script src="/js/review.js"></script>
+<script src="/js/movingPoint.js"></script>
+<button type="button" class="btn btn-secondary btn-fixed-left-bottom" onclick="location.href='/logout'">로그아웃</button>
 
 </body>
 </html>

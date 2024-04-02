@@ -6,18 +6,16 @@ import com.estsoft13.matdori.domain.ReviewImage;
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.CommentResponseDto;
 import com.estsoft13.matdori.dto.ReviewResponseDto;
+import com.estsoft13.matdori.repository.CommentRepository;
 import com.estsoft13.matdori.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class ReviewPageController {
     private final ReviewService reviewService;
     private final ReviewImageService reviewImageService;
     private final CommentService commentService;
-    private final UserService userService;
+    private final CommentRepository commentRepository;
 
     // review post - test용 컨트롤러입니다.
     @GetMapping("/add-review")
@@ -67,12 +65,19 @@ public class ReviewPageController {
         boolean isOwner = review.getUser().getId().equals(userId);
         model.addAttribute("isOwner", isOwner);
 
+        if (!comments.isEmpty()) {
+            comments.forEach(comment -> {
+                boolean isCommentOwner = comment.getUserId().equals(userId);
+                model.addAttribute("isCommentOwner", isCommentOwner); // CommentResponseDto에 isOwner 필드를 추가해야 합니다.
+            });
+        }
+
         return "detailedReviewPage";
     }
 
     @GetMapping("/reviews")
     public String showReviews(@RequestParam(required = false) String sort, Model model) {
-        //List<Review> reviews = reviewService.findAll();
+   //List<Review> reviews = reviewService.findAll();
         List<Review> reviews;
         if("rating".equals(sort)) {
             reviews = reviewService.findAllByOrderByRatingDesc();
@@ -98,12 +103,13 @@ public class ReviewPageController {
         }
 
         model.addAttribute("reviews", responseDtoes);
+
         return "review-main";
     }
 
     // 검색기능 ->  검색시 리뷰의 타이틀, 내용, 관련 식당에 키워드가 있으면 표시
     // /reviews/에서 검색 시 /search?keyword={keyword}로 이동
-    @GetMapping("/search")
+    @GetMapping("/searchReviews")
     public String searchByKeyword(@RequestParam("keyword") String keyword, Model model) {
         List<Review> searchResults = reviewService.findByTitleContainingOrContentContainingOrRestaurantNameContainingOrRestaurantCategoryContaining(keyword, keyword, keyword, keyword);
         List<ReviewResponseDto> responseDtoes = new ArrayList<>();

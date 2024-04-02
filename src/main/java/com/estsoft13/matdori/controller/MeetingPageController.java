@@ -5,6 +5,7 @@ import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.CommentResponseDto;
 import com.estsoft13.matdori.dto.MeetingResponseDto;
+import com.estsoft13.matdori.repository.CommentRepository;
 import com.estsoft13.matdori.service.CommentService;
 import com.estsoft13.matdori.service.MeetingService;
 import com.estsoft13.matdori.service.RestaurantService;
@@ -25,6 +26,7 @@ public class MeetingPageController {
     private final MeetingService meetingService;
     private final RestaurantService restaurantService;
     private final CommentService commentService;
+    private final CommentRepository commentRepository;
 
 
     @GetMapping("/add-meeting")
@@ -56,11 +58,18 @@ public class MeetingPageController {
         boolean isOwner = responseDto.getUser_id().equals(userId);
         model.addAttribute("isOwner", isOwner);
 
+        if (!comments.isEmpty()) {
+            comments.forEach(comment -> {
+                boolean isCommentOwner = comment.getUserId().equals(userId);
+                model.addAttribute("isCommentOwner", isCommentOwner); // CommentResponseDto에 isOwner 필드를 추가해야 합니다.
+            });
+        }
+
         return "detailedMeetingPage";
     }
 
     @GetMapping("/meetings")
-    public String showAllMeeitngs(Model model) {
+    public String showAllMeeitngs(Model model,@AuthenticationPrincipal User user) {
         List<MeetingResponseDto> meetings = meetingService.getMeetings();
         model.addAttribute("meetings", meetings);
         return "mainMeetingPage";

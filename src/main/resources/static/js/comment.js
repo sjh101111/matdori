@@ -53,9 +53,9 @@ document.getElementById('commentBtn').addEventListener('click', function() {
                      </div>
                     <span class="comment-content">${data.content}</span>
                     <input type="text" class="comment-edit-field" value="${data.content}" name="content" style="display: none;">
-                    <button type="button" class="edit-comment-btn">수정</button>
-                    <button type="button" class="save-comment-btn" style="display: none;">저장</button>
-                    <button type="button" class="delete-comment-btn">삭제</button>
+                    <button type="button" class="edit-comment-btn">edit</button>
+                    <button type="button" class="save-comment-btn" style="display: none;">edit save</button>
+                    <button type="button" class="delete-comment-btn">delete</button>
                 
             `;
             commentsList.appendChild(newComment);
