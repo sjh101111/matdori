@@ -3,7 +3,7 @@ package com.estsoft13.matdori.util;
 import java.security.SecureRandom;
 
 public class GeneratePassword {
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final SecureRandom RANDOM = new SecureRandom();
 
     public static String generateRandomPassword(int length) {

@@ -1,4 +1,5 @@
 package com.estsoft13.matdori.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,12 +19,11 @@ public class WebSecurityConfig {
                 .requestMatchers("/static/**","/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"
                         ,"/error", "/api/restaurant", "/api/review/1");
     }
-
     // 특정 http 요청에 대한 웹 기반 보안 구성
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/css/**", "/login", "/signup", "/forgot","/user").permitAll()
+                        auth.requestMatchers("/css/**", "/login", "/signup", "/forgot","/user", "/admin/newAdmin").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .usernameParameter("email")
