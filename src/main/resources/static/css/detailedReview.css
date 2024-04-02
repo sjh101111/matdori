@@ -64,10 +64,10 @@ body {
 }
 
 .usersymbol {
-    color: aqua;
     width: 40px;
-    background-color: blue;
+    background-color: lightgrey;
     height: 40px;
+    border-radius: 50%
 }
 
 .restaddress {
@@ -222,6 +222,7 @@ body {
     cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
 }
 
+/**/
 
 header {
     display: flex;
@@ -261,9 +262,10 @@ header {
 }
 
 .usersymbol {
-    color: aqua;
     width: 40px;
-    background-color: blue;
+    background-color: lightgrey;
+    height: 40px;
+    border-radius: 50%
 }
 
 .searchbtn {
@@ -348,7 +350,29 @@ header {
     flex-direction: column;
 }
 
+.btn-fixed-left-bottom {
+    position: fixed; /* 요소의 위치를 뷰포트에 상대적으로 고정 */
+    bottom: 20px; /* 하단에서 20px의 간격을 둠 */
+    left: 20px; /* 좌측에서 20px의 간격을 둠 */
+    z-index: 999; /* 다른 요소들 위에 오도록 z-index 설정 */
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
+}
 
+.reviewsearch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
 
 

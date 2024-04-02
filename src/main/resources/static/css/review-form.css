@@ -68,3 +68,196 @@ textarea {
     font-size: 16px;
     font-weight: bold;
 }
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-container {
+    display: flex;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 12px;
+    max-width: 371px;
+}
+
+.createdAt {
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.48);
+}
+
+.userBox {
+    display: flex;
+    align-items: center;
+}
+
+.userGrade {
+    color: rgba(0, 0, 0, 0.48);
+}
+
+.userInfo {
+    height: 40px;
+    min-width: 153px;
+    max-width: 323px;
+    margin-left: 6px;
+}
+
+.usersymbol {
+    color: aqua;
+    width: 40px;
+    height: 40px;
+    background-color: lightgrey;
+    border-radius: 50%
+}
+
+.searchbtn {
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 50px;
+    height: 30px;
+}
+
+.searchinput {
+    border-style: none;
+}
+
+.searchstyle {
+    border-radius: 8px;
+    border-width: 0.6px;
+    border-style: solid;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 12px 8px 8px;
+    border-color: rgba(0,0,0,0.38);
+    width: 450px;
+}
+
+.meetingsearch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.searchform {
+    margin-bottom: 6px;
+}
+
+.loginandsignup {
+    display:flex;
+}
+
+.loginBtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.signupBtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+.dropdown {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    text-align: center;
+}
+
+.movePageBtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.loginBtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.signupBtn {width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.dropdown-content {
+    display: none; /* 기본 상태는 숨김 */
+}
+
+.show {
+    display: flex; /* .show 클래스가 추가되면 보임 */
+    flex-direction: column;
+}
+
+.btn-fixed-left-bottom {
+    position: fixed; /* 요소의 위치를 뷰포트에 상대적으로 고정 */
+    bottom: 20px; /* 하단에서 20px의 간격을 둠 */
+    left: 20px; /* 좌측에서 20px의 간격을 둠 */
+    z-index: 999; /* 다른 요소들 위에 오도록 z-index 설정 */
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.reviewsearch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}

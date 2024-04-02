@@ -15,17 +15,19 @@ public class CommentResponseDto {
     private LocalDateTime createdAt;
     private String username;
     private Long id;
+    private Long userId;
     public CommentResponseDto(Comment comment) {
         this.content = comment.getContent();
         this.createdAt = comment.getCreatedAt();
     }
 
     @Builder
-    public CommentResponseDto(String content, LocalDateTime createdAt,String username, Long id) {
+    public CommentResponseDto(String content, LocalDateTime createdAt,String username, Long id, Long userId) {
         this.content = content;
         this.createdAt =createdAt;
         this.username = username;
         this.id = id;
+        this.userId = userId;
     }
 
 }

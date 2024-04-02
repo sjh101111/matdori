@@ -50,11 +50,6 @@ main {
     margin-bottom: 20px;
 }
 
-.btn {
-    display: flex;
-    float:right;
-}
-
 .createbtn {
     width: 100px;
     height: 42px;
@@ -134,7 +129,8 @@ header {
     color: aqua;
     width: 40px;
     height: 40px;
-    background-color: blue;
+    background-color: lightgrey;
+    border-radius: 50%
 }
 
 .searchbtn {
@@ -251,6 +247,19 @@ header {
     font-weight: bold;
 }
 
+.createbtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
 .dropdown-content {
     display: none; /* 기본 상태는 숨김 */
 }
@@ -258,4 +267,21 @@ header {
 .show {
     display: flex; /* .show 클래스가 추가되면 보임 */
     flex-direction: column;
+}
+
+.btn-fixed-left-bottom {
+    position: fixed; /* 요소의 위치를 뷰포트에 상대적으로 고정 */
+    bottom: 20px; /* 하단에서 20px의 간격을 둠 */
+    left: 20px; /* 좌측에서 20px의 간격을 둠 */
+    z-index: 999; /* 다른 요소들 위에 오도록 z-index 설정 */
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
 }

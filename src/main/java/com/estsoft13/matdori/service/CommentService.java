@@ -38,14 +38,14 @@ public class CommentService {
     public List<CommentResponseDto> getAllCommentsOfReview(Long reviewId) {
         return commentRepository.findByReview_Id(reviewId).stream()
                 .map(x -> new CommentResponseDto(
-                        x.getContent(), x.getCreatedAt(), x.getUser().getEnteredUsername(), x.getId()))
+                        x.getContent(), x.getCreatedAt(), x.getUser().getEnteredUsername(), x.getId(), x.getUser().getId()))
                 .toList();
     }
 
     public List<CommentResponseDto> getAllCommentsOfMeeting(Long meetingId) {
         return commentRepository.findByMeeting_Id(meetingId).stream()
                 .map(x -> new CommentResponseDto(
-                        x.getContent(), x.getCreatedAt(), x.getUser().getEnteredUsername(), x.getId())).toList();
+                        x.getContent(), x.getCreatedAt(), x.getUser().getEnteredUsername(), x.getId(), x.getUser().getId())).toList();
     }
 
     public CommentResponseDto createCommentToReview(Long reviewId,AddCommentRequestDto requestDto) {

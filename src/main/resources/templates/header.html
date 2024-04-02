@@ -30,6 +30,19 @@
         </div>
     </div>
 
+    <div th:fragment="reviewSearch">
+        <div class="reviewsearch">
+            <form action="/searchReviews" method="GET" class="searchform">
+                <div class="searchstyle">
+                    <input class="searchinput" type="text" name="keyword" placeholder="검색...">
+                    <button class="searchbtn" type="submit">검색</button>
+                </div>
+            </form>
+            <div>검색 키워드: <!--/*@thymesVar id="keyword" type=""*/-->
+                <span th:text="${keyword}"></span></div>
+        </div>
+    </div>
+
     <div th:fragment="meetingSearch">
         <div class="meetingsearch">
             <form action="/searchMeetings" method="GET" class="searchform">
@@ -65,11 +78,12 @@
 
         <!-- 로그인 되어 있을 때 Create 버튼 표시, 페이지에 따라 다른 기능 수행 -->
         <button type="button" th:if="${currentUser.username != 'unknownUser'}"
-                th:onclick="|location.href='@{/add-meeting}'|"
+                th:onclick="|location.href='@{/add-review}'|"
                 class="createbtn">Create</button>
     </div>
-
 </header>
+
+
 <script src="/js/movingPoint.js"></script>
 </body>
 </html>
