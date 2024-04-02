@@ -23,7 +23,7 @@ if (postReviewButton) {
             if (response.ok) {
                 alert('등록 완료되었습니다');
                 // 성공시 페이지 리디렉션
-                //location.replace(`/someSuccessPage`);
+                location.replace(`/meetings`);
             } else {
                 alert('등록 실패. 다시 시도해 주세요.');
             }
@@ -58,7 +58,7 @@ if (modiReviewButton) {
             if (response.ok) {
                 alert('수정 완료되었습니다');
                 // 성공시 페이지 리디렉션
-                //location.replace(`/someSuccessPage`);
+                location.replace(`/meeting/${meetingId}`);
             } else {
                 alert('수정 실패. 다시 시도해 주세요.');
             }
@@ -77,7 +77,7 @@ if (deleteReviewButton) {
             method: 'DELETE'
         }).then(() => {
             alert('삭제가 완료되었습니다');
-            //location.replace('/');
+            location.replace('/meetings');
         });
     });
 }
