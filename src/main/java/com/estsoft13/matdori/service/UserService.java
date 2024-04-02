@@ -29,6 +29,15 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void saveAdmin(UserDto userDto) {
+        User user = new User();
+        user.setUsername(userDto.getUsername());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(encoder.encode(userDto.getPassword()));
+        user.setRole(Role.Admin);
+        userRepository.save(user);
+    }
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).
                 orElseThrow(() -> new IllegalArgumentException("User not found: " + email));
@@ -53,8 +62,12 @@ public class UserService {
     }
 
     public void upgradeRoles(Long userId, Role newRole) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("해당 회원이 존재하지 않습니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
         user.setRole(newRole);
         userRepository.save(user);
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
 }

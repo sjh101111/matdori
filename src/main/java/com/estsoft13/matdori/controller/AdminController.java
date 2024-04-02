@@ -1,14 +1,12 @@
 package com.estsoft13.matdori.controller;
 
 import com.estsoft13.matdori.domain.User;
+import com.estsoft13.matdori.dto.UserDto;
 import com.estsoft13.matdori.service.UserService;
 import com.estsoft13.matdori.util.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,22 @@ public class AdminController {
         this.userService = userService;
     }
 
+    @GetMapping("/newAdmin")
+    public String adminSignup(Model model){
+        model.addAttribute("userDto", new UserDto());
+        return "newAdmin";
+    }
+
+    @PostMapping("/newAdmin")
+    public String adminSignup(@ModelAttribute("userDto") UserDto userDto) {
+        if (!userService.isEmailUnique(userDto.getEmail())) {
+            return "/newAdmin";
+        } else {
+            userService.saveAdmin(userDto);
+            return "/login";
+        }
+    }
+
     @GetMapping("/manage")
     public String showUsers(Model model){
         List<User> users =userService.getAllUsers();
@@ -31,6 +45,12 @@ public class AdminController {
     @PostMapping("/manage")
     public String upgradeRoles(@RequestParam Long userId, @RequestParam Role newRole){
         userService.upgradeRoles(userId, newRole);
+        return "redirect:/admin/manage";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser(@RequestParam("userId") Long userId) {
+        userService.deleteUser(userId);
         return "redirect:/admin/manage";
     }
 }
