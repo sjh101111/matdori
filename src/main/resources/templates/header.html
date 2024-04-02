@@ -21,14 +21,14 @@
         </div>
     </div>
 
-    <nav th:fragment="movingPoint" class="movingPoint">
-        <ul>
-            <!-- 현재 "REVIEW" 페이지에 있지 않은 경우에만 "REVIEW" 링크를 표시 -->
-            <li th:if="${currentPage != 'review'}"><a th:href="@{/reviews}">Review Community</a></li>
-            <!-- 현재 "MEETING" 페이지에 있지 않은 경우에만 "MEETING" 링크를 표시 -->
-            <li th:if="${currentPage != 'meeting'}"><a th:href="@{/meetings}">Meeting Community</a></li>
-        </ul>
-    </nav>
+    <div class="dropdown" th:fragment="movingPoint">
+        <button class="movePageBtn" onclick="toggleDropdown()">Move to Pages</button>
+        <div id="dropdownContent" class="dropdown-content">
+            <a href="/reviews">ReviewCommunity</a>
+            <a href="/meetings">MeetingCommunity</a>
+            <!-- 추가 페이지 링크 -->
+        </div>
+    </div>
 
     <div th:fragment="meetingSearch">
         <div class="meetingsearch">
@@ -70,6 +70,6 @@
     </div>
 
 </header>
-
+<script src="/js/movingPoint.js"></script>
 </body>
 </html>
