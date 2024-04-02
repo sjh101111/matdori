@@ -91,11 +91,12 @@ main {
     font-weight: bold;
 }
 
+/*헤더 css*/
+
 header {
     display: flex;
     justify-content: space-between;
 }
-/**/
 
 .user-container {
     display: flex;
@@ -204,8 +205,26 @@ header {
 
 }
 
-.movingPoint {
+.dropdown {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    transform: translateX(-50%);
     font-weight: bold;
+    text-align: center;
+}
+
+.movePageBtn {
+    width: 100px;
+    height: 42px;
+    color: white;
+    background-color: rgba(255, 107, 0, 1);
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 .loginBtn {
@@ -230,4 +249,13 @@ header {
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+}
+
+.dropdown-content {
+    display: none; /* 기본 상태는 숨김 */
+}
+
+.show {
+    display: flex; /* .show 클래스가 추가되면 보임 */
+    flex-direction: column;
 }
