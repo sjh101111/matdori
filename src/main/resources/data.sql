@@ -1,3 +1,4 @@
+
 insert into restaurant (AVG_RATING, ADDRESS ,CATEGORY ,NAME)
 values
 (0.0, '서울 서초2동 1321-8','베트남','빈로이 1호점'),

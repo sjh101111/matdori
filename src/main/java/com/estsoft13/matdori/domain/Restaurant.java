@@ -2,6 +2,7 @@ package com.estsoft13.matdori.domain;
 
 import com.estsoft13.matdori.dto.AddRestaurantRequestDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,5 +39,12 @@ public class Restaurant {
         this.name = name;
         this.address = address;
         this.category = category;
+    }
+
+    public Restaurant(String name, String address, String category) {
+        this.name = name;
+        this.address = address;
+        this.category = category;
+        this.avgRating = 0.0;
     }
 }

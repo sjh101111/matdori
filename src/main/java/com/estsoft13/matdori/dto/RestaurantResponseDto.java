@@ -20,4 +20,12 @@ public class RestaurantResponseDto {
         this.category = restaurant.getCategory();
         this.avgRating = restaurant.getAvgRating();
     }
+
+    public RestaurantResponseDto(Long id, String name, String address, String category, Double avgRating) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.category = category;
+        this.avgRating = avgRating;
+    }
 }
