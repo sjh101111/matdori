@@ -1,11 +1,11 @@
-package com.estsoft13.matdori.controller;
+package com.estsoft13.matdori.controller.review;
 
 import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.Review;
 import com.estsoft13.matdori.domain.ReviewImage;
 import com.estsoft13.matdori.domain.User;
-import com.estsoft13.matdori.dto.CommentResponseDto;
-import com.estsoft13.matdori.dto.ReviewResponseDto;
+import com.estsoft13.matdori.dto.comment.CommentResponseDto;
+import com.estsoft13.matdori.dto.review.ReviewResponseDto;
 import com.estsoft13.matdori.repository.CommentRepository;
 import com.estsoft13.matdori.service.*;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,7 +38,8 @@ public class ReviewPageController {
         if (reviewId == null) {
             model.addAttribute("review", new Review());
         } else {
-            Review review = reviewService.findById(reviewId);
+            Optional<Review> reviewOptional = reviewService.findById(reviewId);
+            Review review = reviewOptional.get();
             model.addAttribute("review", review);
         }
 
@@ -46,8 +48,13 @@ public class ReviewPageController {
 
     @GetMapping("/review/{reviewId}")
     public String showReviewDetail(@PathVariable Long reviewId, Model model, @AuthenticationPrincipal User user) {
-        //Review review = reviewService.findById(reviewId);
-        Review review = reviewService.findById(reviewId);
+
+        Optional<Review> reviewOptional = reviewService.findById(reviewId);
+
+        if (!reviewOptional.isPresent()) {
+            return "redirect:/reviews"; // 리뷰가 없으면 /reviews로 리다이렉션
+        }
+        Review review = reviewOptional.get();
         //조회수 up
         reviewService.countUpViewCount(reviewId);
         review.setViewCount(review.getViewCount()+1);

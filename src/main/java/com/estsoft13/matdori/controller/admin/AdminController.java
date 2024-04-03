@@ -1,7 +1,7 @@
-package com.estsoft13.matdori.controller;
+package com.estsoft13.matdori.controller.admin;
 
 import com.estsoft13.matdori.domain.User;
-import com.estsoft13.matdori.dto.UserDto;
+import com.estsoft13.matdori.dto.user.UserDto;
 import com.estsoft13.matdori.service.AdminService;
 import com.estsoft13.matdori.service.UserService;
 import com.estsoft13.matdori.util.Role;

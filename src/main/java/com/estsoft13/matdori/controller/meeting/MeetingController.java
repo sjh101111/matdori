@@ -1,8 +1,8 @@
-package com.estsoft13.matdori.controller;
+package com.estsoft13.matdori.controller.meeting;
 
-import com.estsoft13.matdori.dto.AddMeetingRequestDto;
-import com.estsoft13.matdori.dto.MeetingResponseDto;
-import com.estsoft13.matdori.dto.UpdateMeetingDto;
+import com.estsoft13.matdori.dto.meeting.AddMeetingRequestDto;
+import com.estsoft13.matdori.dto.meeting.MeetingResponseDto;
+import com.estsoft13.matdori.dto.meeting.UpdateMeetingDto;
 import com.estsoft13.matdori.service.MeetingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

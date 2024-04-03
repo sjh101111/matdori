@@ -3,9 +3,9 @@ package com.estsoft13.matdori.service;
 import com.estsoft13.matdori.domain.Meeting;
 import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.User;
-import com.estsoft13.matdori.dto.AddMeetingRequestDto;
-import com.estsoft13.matdori.dto.MeetingResponseDto;
-import com.estsoft13.matdori.dto.UpdateMeetingDto;
+import com.estsoft13.matdori.dto.meeting.AddMeetingRequestDto;
+import com.estsoft13.matdori.dto.meeting.MeetingResponseDto;
+import com.estsoft13.matdori.dto.meeting.UpdateMeetingDto;
 import com.estsoft13.matdori.repository.CommentRepository;
 import com.estsoft13.matdori.repository.MeetingRepository;
 import com.estsoft13.matdori.repository.RestaurantRepository;
@@ -56,6 +56,7 @@ public class MeetingService {
         Meeting meeting = new Meeting(addMeetingRequestDto, restaurant, user);
         return new MeetingResponseDto(meetingRepository.save(meeting));
     }
+
 
     @Transactional
     public MeetingResponseDto findById(Long meetingId) {

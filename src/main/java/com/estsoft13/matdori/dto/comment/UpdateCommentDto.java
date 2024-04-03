@@ -1,4 +1,4 @@
-package com.estsoft13.matdori.dto;
+package com.estsoft13.matdori.dto.comment;
 
 import com.estsoft13.matdori.domain.Comment;
 import lombok.Getter;

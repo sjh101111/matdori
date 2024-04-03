@@ -4,7 +4,10 @@ import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.Review;
 import com.estsoft13.matdori.domain.ReviewImage;
 import com.estsoft13.matdori.domain.User;
-import com.estsoft13.matdori.dto.*;
+import com.estsoft13.matdori.dto.review.AddReviewRequestDto;
+import com.estsoft13.matdori.dto.review.ReviewResponseDto;
+import com.estsoft13.matdori.dto.review.UpdateReviewRequestDto;
+import com.estsoft13.matdori.dto.review.UpdateReviewResponseDto;
 import com.estsoft13.matdori.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -159,9 +163,14 @@ public class ReviewService {
         return responseDto;
     }
 
+    /*
     public Review findById(Long reviewId) {
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
         return review;
+    }
+     */
+    public Optional<Review> findById(Long reviewId) {
+        return reviewRepository.findById(reviewId);
     }
 
     // 업로든된 이미지들의 파일 경로 저장

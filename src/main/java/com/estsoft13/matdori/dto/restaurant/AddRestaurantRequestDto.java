@@ -1,4 +1,4 @@
-package com.estsoft13.matdori.dto;
+package com.estsoft13.matdori.dto.restaurant;
 
 import lombok.Getter;
 import lombok.Setter;

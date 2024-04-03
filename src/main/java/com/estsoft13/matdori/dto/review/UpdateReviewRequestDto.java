@@ -1,4 +1,4 @@
-package com.estsoft13.matdori.dto;
+package com.estsoft13.matdori.dto.review;
 
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package com.estsoft13.matdori.service;
 
 import com.estsoft13.matdori.domain.User;
-import com.estsoft13.matdori.dto.UserDto;
+import com.estsoft13.matdori.dto.user.UserDto;
 import com.estsoft13.matdori.repository.UserRepository;
 import com.estsoft13.matdori.util.Role;
 import lombok.RequiredArgsConstructor;

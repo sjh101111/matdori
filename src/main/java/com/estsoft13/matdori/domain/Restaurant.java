@@ -1,8 +1,7 @@
 package com.estsoft13.matdori.domain;
 
-import com.estsoft13.matdori.dto.AddRestaurantRequestDto;
+import com.estsoft13.matdori.dto.restaurant.AddRestaurantRequestDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
