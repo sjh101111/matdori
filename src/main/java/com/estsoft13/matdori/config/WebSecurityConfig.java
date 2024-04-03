@@ -37,9 +37,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth ->
                         auth.requestMatchers("/css/**", "/login", "/signup", "/forgot","/user", "/admin/new", "/reviews").permitAll()
-                                .requestMatchers("/admin/manage").hasRole("Admin")
-                                .requestMatchers("/meetings").hasAnyRole("Associate","Member")
-                                .requestMatchers("/meeting/**").hasRole("Member")
+                                .requestMatchers("/admin/manage").hasRole("ADMIN")
+                                .requestMatchers("/meetings").hasAnyRole("ASSOCIATE","MEMBER")
+                                .requestMatchers("/meeting/**").hasRole("MEMBER")
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .usernameParameter("email")

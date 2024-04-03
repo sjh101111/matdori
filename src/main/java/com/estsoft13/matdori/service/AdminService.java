@@ -11,7 +11,7 @@ public class AdminService {
     public boolean isEligibleForAssociate(User user) {
         int commentCount = user.getComments().size(); // User 엔티티에 연결된 Comment의 수
         int reviewCount = user.getReviews().size();
-        Role beginner = Role.Beginner;
+        Role beginner = Role.ROLE_BEGINNER;
         if (commentCount >= 1 && reviewCount >= 1 &&
         user.getRole().equals(beginner)
         ) {
@@ -24,7 +24,7 @@ public class AdminService {
     public boolean isEligibleForMember(User user) {
         int commentCount = user.getComments().size(); // User 엔티티에 연결된 Comment의 수
         int reviewCount = user.getReviews().size();
-        Role associate = Role.Associate;
+        Role associate = Role.ROLE_ASSOCIATE;
         if (commentCount > 3 && reviewCount > 3
         && user.getRole().equals(associate) ) {
             return true;
