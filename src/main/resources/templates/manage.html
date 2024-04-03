@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>Manage Members</h1>
+<div th:if="${message}" th:text="${message}"></div>
 <form th:action="@{/admin/delete}" method="post">
     <select name="userId">
         <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
@@ -13,13 +14,17 @@
     <button type="submit">삭제</button>
 </form>
 <form th:action="@{/admin/manage}" method="post">
+<form action="/admin/manage" method="post">
+    <p>부회원 승급자 목록</p>
     <select name="userId">
-        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
+        <option th:each="associate : ${associates}" th:value="${associate.id}" th:text="${associate.username}"></option>
     </select>
-    <select name="newRole">
-        <option value="Associate">부회원</option>
-        <option value="Member">정회원</option>
-        <option value="Admin">관리자</option>
+    <button type="submit">변경</button>
+</form>
+<form action="/admin/manage" method="post">
+    <p>정회원 승급자 목록</p>
+    <select name="userId">
+        <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.username}"></option>
     </select>
     <button type="submit">변경</button>
 </form>
