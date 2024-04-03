@@ -2,6 +2,7 @@ package com.estsoft13.matdori.dto;
 
 import com.estsoft13.matdori.domain.Meeting;
 import com.estsoft13.matdori.domain.Restaurant;
+import com.estsoft13.matdori.util.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class MeetingResponseDto {
 
     private String username;
     private Restaurant restaurant;
+    private Role role;
 
     //private Long user_id;
     @Builder
@@ -53,6 +55,7 @@ public class MeetingResponseDto {
         this.restaurant = meeting.getRestaurant();
         this.created_at = meeting.getCreated_at();
         this.visitTime = meeting.getVisitTime();
+        this.role = meeting.getUser().getRole();
     }
 
 
