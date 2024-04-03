@@ -62,10 +62,11 @@
                             <div class="text-center">
                                 <!-- Product name-->
                                 <h5 class="fw-bolder" th:text="${review.title}">review title</h5>
+                                작성자<h5 class="fw-bolder" th:text="${review.username}">review writer</h5>
                                 내 점수<h5 class="fw-bolder" th:text="${review.rating}">review rating</h5>
                                 조회수<h5 class="fw-bolder" th:text="${review.viewCount}">review viewCount</h5>
                                 식당이름<h5 class="fw-bolder" th:text="${review.restaurant.name}">restaurant name</h5>
-                                주소<h5 class="fw-bolder" th:text="${review.restaurant.address}">restaurant address</h5>
+                                <h5 class="fw-bolder" th:text="${review.restaurant.address}">restaurant address</h5>
                                 생성일<h5 class="fw-bolder"
                                        th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">review
                                 createdAt</h5>
