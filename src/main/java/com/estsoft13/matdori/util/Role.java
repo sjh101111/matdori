@@ -1,5 +1,5 @@
 package com.estsoft13.matdori.util;
 
 public enum Role {
-    Beginner, Associate, Member, Admin
+    ROLE_BEGINNER, ROLE_ASSOCIATE, ROLE_MEMBER, ROLE_ADMIN
 }
