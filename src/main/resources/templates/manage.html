@@ -14,18 +14,19 @@
     <button type="submit">삭제</button>
 </form>
 <form th:action="@{/admin/manage}" method="post">
-<form action="/admin/manage" method="post">
     <p>부회원 승급자 목록</p>
     <select name="userId">
         <option th:each="associate : ${associates}" th:value="${associate.id}" th:text="${associate.username}"></option>
     </select>
+    <input type="hidden" name="newRole" value="ROLE_ASSOCIATE" />
     <button type="submit">변경</button>
 </form>
-<form action="/admin/manage" method="post">
+<form th:action="@{/admin/manage}" method="post">
     <p>정회원 승급자 목록</p>
     <select name="userId">
         <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.username}"></option>
     </select>
+    <input type="hidden" name="newRole" value="ROLE_MEMBER" />
     <button type="submit">변경</button>
 </form>
 </body>
