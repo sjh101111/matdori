@@ -31,7 +31,7 @@
                         <span class="createdAt"
                               th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
                     </div>
-                    <span class="userGrade">foodie adventurer</span>
+                    <span class="userGrade" th:text="${review.user.role}">foodie adventurer</span>
                 </div>
             </div>
             <div class="restaurant-info">
@@ -40,7 +40,7 @@
 
                     <span class="restcategory" th:text="${review.restaurant.category}">식당 카테고리</span>
 
-                    <span th:text="${review.restaurant.avgRating}">식당 평점</span>
+                    <span th:text="${#numbers.formatDecimal(review.restaurant.avgRating, 1, 2)}">식당 평점</span>
                 </div>
                 <span class="restaddress" th:text="${review.restaurant.address}">식당 주소</span>
             </div>
@@ -97,7 +97,7 @@
                             <span class="createdAt"
                                   th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}">작성 시간</span>
                         </div>
-                        <span class="userGrade">foodie adventurer</span>
+                        <span class="userGrade" th:text="${comment.role}">foodie adventurer</span>
                     </div>
                 </div>
                 <span th:text="${comment.content}" class="comment-content">댓글 내용</span>
