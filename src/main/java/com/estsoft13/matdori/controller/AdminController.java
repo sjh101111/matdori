@@ -47,16 +47,21 @@ public class AdminController {
         List<UserDto> associate = new ArrayList<>();
         List<UserDto> member = new ArrayList<>();
 
+        boolean hasEligibleUser = false;
         for (User user : users) {
             // 코멘트 수에 따라 사용자 등급을 업데이트하는 로직
             if (adminService.isEligibleForAssociate(user)) {
                 // 예를 들어, 등급 상승 로직
                 associate.add(user.toDto());
+                hasEligibleUser = true;
             } else if (adminService.isEligibleForMember(user)) {
                 member.add(user.toDto());
-            } else {
-                model.addAttribute("message", "승급할 사용자가 없습니다.");
+                hasEligibleUser = true;
             }
+        }
+
+        if (!hasEligibleUser) {
+            model.addAttribute("message", "승급할 사용자가 없습니다.");
         }
         model.addAttribute("associates", associate);
         model.addAttribute("members", member);
