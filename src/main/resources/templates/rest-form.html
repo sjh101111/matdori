@@ -98,8 +98,8 @@
         <tr><td><input type="text" id="category" th:value="*{restaurant.category}" placeholder="업종(한식,일식...)을 입력하세요."></td></tr>
 
 
-        <tr><td><button th:if="${restaurant.id} == null" type="button" id="post-rest-btn" class="postRestBtn">리뷰 등록</button></td></tr>
-        <tr><td><button th:if="${restaurant.id} != null" type="button" id="modi-rest-btn">리뷰 수정</button></td></tr>
+        <tr><td><button th:if="${restaurant.id} == null" type="button" id="post-rest-btn" class="postRestBtn">식당 등록</button></td></tr>
+        <tr><td><button th:if="${restaurant.id} != null" type="button" id="modi-rest-btn">식당 수정</button></td></tr>
     </table>
 </form>
 <script src="/js/rest.js"></script>
