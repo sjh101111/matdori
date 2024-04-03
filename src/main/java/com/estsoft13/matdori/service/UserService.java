@@ -25,7 +25,7 @@ public class UserService {
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
-        user.setRole(Role.Associate);
+        user.setRole(Role.Begginer);
         userRepository.save(user);
     }
 
@@ -48,6 +48,7 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found by: " + email + " and " + username));
     }
 
+
     public boolean isEmailUnique(String email) {
         return userRepository.findByEmail(email).isEmpty();
     }
@@ -69,5 +70,10 @@ public class UserService {
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    public User findById(Long userId) {
+         return userRepository.findById(userId).orElseThrow(
+                 () -> new IllegalArgumentException("Invalid user Id:" + userId));
     }
 }

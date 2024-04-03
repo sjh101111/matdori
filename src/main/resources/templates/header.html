@@ -11,16 +11,16 @@
 </head>
 <body>
 <header>
-    <div th:fragment="currentuser" class="user-container">
+    <div th:fragment="currentuser" th:if="${currentUser.username!=null}"
+         class="user-container">
         <div class="usersymbol"></div>
         <div class="userInfo">
             <div class="userBox">
                 <span class="username" th:text="${currentUser.username}">유저 이름</span>
             </div>
-            <span class="userGrade">foodie adventurer</span>
+            <span class="userGrade" th:text="${currentUser.role}">foodie adventurer</span>
         </div>
     </div>
-
     <div class="dropdown" th:fragment="movingPoint">
         <button class="movePageBtn" onclick="toggleDropdown()">Move to Pages</button>
         <div id="dropdownContent" class="dropdown-content">
@@ -58,28 +58,30 @@
 
     <div class="meetingHeaderButton" th:fragment="meetingHeaderButton">
         <!-- 로그인 되어 있지 않을 때만 로그인과 회원가입 버튼 표시 -->
-        <div th:if="${currentUser.username == 'unknownUser'}">
+        <div th:if="${currentUser.username == null}">
             <button type="button" th:onclick="|location.href='@{/login}'|" class="loginBtn">Login</button>
             <button type="button" th:onclick="|location.href='@{/signup}'|" class="signupBtn">Signup</button>
         </div>
 
         <!-- 로그인 되어 있을 때 Create 버튼 표시, 페이지에 따라 다른 기능 수행 -->
-        <button type="button" th:if="${currentUser.username != 'unknownUser'}"
+        <button type="button" th:if="${currentUser.username != null}"
                 th:onclick="|location.href='@{/add-meeting}'|"
-                class="createbtn">Create</button>
+                class="createbtn">Create
+        </button>
     </div>
 
     <div class="reviewHeaderButton" th:fragment="reviewHeaderButton">
         <!-- 로그인 되어 있지 않을 때만 로그인과 회원가입 버튼 표시 -->
-        <div th:if="${currentUser.username == 'unknownUser'}">
+        <div th:if="${currentUser.username == null}">
             <button type="button" th:onclick="|location.href='@{/login}'|" class="loginBtn">Login</button>
             <button type="button" th:onclick="|location.href='@{/signup}'|" class="signupBtn">Signup</button>
         </div>
 
         <!-- 로그인 되어 있을 때 Create 버튼 표시, 페이지에 따라 다른 기능 수행 -->
-        <button type="button" th:if="${currentUser.username != 'unknownUser'}"
+        <button type="button" th:if="${currentUser.username != null}"
                 th:onclick="|location.href='@{/add-review}'|"
-                class="createbtn">Create</button>
+                class="createbtn">Create
+        </button>
     </div>
 </header>
 
