@@ -20,10 +20,23 @@ public class WebSecurityConfig {
                         ,"/error", "/api/restaurant", "/api/review/1");
     }
     // 특정 http 요청에 대한 웹 기반 보안 구성
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity.authorizeHttpRequests(auth ->
+//                        auth.requestMatchers("/css/**", "/login", "/signup", "/forgot","/user", "/admin/newAdmin").permitAll()
+//                                .anyRequest().authenticated())
+//                .formLogin(auth -> auth.loginPage("/login")
+//                        .usernameParameter("email")
+//                        .defaultSuccessUrl("/reviews"))
+//                .logout(auth -> auth.logoutSuccessUrl("/login")
+//                        .invalidateHttpSession(true))
+//                .csrf(auth -> auth.disable());
+//        return httpSecurity.build();
+//    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/css/**", "/login", "/signup", "/forgot","/user", "/admin/newAdmin").permitAll()
+                        auth.requestMatchers("/css/**", "/login", "/signup", "/forgot","/user", "/admin/new").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .usernameParameter("email")
@@ -33,7 +46,6 @@ public class WebSecurityConfig {
                 .csrf(auth -> auth.disable());
         return httpSecurity.build();
     }
-
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

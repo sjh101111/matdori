@@ -19,16 +19,16 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/newAdmin")
+    @GetMapping("/new")
     public String adminSignup(Model model){
         model.addAttribute("userDto", new UserDto());
-        return "newAdmin";
+        return "new";
     }
 
-    @PostMapping("/newAdmin")
+    @PostMapping("/new")
     public String adminSignup(@ModelAttribute("userDto") UserDto userDto) {
         if (!userService.isEmailUnique(userDto.getEmail())) {
-            return "/newAdmin";
+            return "/new";
         } else {
             userService.saveAdmin(userDto);
             return "/login";
