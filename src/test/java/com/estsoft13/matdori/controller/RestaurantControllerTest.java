@@ -1,10 +1,8 @@
 package com.estsoft13.matdori.controller;
 
 import com.estsoft13.matdori.domain.Restaurant;
-import com.estsoft13.matdori.dto.AddRestaurantRequestDto;
-import com.estsoft13.matdori.dto.RestaurantResponseDto;
-import com.estsoft13.matdori.dto.UpdateRestRequestDto;
-import com.estsoft13.matdori.dto.UpdateRestResponseDto;
+import com.estsoft13.matdori.dto.restaurant.UpdateRestRequestDto;
+import com.estsoft13.matdori.dto.restaurant.UpdateRestResponseDto;
 import com.estsoft13.matdori.repository.RestaurantRepository;
 import com.estsoft13.matdori.service.RestaurantService;
 import com.fasterxml.jackson.databind.ObjectMapper;

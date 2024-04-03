@@ -1,6 +1,9 @@
-package com.estsoft13.matdori.controller;
+package com.estsoft13.matdori.controller.review;
 
-import com.estsoft13.matdori.dto.*;
+import com.estsoft13.matdori.dto.review.AddReviewRequestDto;
+import com.estsoft13.matdori.dto.review.ReviewResponseDto;
+import com.estsoft13.matdori.dto.review.UpdateReviewRequestDto;
+import com.estsoft13.matdori.dto.review.UpdateReviewResponseDto;
 import com.estsoft13.matdori.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

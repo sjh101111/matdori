@@ -1,6 +1,6 @@
 package com.estsoft13.matdori.domain;
 
-import com.estsoft13.matdori.dto.AddReviewRequestDto;
+import com.estsoft13.matdori.dto.review.AddReviewRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor

@@ -1,7 +1,7 @@
 package com.estsoft13.matdori.domain;
 
-import com.estsoft13.matdori.dto.AddMeetingRequestDto;
-import com.estsoft13.matdori.dto.MeetingResponseDto;
+import com.estsoft13.matdori.dto.meeting.AddMeetingRequestDto;
+import com.estsoft13.matdori.dto.meeting.MeetingResponseDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.estsoft13.matdori.domain;
 
-import com.estsoft13.matdori.dto.CommentResponseDto;
+import com.estsoft13.matdori.dto.comment.CommentResponseDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.estsoft13.matdori.dto;
+package com.estsoft13.matdori.dto.meeting;
 
 import com.estsoft13.matdori.domain.Meeting;
 import com.estsoft13.matdori.domain.Restaurant;

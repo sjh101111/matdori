@@ -1,7 +1,7 @@
-package com.estsoft13.matdori.controller;
+package com.estsoft13.matdori.controller.comment;
 
-import com.estsoft13.matdori.dto.AddCommentRequestDto;
-import com.estsoft13.matdori.dto.CommentResponseDto;
+import com.estsoft13.matdori.dto.comment.AddCommentRequestDto;
+import com.estsoft13.matdori.dto.comment.CommentResponseDto;
 import com.estsoft13.matdori.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

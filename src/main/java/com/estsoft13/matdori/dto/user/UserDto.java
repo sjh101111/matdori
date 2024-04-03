@@ -1,4 +1,4 @@
-package com.estsoft13.matdori.dto;
+package com.estsoft13.matdori.dto.user;
 
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.util.Role;

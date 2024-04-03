@@ -1,6 +1,6 @@
 package com.estsoft13.matdori.domain;
 
-import com.estsoft13.matdori.dto.UserDto;
+import com.estsoft13.matdori.dto.user.UserDto;
 import com.estsoft13.matdori.util.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
