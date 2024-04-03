@@ -36,7 +36,7 @@ public class Comment {
     public CommentResponseDto toResponse() {
         return CommentResponseDto.builder()
                 .content(content).createdAt(createdAt).username(user.getEnteredUsername())
-                .id(id)
+                .id(id).role(user.getRole())
                 .build();
     }
 

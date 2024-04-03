@@ -48,7 +48,7 @@ document.getElementById('commentBtn').addEventListener('click', function() {
                                                 <span class="createdAt">
                                                       ${new Date(data.createdAt).toLocaleString()}</span>
                                             </div>
-                                            <span class="userGrade">foodie adventurer</span>
+                                            <span class="userGrade">${data.role}</span>
                                         </div>
                      </div>
                     <span class="comment-content">${data.content}</span>
