@@ -1,14 +1,12 @@
-package com.estsoft13.matdori.controller;
+package com.estsoft13.matdori.controller.restaurant;
 
 import com.estsoft13.matdori.domain.Restaurant;
-import com.estsoft13.matdori.domain.Review;
-import com.estsoft13.matdori.dto.RestaurantResponseDto;
+import com.estsoft13.matdori.dto.restaurant.RestaurantResponseDto;
 import com.estsoft13.matdori.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;

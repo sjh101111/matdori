@@ -1,20 +1,16 @@
-package com.estsoft13.matdori.dto;
+package com.estsoft13.matdori.dto.meeting;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
-public class AddMeetingRequestDto {
+public class UpdateMeetingDto {
     private String title;
 
     private String content;
 
     private String location;
-
-    private LocalDateTime created_at;
 
     private Long restaurantId;
 

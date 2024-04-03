@@ -1,4 +1,4 @@
-package com.estsoft13.matdori.dto;
+package com.estsoft13.matdori.dto.review;
 
 import com.estsoft13.matdori.domain.Restaurant;
 import lombok.AllArgsConstructor;

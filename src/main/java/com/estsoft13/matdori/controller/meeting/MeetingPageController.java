@@ -1,10 +1,10 @@
-package com.estsoft13.matdori.controller;
+package com.estsoft13.matdori.controller.meeting;
 
 import com.estsoft13.matdori.domain.Meeting;
 import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.User;
-import com.estsoft13.matdori.dto.CommentResponseDto;
-import com.estsoft13.matdori.dto.MeetingResponseDto;
+import com.estsoft13.matdori.dto.comment.CommentResponseDto;
+import com.estsoft13.matdori.dto.meeting.MeetingResponseDto;
 import com.estsoft13.matdori.repository.CommentRepository;
 import com.estsoft13.matdori.service.CommentService;
 import com.estsoft13.matdori.service.MeetingService;

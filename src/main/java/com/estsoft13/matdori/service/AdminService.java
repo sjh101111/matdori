@@ -25,7 +25,7 @@ public class AdminService {
         int commentCount = user.getComments().size(); // User 엔티티에 연결된 Comment의 수
         int reviewCount = user.getReviews().size();
         Role associate = Role.ROLE_ASSOCIATE;
-        if (commentCount > 3 && reviewCount > 3
+        if (commentCount >= 3 && reviewCount >= 3
         && user.getRole().equals(associate) ) {
             return true;
         } else {

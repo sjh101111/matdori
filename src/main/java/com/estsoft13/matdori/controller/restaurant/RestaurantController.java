@@ -1,6 +1,9 @@
-package com.estsoft13.matdori.controller;
+package com.estsoft13.matdori.controller.restaurant;
 
-import com.estsoft13.matdori.dto.*;
+import com.estsoft13.matdori.dto.restaurant.AddRestaurantRequestDto;
+import com.estsoft13.matdori.dto.restaurant.RestaurantResponseDto;
+import com.estsoft13.matdori.dto.restaurant.UpdateRestRequestDto;
+import com.estsoft13.matdori.dto.restaurant.UpdateRestResponseDto;
 import com.estsoft13.matdori.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
