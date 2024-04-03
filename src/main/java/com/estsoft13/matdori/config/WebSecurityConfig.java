@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+// 배포시 주석처리
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @EnableWebSecurity
@@ -17,19 +18,36 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer configure() { // 스프링시큐리티 비활성화
         return web -> web.ignoring().requestMatchers(toH2Console())
                 .requestMatchers("/static/**","/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"
-                        ,"/error", "/api/restaurant", "/api/review/1","/js/**", "/css/**", "/images/**");
+                        ,"/error", "/api/restaurant", "/js/**", "/css/**", "/images/**"
+                        ,"/admin/new");
     }
+
+    /* 배포시 사용할 코드(위 메소드 주석처리)
+    @Bean
+    public WebSecurityCustomizer configure() { // 스프링시큐리티 비활성화
+
+        return (web) -> web.ignoring().requestMatchers("/static/**","/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"
+                        ,"/error","/js/**", "/css/**", "/images/**");
+    }
+    */
+
+
     // 특정 http 요청에 대한 웹 기반 보안 구성
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/css/**", "/login", "/signup", "/forgot","/user", "/admin/new", "/reviews", "/meetings").permitAll()
+                        auth.requestMatchers("/css/**", "/login", "/signup", "/forgot","/user", "/admin/new", "/reviews").permitAll()
+                                .requestMatchers("/admin/manage").hasRole("Admin")
+                                .requestMatchers("/meetings").hasAnyRole("Associate","Member")
+                                .requestMatchers("/meeting/**").hasRole("Member")
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .usernameParameter("email")
                         .defaultSuccessUrl("/reviews"))
                 .logout(auth -> auth.logoutSuccessUrl("/login")
                         .invalidateHttpSession(true))
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling.accessDeniedHandler(new CustomAccessDeniedHandler()))
                 .csrf(auth -> auth.disable());
         return httpSecurity.build();
     }
