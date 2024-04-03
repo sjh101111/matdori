@@ -7,12 +7,19 @@ import com.estsoft13.matdori.util.GeneratePassword;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -65,23 +72,65 @@ public class UserController {
     }
 
     @PostMapping("/forgot")
-    public String resetPassword(@RequestParam("username") String username, @RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<?> resetPassword(@RequestParam("username") String username, @RequestParam("email") String email) {
         User user = userService.findByUsernameAndEmail(username, email);
         if (user != null) {
             String newPassword = generateRandomPassword();
             userService.resetPassword(user, newPassword);
-            redirectAttributes.addFlashAttribute("msg","임시 비밀번호가 생성되었습니다. 로그인 후 변경해주세요!");
-            redirectAttributes.addAttribute("newPassword", newPassword);
-            return "redirect:/login";
-
+            return ResponseEntity.ok("newPassword=" + newPassword);
         } else {
-            redirectAttributes.addFlashAttribute("error","해당 정보가 없습니다!");
-            return "/";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 정보가 없습니다!");
         }
     }
 
-    private String generateRandomPassword() {
-        return GeneratePassword.generateRandomPassword(8);
+    @GetMapping("/change")
+    public String myPage(){
+            return "myPage";
+    }
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam("password") String password,
+                                 @RequestParam("newPassword") String newPassword,
+                                 Principal principal,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response,
+                                 Model model) {
+        String email = principal.getName();
+        User user = userService.findByEmail(email);
+
+        if (user != null && userService.checkPassword(user, password)) {
+            // 현재 비밀번호가 일치하는 경우, 새로운 비밀번호로 변경 처리
+            userService.resetPassword(user, newPassword);
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null) {
+                new SecurityContextLogoutHandler().logout(request, response, auth);
+            }
+            return "redirect:/login";
+        } else {
+            model.addAttribute("error", "현재 비밀번호가 올바르지 않습니다.");
+            return "myPage";
+        }
+    }
+    @PostMapping("/remove")
+    public String removeUser(@RequestParam("password") String password, Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
+        String email = principal.getName(); // 로그인한 사용자의 이메일을 가져옵니다.
+        User user = userService.findByEmail(email);
+
+        if (user != null && userService.checkPassword(user, password)) {
+            // 현재 로그인한 사용자가 삭제되는 경우 로그아웃 처리
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null && auth.getName().equals(email)) {
+                new SecurityContextLogoutHandler().logout(request, response, auth);
+            }
+            userService.deleteUser(user.getId());
+            return "redirect:/login";
+        } else {
+            model.addAttribute("error", "비밀번호가 올바르지 않습니다.");
+            return "myPage";
+        }
+    }
+
+        private String generateRandomPassword() {
+    return GeneratePassword.generateRandomPassword(8);
     }
 
 }
