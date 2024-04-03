@@ -38,8 +38,8 @@ public class WebSecurityConfig {
         httpSecurity.authorizeHttpRequests(auth ->
                         auth.requestMatchers("/css/**", "/login", "/signup", "/forgot","/user", "/admin/new", "/reviews").permitAll()
                                 .requestMatchers("/admin/manage").hasRole("ADMIN")
-                                .requestMatchers("/meetings").hasAnyRole("ASSOCIATE","MEMBER")
-                                .requestMatchers("/meeting/**").hasRole("MEMBER")
+                                .requestMatchers("/meetings").hasAnyRole("ASSOCIATE","MEMBER","ADMIN")
+                                .requestMatchers("/meeting/**").hasAnyRole("MEMBER","ADMIN")
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .usernameParameter("email")
