@@ -12,7 +12,7 @@
     </select>
     <button type="submit">삭제</button>
 </form>
-<form action="/admin/manage" method="post">
+<form th:action="@{/admin/manage}" method="post">
     <select name="userId">
         <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
     </select>
