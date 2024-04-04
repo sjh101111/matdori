@@ -76,4 +76,7 @@ public class UserService {
          return userRepository.findById(userId).orElseThrow(
                  () -> new IllegalArgumentException("Invalid user Id:" + userId));
     }
+    public boolean checkPassword(User user, String password) {
+        return encoder.matches(password, user.getPassword());
+    }
 }
