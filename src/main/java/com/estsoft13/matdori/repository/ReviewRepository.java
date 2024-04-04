@@ -10,7 +10,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findByTitleContainingOrContentContainingOrRestaurantNameContainingOrRestaurantCategoryContaining(String keyword, String keyword1, String keyword2, String keyword3);
 
-    List<Review> findAllByOrderByCreatedAt();
+    List<Review> findAllByOrderByCreatedAtDesc();
 
     List<Review> findAllByOrderByRatingDesc();
 
