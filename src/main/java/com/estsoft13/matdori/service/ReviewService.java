@@ -219,7 +219,7 @@ public class ReviewService {
     }
 
     public List<Review> findAllByOrderByCreatedAtDesc() {
-        List<Review> reviews = reviewRepository.findAllByOrderByCreatedAt();
+        List<Review> reviews = reviewRepository.findAllByOrderByCreatedAtDesc();
         return  reviews;
     }
 
