@@ -27,15 +27,18 @@ public class UserController {
 
     private final UserService userService;
 
+    // 로그인 페이지
     @GetMapping("/login")
     public String login() {
-        return "login";   //login.html
+        return "login";
     }
 
+    // 로그인
     @PostMapping("/login")
-    public String login(@RequestParam("email") String email,
-                        @RequestParam("password") String password) {
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password) {
+
         User user = userService.findByEmail(email);
+
         if (user != null && user.getPassword().equals(password)) {
             return "redirect:/";
         } else {
@@ -43,21 +46,27 @@ public class UserController {
         }
     }
 
+    // 로그아웃
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-        new SecurityContextLogoutHandler().logout(request, response,
-                SecurityContextHolder.getContext().getAuthentication());
+        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+
         return "redirect:/login";
     }
 
+    // 회원가입 페이지
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("userDto", new UserDto());
-        return "signup";    // signup.html
+
+        return "signup";
     }
 
+    // 회원가입
     @PostMapping("/signup")
     public String signup(@ModelAttribute("userDto") UserDto userDto) {
+
+        // 이메일 중복 체크
         if (!userService.isEmailUnique(userDto.getEmail())) {
             return "signup";
         } else {
@@ -66,27 +75,35 @@ public class UserController {
         }
     }
 
+    // 비밀번호 찾기 페이지
     @GetMapping("/forgot")
     public String forgot() {
-        return "forgot";    // forgot.html
+        return "forgot";
     }
 
+    // 비밀번호 찾기
     @PostMapping("/forgot")
     public ResponseEntity<?> resetPassword(@RequestParam("username") String username, @RequestParam("email") String email) {
+
         User user = userService.findByUsernameAndEmail(username, email);
+
         if (user != null) {
             String newPassword = generateRandomPassword();
             userService.resetPassword(user, newPassword);
+
             return ResponseEntity.ok("newPassword=" + newPassword);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 정보가 없습니다!");
         }
     }
 
+    // 비밀번호 변경 페이지
     @GetMapping("/change")
     public String myPage(){
             return "myPage";
     }
+
+    // 비밀번호 변경
     @PostMapping("/changePassword")
     public String changePassword(@RequestParam("password") String password,
                                  @RequestParam("newPassword") String newPassword,
@@ -94,6 +111,7 @@ public class UserController {
                                  HttpServletRequest request,
                                  HttpServletResponse response,
                                  Model model) {
+
         String email = principal.getName();
         User user = userService.findByEmail(email);
 
@@ -107,9 +125,12 @@ public class UserController {
             return "redirect:/login";
         } else {
             model.addAttribute("error", "현재 비밀번호가 올바르지 않습니다.");
+
             return "myPage";
         }
     }
+
+    // 회원 탈퇴
     @PostMapping("/remove")
     public String removeUser(@RequestParam("password") String password, Principal principal, HttpServletRequest request, HttpServletResponse response, Model model) {
         String email = principal.getName(); // 로그인한 사용자의 이메일을 가져옵니다.
@@ -129,8 +150,8 @@ public class UserController {
         }
     }
 
-        private String generateRandomPassword() {
-    return GeneratePassword.generateRandomPassword(8);
+    private String generateRandomPassword() {
+        return GeneratePassword.generateRandomPassword(8);
     }
 
 }

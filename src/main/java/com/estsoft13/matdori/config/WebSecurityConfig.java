@@ -14,6 +14,7 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig {
+
     @Bean
     public WebSecurityCustomizer configure() { // 스프링시큐리티 비활성화
         return web -> web.ignoring().requestMatchers(toH2Console())

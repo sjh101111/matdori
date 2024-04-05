@@ -6,7 +6,6 @@ import com.estsoft13.matdori.domain.ReviewImage;
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.comment.CommentResponseDto;
 import com.estsoft13.matdori.dto.review.ReviewResponseDto;
-import com.estsoft13.matdori.repository.CommentRepository;
 import com.estsoft13.matdori.service.CommentService;
 import com.estsoft13.matdori.service.RestaurantService;
 import com.estsoft13.matdori.service.ReviewImageService;
@@ -26,52 +25,61 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class ReviewPageController {
+
     private final RestaurantService restaurantService;
     private final ReviewService reviewService;
     private final ReviewImageService reviewImageService;
     private final CommentService commentService;
-    private final CommentRepository commentRepository;
 
-    // review post - test용 컨트롤러입니다.
+    // 리뷰 추가, 수정 페이지
     @GetMapping("/add-review")
     public String showCreateReviewForm(@RequestParam(required = false) Long reviewId, Model model) {
+
         List<Restaurant> restaurants = restaurantService.findAll();
         model.addAttribute("restaurants", restaurants);
 
+        // 리뷰 추가
         if (reviewId == null) {
             model.addAttribute("review", new Review());
+
+            // 리뷰 수정
         } else {
             Optional<Review> reviewOptional = reviewService.findById(reviewId);
             Review review = reviewOptional.get();
+
             model.addAttribute("review", review);
         }
 
         return "review-form";
     }
 
+    // 리뷰 상세 페이지
     @GetMapping("/review/{reviewId}")
     public String showReviewDetail(@PathVariable Long reviewId, Model model, @AuthenticationPrincipal User user) {
 
         Optional<Review> reviewOptional = reviewService.findById(reviewId);
 
+        // 리뷰가 없을 경우 /reviews 으로 리다이렉트
         if (!reviewOptional.isPresent()) {
-            return "redirect:/reviews"; // 리뷰가 없으면 /reviews로 리다이렉션
+            return "redirect:/reviews";
         }
+
         Review review = reviewOptional.get();
         //조회수 up
         reviewService.countUpViewCount(reviewId);
         review.setViewCount(review.getViewCount()+1);
-
         model.addAttribute("review", review);
 
+        // 리뷰에 등록된 이미지 불러오기
         List<ReviewImage> images = reviewImageService.findAllByReviewId(reviewId);
         model.addAttribute("images", images);
 
-        // 현재 로그인한 유저가 글을 등록한 유저인지 확인 후 글을 수정할 수 있게끔
+        // 리뷰 작성자와 현재 로그인한 사용자가 같은지 확인
         Long userId = user.getId();
         boolean isOwner = review.getUser().getId().equals(userId);
         model.addAttribute("isOwner", isOwner);
 
+        // 리뷰에 달린 댓글 불러오기
         List<CommentResponseDto> comments = commentService.getAllCommentsOfReview(reviewId);
         List<CommentResponseDto> commentWithOwnership = comments.stream()
                 .map(x -> new CommentResponseDto(x, x.getUserId().equals(userId))).toList();
@@ -80,9 +88,11 @@ public class ReviewPageController {
         return "detailedReviewPage";
     }
 
+    // 리뷰 목록 페이지
     @GetMapping("/reviews")
     public String showReviews(@RequestParam(required = false) String sort, Model model) {
-   //List<Review> reviews = reviewService.findAll();
+
+        // sort에 따라 리뷰 정렬
         List<Review> reviews;
         if("rating".equals(sort)) {
             reviews = reviewService.findAllByOrderByRatingDesc();
@@ -94,20 +104,11 @@ public class ReviewPageController {
             reviews = reviewService.findAll();
         }
 
-        List<ReviewResponseDto> responseDtoes = new ArrayList<>();
-        for (Review review : reviews) {
-            ReviewResponseDto reviewResponseDto = new ReviewResponseDto(review);
-            Long reviewId = review.getId();
-            List<ReviewImage> reviewImages = reviewImageService.findAllByReviewId(reviewId);
-            List<String> imgPaths = new ArrayList<>();
-            for (ReviewImage reviewImage : reviewImages) {
-                imgPaths.add(reviewImage.getImgPath());
-            }
-            reviewResponseDto.setImgPaths(imgPaths);
-            responseDtoes.add(reviewResponseDto);
-        }
+        // 리뷰에 등록된 이미지 불러오기
+        List<ReviewResponseDto> responseDtoList = new ArrayList<>();
+        setImgPathsToResponseDto(reviews, responseDtoList);
 
-        model.addAttribute("reviews", responseDtoes);
+        model.addAttribute("reviews", responseDtoList);
 
         return "review-main";
     }
@@ -116,23 +117,37 @@ public class ReviewPageController {
     // /reviews/에서 검색 시 /search?keyword={keyword}로 이동
     @GetMapping("/searchReviews")
     public String searchByKeyword(@RequestParam("keyword") String keyword, Model model) {
+
+        // 제목, 내용, 식당이름, 식당카테고리에 키워드가 포함된 리뷰 찾기
         List<Review> searchResults = reviewService.findByTitleContainingOrContentContainingOrRestaurantNameContainingOrRestaurantCategoryContaining(keyword, keyword, keyword, keyword);
-        List<ReviewResponseDto> responseDtoes = new ArrayList<>();
-        for (Review review : searchResults) {
+
+        // 리뷰에 등록된 이미지 불러오기
+        List<ReviewResponseDto> responseDtoList = new ArrayList<>();
+        setImgPathsToResponseDto(searchResults, responseDtoList);
+
+        model.addAttribute("reviews", responseDtoList);
+        model.addAttribute("keyword", keyword);
+
+        return "review-main";
+    }
+
+    // ReviewResponseDto에 이미지 경로 추가 메소드
+    public void setImgPathsToResponseDto(List<Review> reviews, List<ReviewResponseDto> responseDtoList) {
+
+        for (Review review : reviews) {
+
             ReviewResponseDto reviewResponseDto = new ReviewResponseDto(review);
             Long reviewId = review.getId();
+
             List<ReviewImage> reviewImages = reviewImageService.findAllByReviewId(reviewId);
             List<String> imgPaths = new ArrayList<>();
+
             for (ReviewImage reviewImage : reviewImages) {
                 imgPaths.add(reviewImage.getImgPath());
             }
             reviewResponseDto.setImgPaths(imgPaths);
-            responseDtoes.add(reviewResponseDto);
+            responseDtoList.add(reviewResponseDto);
         }
-        model.addAttribute("reviews", responseDtoes);
-        model.addAttribute("keyword", keyword);
-
-        return "review-main";
     }
 
 }

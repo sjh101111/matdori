@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class UserControllerAdvice {
 
     private final UserService userService; // 사용자 서비스
-
     private final UserRepository userRepository;
 
     @ModelAttribute("currentUser")

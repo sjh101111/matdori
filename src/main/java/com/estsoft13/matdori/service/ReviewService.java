@@ -34,6 +34,7 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
 
+    // 로그인된 유저 정보 찾기
     private User getAuthenticatedUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(username)
@@ -54,10 +55,10 @@ public class ReviewService {
     public ReviewResponseDto createReview(AddReviewRequestDto addReviewRequestDto, Long restaurantId,
                                           List<MultipartFile> imgFiles) {
 
+        // 리뷰 객체 생성
         Review review = new Review(addReviewRequestDto);
 
-        // 식당 찾기 및 예외 처리
-        // Review 엔티티에 식당 설정
+        // 식당 찾기 및 리뷰 객체에 설정
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 식당이 존재하지 않습니다."));
         review.setRestaurant(restaurant);
@@ -66,6 +67,7 @@ public class ReviewService {
         User user = getAuthenticatedUser();
         review.setUser(user);
 
+        // 리뷰에 이미지 저장
         ReviewResponseDto responseDto = new ReviewResponseDto(review);
         List<String> imgPaths = new ArrayList<>();
 
@@ -75,6 +77,7 @@ public class ReviewService {
         responseDto.setImgPaths(imgPaths);
         reviewRepository.save(review);
 
+        // 식당 평점 업데이트
         updateRestaurantAvgRating(restaurant.getId());
 
         return responseDto;
@@ -90,7 +93,9 @@ public class ReviewService {
 
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 식당의 존재 하지 않습니다. = " + restaurantId));
-        restaurant.setAvgRating(avgRating);// 식당 평점 update
+        // 식당 평점 update
+        restaurant.setAvgRating(avgRating);
+
         restaurantRepository.save(restaurant);
     }
 
@@ -101,6 +106,7 @@ public class ReviewService {
                 .map(ReviewResponseDto::new)
                 .orElseThrow(() -> new IllegalArgumentException("리뷰 ID가 존재하지 않습니다."));
 
+        // 리뷰에 이미지 설정
         List<ReviewImage> images = reviewImageRepository.findAllByReviewId(reviewId);
         List<String> paths = new ArrayList<>();
         for (ReviewImage image : images) {
@@ -108,6 +114,7 @@ public class ReviewService {
             paths.add(imgPath);
         }
         responseDto.setImgPaths(paths);
+
         return responseDto;
     }
 
@@ -160,20 +167,15 @@ public class ReviewService {
             saveFileName(imgFiles, imgPaths, review);
             responseDto.setImgPaths(imgPaths);
         }
+
         return responseDto;
     }
 
-    /*
-    public Review findById(Long reviewId) {
-        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
-        return review;
-    }
-     */
     public Optional<Review> findById(Long reviewId) {
         return reviewRepository.findById(reviewId);
     }
 
-    // 업로든된 이미지들의 파일 경로 저장
+    // 업로든된 이미지들의 파일 경로 저장 메소드
     public void saveFileName(List<MultipartFile> imgFiles, List<String> imgPaths, Review review) {
         for (MultipartFile file : imgFiles) {
             String oriImgName = file.getOriginalFilename();
@@ -198,7 +200,7 @@ public class ReviewService {
             }
             ReviewImage image = new ReviewImage("/files/" + imgName, review);
             imgPaths.add(image.getImgPath());
-            // review.setReviewImage(image);
+
             reviewImageRepository.save(image);
         }
     }
@@ -214,23 +216,26 @@ public class ReviewService {
         return reviews;
     }
 
-    // 조회수
+    // 조회수 증가 메소드
     public void countUpViewCount(Long reviewId) {
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("리뷰 id가 존재하지 않습니다."));
         review.setViewCount(review.getViewCount()+1);
         reviewRepository.save(review);
     }
 
+    // 리뷰 최신 생성일 순으로 정렬
     public List<Review> findAllByOrderByCreatedAtDesc() {
         List<Review> reviews = reviewRepository.findAllByOrderByCreatedAtDesc();
         return  reviews;
     }
 
+    // 리뷰 평점 순으로 정렬
     public List<Review> findAllByOrderByRatingDesc() {
         List<Review> reviews = reviewRepository.findAllByOrderByRatingDesc();
         return  reviews;
     }
 
+    // 리뷰 조회수 순으로 정렬
     public List<Review> findAllByOrderByViewCountDesc() {
         List<Review> reviews = reviewRepository.findAllByOrderByViewCountDesc();
         return reviews;
