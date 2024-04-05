@@ -2,6 +2,9 @@ package com.estsoft13.matdori.controller.user;
 
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.user.UserDto;
+import com.estsoft13.matdori.service.CommentService;
+import com.estsoft13.matdori.service.MeetingService;
+import com.estsoft13.matdori.service.ReviewService;
 import com.estsoft13.matdori.service.UserService;
 import com.estsoft13.matdori.util.GeneratePassword;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +29,9 @@ import java.security.Principal;
 public class UserController {
 
     private final UserService userService;
+    private final ReviewService reviewService;
+    private final MeetingService meetingService;
+    private final CommentService commentService;
 
     // 로그인 페이지
     @GetMapping("/login")
@@ -143,6 +149,9 @@ public class UserController {
             if (auth != null && auth.getName().equals(email)) {
                 new SecurityContextLogoutHandler().logout(request, response, auth);
             }
+            reviewService.delete(user.getId());
+            meetingService.deleteMeeting(user.getId());
+
             userService.deleteUser(user.getId());
             return "redirect:/login";
         } else {
