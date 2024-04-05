@@ -64,10 +64,11 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/signup")
-    public String signup(@ModelAttribute("userDto") UserDto userDto) {
+    public String signup(@ModelAttribute("userDto") UserDto userDto, Model model) {
 
         // 이메일 중복 체크
         if (!userService.isEmailUnique(userDto.getEmail())) {
+            model.addAttribute("error", "해당 이메일은 사용중입니다.");
             return "signup";
         } else {
             userService.saveUser(userDto);

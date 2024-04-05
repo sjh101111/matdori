@@ -35,8 +35,9 @@ public class AdminController {
 
     // 관리자 생성
     @PostMapping("/new")
-    public String adminSignup(@ModelAttribute("userDto") UserDto userDto) {
+    public String adminSignup(@ModelAttribute("userDto") UserDto userDto, Model model) {
         if (!userService.isEmailUnique(userDto.getEmail())) {
+            model.addAttribute("error", "해당 이메일은 사용중입니다.");
             return "new";
         } else {
             userService.saveAdmin(userDto);
