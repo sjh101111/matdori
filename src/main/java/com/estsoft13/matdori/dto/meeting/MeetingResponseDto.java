@@ -34,7 +34,8 @@ public class MeetingResponseDto {
     //private Long user_id;
     @Builder
     public MeetingResponseDto(Long id, String title, String content, Restaurant restaurant,
-                              String location, LocalDateTime created_at, String username, String visitTime) {
+                              String location, LocalDateTime created_at, String username, String visitTime
+                                ,Long user_id) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -43,6 +44,7 @@ public class MeetingResponseDto {
         this.username = username;
         this.restaurant = restaurant;
         this.visitTime = visitTime;
+        this.user_id = user_id;
     }
 
     public MeetingResponseDto(Meeting meeting) {

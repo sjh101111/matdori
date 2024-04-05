@@ -5,7 +5,6 @@ import com.estsoft13.matdori.domain.Restaurant;
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.comment.CommentResponseDto;
 import com.estsoft13.matdori.dto.meeting.MeetingResponseDto;
-import com.estsoft13.matdori.repository.CommentRepository;
 import com.estsoft13.matdori.service.CommentService;
 import com.estsoft13.matdori.service.MeetingService;
 import com.estsoft13.matdori.service.RestaurantService;
@@ -49,7 +48,7 @@ public class MeetingPageController {
     public String showMeetingDetail(@PathVariable Long meetingId, Model model, @AuthenticationPrincipal User user) {
 
         try {
-            MeetingResponseDto responseDto = meetingService.findById(meetingId);
+            MeetingResponseDto responseDto = meetingService.getOneMeeting(meetingId, user);
             model.addAttribute("meeting", responseDto);
 
             // 현재 로그인한 유저가 글을 등록한 유저인지 확인 후 글을 수정할 수 있게끔
