@@ -1,13 +1,8 @@
 package com.estsoft13.matdori.dto.review;
 
-import com.estsoft13.matdori.domain.Restaurant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
