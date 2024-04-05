@@ -1,11 +1,13 @@
 package com.estsoft13.matdori.controller.meeting;
 
+import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.meeting.AddMeetingRequestDto;
 import com.estsoft13.matdori.dto.meeting.MeetingResponseDto;
 import com.estsoft13.matdori.dto.meeting.UpdateMeetingDto;
 import com.estsoft13.matdori.service.MeetingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,8 @@ public class MeetingController {
 
     // 모임 하나 조회
     @GetMapping("/api/meeting/{meetingId}")
-    public MeetingResponseDto getOneMeeting(@PathVariable Long meetingId) {
-        return meetingService.getOneMeeting(meetingId);
+    public MeetingResponseDto getOneMeeting(@PathVariable Long meetingId, @AuthenticationPrincipal User user) {
+        return meetingService.getOneMeeting(meetingId, user);
     }
 
     // 모임 생성

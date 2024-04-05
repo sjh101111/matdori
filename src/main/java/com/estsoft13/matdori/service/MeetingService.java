@@ -10,8 +10,10 @@ import com.estsoft13.matdori.repository.CommentRepository;
 import com.estsoft13.matdori.repository.MeetingRepository;
 import com.estsoft13.matdori.repository.RestaurantRepository;
 import com.estsoft13.matdori.repository.UserRepository;
+import com.estsoft13.matdori.util.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -46,9 +48,16 @@ public class MeetingService {
 
     // 특정 모임 조회 서비스
     @Transactional
-    public MeetingResponseDto getOneMeeting(Long meetingId) {
-        return meetingRepository.findById(meetingId)
+    public MeetingResponseDto getOneMeeting(Long meetingId, User user) {
+        MeetingResponseDto meeting = meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 모임이 존재하지 않습니다.")).toOneResponse();
+
+        if (meeting.getUser_id().equals(user.getId()) || user.getRole().equals(Role.ROLE_MEMBER)
+        ||user.getRole().equals(Role.ROLE_ADMIN)) {
+            return meeting;
+        } else {
+            throw new AccessDeniedException("Access denied");
+        }
     }
 
     // 모임 생성 서비스

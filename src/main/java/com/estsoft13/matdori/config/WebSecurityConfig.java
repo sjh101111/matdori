@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                         auth.requestMatchers("/files/**","/","/css/**", "/login", "/signup", "/forgot","/user", "/admin/new", "/reviews").permitAll()
                                 .requestMatchers("/admin/manage", "/restaurants").hasRole("ADMIN")
                                 .requestMatchers("/meetings").hasAnyRole("ASSOCIATE","MEMBER","ADMIN")
-                                .requestMatchers("/meeting/**").hasAnyRole("MEMBER","ADMIN")
+//                                .requestMatchers("/meeting/**").hasAnyRole("MEMBER","ADMIN")
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .usernameParameter("email")
