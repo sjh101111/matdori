@@ -135,6 +135,7 @@ body {
 .reviewcontent {
     height: 300px;
     display:block;
+    overflow-wrap: break-word;
 }
 
 .watingtime {
