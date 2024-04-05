@@ -40,6 +40,7 @@ public class RestaurantController {
         restaurantService.deleteRestaurant(restaurantId);
     }
 
+    // 식당 수정
     @PutMapping("/api/restaurant/{restaurantId}")
     public UpdateRestResponseDto updateRestaurant(@PathVariable Long restaurantId, @RequestBody UpdateRestRequestDto requestDto) {
         return restaurantService.updateRestaurant(restaurantId, requestDto);

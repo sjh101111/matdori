@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class AdminService {
+
+    // 사용자 등급(BEGINNER -> ASSOCIATE) 업데이트 로직
     public boolean isEligibleForAssociate(User user) {
         int commentCount = user.getComments().size(); // User 엔티티에 연결된 Comment의 수
         int reviewCount = user.getReviews().size();
@@ -21,6 +23,7 @@ public class AdminService {
         }
     }
 
+    // 사용자 등급(ASSOCIATE -> MEMBER) 업데이트 로직
     public boolean isEligibleForMember(User user) {
         int commentCount = user.getComments().size(); // User 엔티티에 연결된 Comment의 수
         int reviewCount = user.getReviews().size();

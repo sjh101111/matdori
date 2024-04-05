@@ -15,26 +15,28 @@ import java.util.List;
 @Service
 public class UserService {
 
-
     private final UserRepository userRepository;
-
     private final BCryptPasswordEncoder encoder;
 
+    // 유저 저장
     public void saveUser(UserDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
         user.setRole(Role.ROLE_BEGINNER);
+
         userRepository.save(user);
     }
 
+    // 관리자 저장
     public void saveAdmin(UserDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setPassword(encoder.encode(userDto.getPassword()));
         user.setRole(Role.ROLE_ADMIN);
+
         userRepository.save(user);
     }
 
@@ -53,8 +55,10 @@ public class UserService {
         return userRepository.findByEmail(email).isEmpty();
     }
 
+    // 비밀번호 변경
     public void resetPassword(User user, String newPassword) {
         user.setPassword(encoder.encode(newPassword));
+
         userRepository.save(user);
     }
 
@@ -62,9 +66,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    // 유저 업그레이드
     public void upgradeRoles(Long userId, Role newRole) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
         user.setRole(newRole);
+
         userRepository.save(user);
     }
 
@@ -76,6 +82,7 @@ public class UserService {
          return userRepository.findById(userId).orElseThrow(
                  () -> new IllegalArgumentException("Invalid user Id:" + userId));
     }
+
     public boolean checkPassword(User user, String password) {
         return encoder.matches(password, user.getPassword());
     }

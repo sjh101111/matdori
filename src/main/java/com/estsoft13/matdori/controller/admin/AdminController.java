@@ -22,15 +22,18 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
     private final UserService userService;
     private final AdminService adminService;
 
+    // 관리자 생성 페이지
     @GetMapping("/new")
     public String adminSignup(Model model){
         model.addAttribute("userDto", new UserDto());
         return "new";
     }
 
+    // 관리자 생성
     @PostMapping("/new")
     public String adminSignup(@ModelAttribute("userDto") UserDto userDto) {
         if (!userService.isEmailUnique(userDto.getEmail())) {
@@ -41,6 +44,7 @@ public class AdminController {
         }
     }
 
+    // 사용자 관리 페이지
     @GetMapping("/manage")
     public String showUsers(Model model) {
         List<User> users = userService.getAllUsers();
@@ -69,12 +73,14 @@ public class AdminController {
         return "manage";
     }
 
+    // 사용자 등급 업데이트
     @PostMapping("/manage")
     public String upgradeRoles(@RequestParam Long userId, @RequestParam Role newRole) {
         userService.upgradeRoles(userId, newRole);
         return "redirect:/admin/manage";
     }
 
+    // 사용자 삭제
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("userId") Long userId, HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

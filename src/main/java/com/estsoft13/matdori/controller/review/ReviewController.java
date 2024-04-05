@@ -20,6 +20,7 @@ public class ReviewController {
     // 리뷰 전체 조회
     @GetMapping("/api/reviews")
     public List<ReviewResponseDto> getReviews() {
+
         return reviewService.getReviews();
     }
 
@@ -36,25 +37,22 @@ public class ReviewController {
     // 리뷰 하나 조회
     @GetMapping("/api/review/{reviewId}")
     public ReviewResponseDto getReview(@PathVariable Long reviewId) {
+
         return reviewService.getReview(reviewId);
     }
 
     // 리뷰 DELETE
     @DeleteMapping("/api/review/{reviewId}")
     public void deleteReview(@PathVariable Long reviewId) {
+
         reviewService.delete(reviewId);
     }
 
     // 리뷰 UPDATE
-    /*
-    @PutMapping("/api/review/{reviewId}")
-    public UpdateReviewResponseDto updateReview(@PathVariable Long reviewId, @RequestBody UpdateReviewRequestDto requestDto) {
-        return reviewService.updateReview(reviewId, requestDto);
-    }
-     */
     @PutMapping("/api/review/{reviewId}")
     public UpdateReviewResponseDto updateReview(@PathVariable Long reviewId, @ModelAttribute UpdateReviewRequestDto requestDto,
                                                 @RequestParam(value = "imgFiles", required = false) List<MultipartFile> imgFiles) {
+
         return reviewService.updateReview(reviewId, requestDto, imgFiles);
     }
 

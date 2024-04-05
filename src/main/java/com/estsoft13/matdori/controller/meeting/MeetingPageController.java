@@ -23,12 +23,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class MeetingPageController {
+
     private final MeetingService meetingService;
     private final RestaurantService restaurantService;
     private final CommentService commentService;
-    private final CommentRepository commentRepository;
 
-
+    // 모임 생성 페이지
     @GetMapping("/add-meeting")
     public String showCreateMeetingForm(@RequestParam(required = false) Long meetingId, Model model) {
         List<Restaurant> restaurants = restaurantService.findAll();
@@ -44,9 +44,9 @@ public class MeetingPageController {
         return "meetingForm";
     }
 
+    // 모임 상세 페이지
     @GetMapping("/meeting/{meetingId}")
     public String showMeetingDetail(@PathVariable Long meetingId, Model model, @AuthenticationPrincipal User user) {
-        //Review review = reviewService.findById(reviewId);
 
         try {
             MeetingResponseDto responseDto = meetingService.findById(meetingId);
@@ -69,6 +69,7 @@ public class MeetingPageController {
 
     }
 
+    // 모임 전체 조회 페이지
     @GetMapping("/meetings")
     public String showAllMeeitngs(Model model,@AuthenticationPrincipal User user) {
         List<MeetingResponseDto> meetings = meetingService.getMeetings();
@@ -76,6 +77,7 @@ public class MeetingPageController {
         return "mainMeetingPage";
     }
 
+    // 모임 검색
     @GetMapping("/searchMeetings")
     public String searchMeeting(@RequestParam("keyword") String keyword, Model model) {
         List<Meeting> searchResults = meetingService.searchMeeting(keyword, keyword, keyword);

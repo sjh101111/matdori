@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 // profile = (환경설정 - local/dev/qa/prod)
-//@Tag(name = "블로그 CRUD")
 @Configuration
 public class SwaggerConfig {
+
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
@@ -20,8 +20,8 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("Blog API") // API 제목
-                .description("블로그 CRUD API") // API 설명
+                .title("MATDORI API") // API 제목
+                .description("맛도리 API") // API 설명
                 .version("1.0.0"); // API 버전
     }
 }
