@@ -9,7 +9,7 @@
 ## 🕰️ 개발 기간
 * 팀편성 발표: 03/18(월)
 * 팀빌딩 기간: 03/18(월) ~ 03/22(금)
-* 팀확정 및 역활 확정: ~ 03/22(금)
+* 팀확정 및 역할 확정: ~ 03/22(금)
 * 프로젝트 일정: 03/25(월) ~ 04/08(월)
 * 프로젝트 발표: 04/09(화)
 
@@ -23,11 +23,11 @@
 - **Java** : <img src = "https://img.shields.io/badge/Java 17-007396?&logo=java&logoColor=white">
 - **IDE** : <img src = "https://img.shields.io/badge/Intellij Idea-000000?&logo=intellijidea&logoColor=white">
 - **Framework** : <img src = "https://img.shields.io/badge/Springboot 3.2.4-6DB33F?&logo=springboot&logoColor=white">
-- **Database** : <img src = "https://img.shields.io/badge/H2-4169E1?&logo=H2&logoColor=white">
+- **Database** : <img src = "https://img.shields.io/badge/H2-4169E1?&logo=H2&logoColor=white"> ,RDS MySQL
 - **Server** : <img src = "https://img.shields.io/badge/Amazon EC2-FF9900?&logo=amazonec2&logoColor=white">
 - **WS/WAS** : <img src = "https://img.shields.io/badge/Apachetomcat-F8DC75?&logo=apachetomcat&logoColor=white">
 - **Meeting** : <img src = "https://img.shields.io/badge/Discord-5865F2?&logo=discord&logoColor=white">, <a href="https://www.notion.so/oreumi/13-ad824ce6537d40ea965e67bef0a8988e?pvs=4"><img src = "https://img.shields.io/badge/Notion (Link)-000000?&logo=Notion&logoColor=white"> </a>
-- **Front-end** : <img src = "https://img.shields.io/badge/HTML-E34F26?&logo=html5&logoColor=white">, <img src = "https://img.shields.io/badge/CSS3-1572B6?&logo=css3&logoColor=white">, <img src = "https://img.shields.io/badge/Javascript-F7DF1E?&logo=javascript&logoColor=white">, <img src = "https://img.shields.io/badge/Bootstrap-7952B3?&logo=bootstrap&logoColor=white">
+- **Front-end** : <img src = "https://img.shields.io/badge/HTML-E34F26?&logo=html5&logoColor=white">, <img src = "https://img.shields.io/badge/CSS3-1572B6?&logo=css3&logoColor=white">, <img src = "https://img.shields.io/badge/Javascript-F7DF1E?&logo=javascript&logoColor=white">, <img src = "https://img.shields.io/badge/Bootstrap-7952B3?&logo=bootstrap&logoColor=white">, ThymeLeaf
 
 
 ### 🔨 프로젝트 구조
@@ -65,6 +65,17 @@
 ├── build.gradle    # Gradle 프로젝트 설정 파일
 └── README.md       # 프로젝트 README 파일
 ```
+UI 설계
+https://www.figma.com/file/5fH89WuGk7gOUOeYj6DW4T/MATDORI?type=design&node-id=0-1&mode=design&t=opzCsn0Xf5dU5otQ-0
+
+<img src="(https://github.com/estsoft13/matdori/assets/57342935/4c39c41e-8351-47a4-87a6-4665ad0d9ede)"  width="200" height="200"/>
+
+ERD 설계
+https://dbdiagram.io/d/65fd42f6ae072629ceb1274d
+
+
+API 명세
+https://www.notion.so/oreumi/API-92bc8b4dd74b4f67b48b21f6dce182a6
 
 ## 📌 주요 기능
 ### 공통
