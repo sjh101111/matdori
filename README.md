@@ -72,7 +72,7 @@ https://www.figma.com/file/5fH89WuGk7gOUOeYj6DW4T/MATDORI?type=design&node-id=0-
 
 ERD 설계
 https://dbdiagram.io/d/65fd42f6ae072629ceb1274d
-![image](https://github.com/estsoft13/matdori/assets/57342935/4c39c41e-8351-47a4-87a6-4665ad0d9ede)
+<img src="(https://github.com/estsoft13/matdori/assets/57342935/4c39c41e-8351-47a4-87a6-4665ad0d9ede)"  width="200" height="400"/>
 
 
 API 명세
