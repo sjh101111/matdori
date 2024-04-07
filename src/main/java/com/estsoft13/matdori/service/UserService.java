@@ -1,16 +1,14 @@
 package com.estsoft13.matdori.service;
 
-import com.estsoft13.matdori.domain.Comment;
-import com.estsoft13.matdori.domain.Review;
-import com.estsoft13.matdori.domain.User;
+import com.estsoft13.matdori.domain.*;
 import com.estsoft13.matdori.dto.user.UserDto;
-import com.estsoft13.matdori.repository.CommentRepository;
-import com.estsoft13.matdori.repository.ReviewRepository;
-import com.estsoft13.matdori.repository.UserRepository;
+import com.estsoft13.matdori.repository.*;
 import com.estsoft13.matdori.util.Role;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,7 +20,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
     private final ReviewRepository reviewRepository;
+    private final MeetingRepository meetingRepository;
     private final CommentRepository commentRepository;
+    private final RestaurantRepository restaurantRepository;
+    private final ReviewImageRepository reviewImageRepository;
 
     // 유저 저장
     public void saveUser(UserDto userDto) {
@@ -80,17 +81,42 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(Long userId) {
         List<Review> reviews = reviewRepository.findAllByUserId(userId);
         for (Review review : reviews) {
-            reviewRepository.delete(review);
-        }
-        List<Comment> comments = commentRepository.findAllByUserId(userId);
-        for (Comment comment : comments) {
-            commentRepository.delete(comment);
+            Long reviewId = review.getId();
+            Long restaurantId = review.getRestaurant().getId();
+
+            commentRepository.deleteByReview_Id(reviewId); // 리뷰 삭제 전 연결된 댓글 삭제
+            reviewImageRepository.deleteByReview(review); //리뷰 삭제전 연결된 리뷰 이미지 삭제
+            reviewRepository.deleteById(reviewId); // 리뷰 삭제
+
+            updateRestaurantAvgRating(restaurantId); // 식당 평점 update
         }
 
+        List<Meeting> meetings = meetingRepository.findAllByUserId(userId);
+        for (Meeting meeting : meetings) {
+            Long meetingId = meeting.getId();
+            commentRepository.deleteByMeeting_Id(meetingId); // 모임 삭제 전 연결된 댓글 삭제
+            meetingRepository.deleteById(meetingId); // 모임 삭제
+        }
         userRepository.deleteById(userId);
+    }
+
+    private void updateRestaurantAvgRating(Long restaurantId) {
+        List<Review> reviews = reviewRepository.findByRestaurantId(restaurantId);
+        Double avgRating = reviews.stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0); // 리뷰가 없으면 0.0으로 설정
+
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 식당의 존재 하지 않습니다. = " + restaurantId));
+        // 식당 평점 update
+        restaurant.setAvgRating(avgRating);
+
+        restaurantRepository.save(restaurant);
     }
 
     public User findById(Long userId) {
