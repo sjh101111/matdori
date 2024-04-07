@@ -6,7 +6,6 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
     <title>식당 및 리뷰 정보</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
     <link rel="stylesheet" href="/css/normalize.css">
@@ -27,7 +26,7 @@
                 <div class=usersymbol></div>
                 <div class="userInfo">
                     <div class="userBox">
-                        <span class="username" th:text="${review.user.username}">유저 이름</span>
+                        <span class="username" th:text="${review.user.getEnteredUsername()}">유저 이름</span>
                         <span class="createdAt"
                               th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">작성 시간</span>
                     </div>
