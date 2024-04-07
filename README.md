@@ -15,10 +15,10 @@
 * 프로젝트 발표: 04/09(화)
 
 ## 🧑‍🤝‍🧑 3. 멤버 구성
-- 안태규 (팀장)
-- 조창현 (팀원)
-- 송재훈 (팀원)
-- 하태민 (팀원) 
+- 안태규 (팀장) : Review, Restaurant API 개발, ERD, RDS 연동, EC2 배포
+- 조창현 (팀원) : Meeting, Comment API 개발, FE 개발, ERD, Spring Security
+- 송재훈 (팀원) : Users API 개발, FE 개발, ERD, Spring Security
+- 하태민 (팀원) : Meeting API 개발, ERD
 
 ## ⚙️ 4. 개발 환경
 - **Java** : <img src = "https://img.shields.io/badge/Java 17-007396?&logo=java&logoColor=white">
