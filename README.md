@@ -68,7 +68,17 @@
 UI 설계
 https://www.figma.com/file/5fH89WuGk7gOUOeYj6DW4T/MATDORI?type=design&node-id=0-1&mode=design&t=opzCsn0Xf5dU5otQ-0
 
-<img src="(https://github.com/estsoft13/matdori/assets/57342935/4c39c41e-8351-47a4-87a6-4665ad0d9ede)"  width="200" height="200"/>
+|||
+|-|-|
+|<img src="./assets/login.png" width="100%">로그인 화면|<img src="./assets/My-Page.png" width="100%">내 정보 화면|
+|<img src="./assets/findPassword.png" width="100%">비밀번호 찾기 화면|<img src="./assets/lopgin.png" width="100%">로그인 화면|
+|<img src="./assets/reviewCommunity.png" width="100%">리뷰 메인 화면|<img src="./assets/detailedPage.png" width="100%">리뷰 상세 화면|
+|<img src="./assets/createReviewPage.png" width="100%">리뷰 등록, 수정 화면|<img src="./assets/meetingCommunity.png" width="100%">모임 모집 게시글 화면|
+|<img src="./assets/detailedPage-meeting.png" width="100%">모임 게시판 상세 화면|<img src="./assets/createMeetingPage.png" width="100%">모임 모집 등록, 수정 화면|
+|<img src="./assets/Manage-Restaurants.png" width="100%">식당 관리 메인 화면|<img src="./assets/Register-restaurants.png" width="100%">식당 추가, 수정 화면|
+|<img src="./assets/manage-user.png" width="100%">유저 관리 화면|
+
+
 
 ERD 설계
 https://dbdiagram.io/d/65fd42f6ae072629ceb1274d
