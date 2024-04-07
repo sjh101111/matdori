@@ -101,6 +101,7 @@ public class UserService {
             commentRepository.deleteByMeeting_Id(meetingId); // 모임 삭제 전 연결된 댓글 삭제
             meetingRepository.deleteById(meetingId); // 모임 삭제
         }
+        commentRepository.deleteByUserId(userId); // 사용자가 작성한 모든 댓글 삭제
         userRepository.deleteById(userId);
     }
 
