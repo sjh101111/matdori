@@ -16,8 +16,8 @@
 
 ## 🧑‍🤝‍🧑 3. 멤버 구성
 - 안태규 (팀장) : Review, Restaurant API 개발, ERD, RDS 연동, EC2 배포
-- 조창현 (팀원) : Meeting, Comment API 개발, FE 개발, ERD, Spring Security
-- 송재훈 (팀원) : Users API 개발, FE 개발, ERD, Spring Security
+- 조창현 (팀원) : Users API 개발, FE 개발, ERD, Spring Security
+- 송재훈 (팀원) : Meeting, Comment API 개발, FE 개발, ERD, Spring Security, UI(Wireframe)
 - 하태민 (팀원) : Meeting API 개발, ERD
 
 ## ⚙️ 4. 개발 환경
