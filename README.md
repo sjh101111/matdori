@@ -68,9 +68,12 @@
 UI 설계
 https://www.figma.com/file/5fH89WuGk7gOUOeYj6DW4T/MATDORI?type=design&node-id=0-1&mode=design&t=opzCsn0Xf5dU5otQ-0
 
+![reviewCommunity](https://github.com/estsoft13/matdori/assets/57342935/5c409f43-3c66-458b-bf5a-dce9fe5092ba)
+
 ERD 설계
 https://dbdiagram.io/d/65fd42f6ae072629ceb1274d
 ![image](https://github.com/estsoft13/matdori/assets/57342935/4c39c41e-8351-47a4-87a6-4665ad0d9ede)
+
 
 API 명세
 https://www.notion.so/oreumi/API-92bc8b4dd74b4f67b48b21f6dce182a6
