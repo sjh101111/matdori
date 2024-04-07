@@ -18,4 +18,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     void deleteByReview_Id(Long reviewId);
 
     void deleteByMeeting_Id(Long meetingId);
+
+    List<Comment> findAllByUserId(Long userId);
 }

@@ -1,7 +1,11 @@
 package com.estsoft13.matdori.service;
 
+import com.estsoft13.matdori.domain.Comment;
+import com.estsoft13.matdori.domain.Review;
 import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.user.UserDto;
+import com.estsoft13.matdori.repository.CommentRepository;
+import com.estsoft13.matdori.repository.ReviewRepository;
 import com.estsoft13.matdori.repository.UserRepository;
 import com.estsoft13.matdori.util.Role;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +21,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+    private final ReviewRepository reviewRepository;
+    private final CommentRepository commentRepository;
 
     // 유저 저장
     public void saveUser(UserDto userDto) {
@@ -75,6 +81,15 @@ public class UserService {
     }
 
     public void deleteUser(Long userId) {
+        List<Review> reviews = reviewRepository.findAllByUserId(userId);
+        for (Review review : reviews) {
+            reviewRepository.delete(review);
+        }
+        List<Comment> comments = commentRepository.findAllByUserId(userId);
+        for (Comment comment : comments) {
+            commentRepository.delete(comment);
+        }
+
         userRepository.deleteById(userId);
     }
 
