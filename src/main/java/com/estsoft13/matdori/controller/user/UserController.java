@@ -149,8 +149,8 @@ public class UserController {
             if (auth != null && auth.getName().equals(email)) {
                 new SecurityContextLogoutHandler().logout(request, response, auth);
             }
-            reviewService.delete(user.getId());
-            meetingService.deleteMeeting(user.getId());
+            //reviewService.delete(user.getId());
+            //meetingService.deleteMeeting(user.getId());
 
             userService.deleteUser(user.getId());
             return "redirect:/login";
