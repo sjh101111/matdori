@@ -85,8 +85,8 @@ public class Meeting {
 
     public MeetingResponseDto toOneResponse() {
        return MeetingResponseDto.builder()
-                .content(content).user_id(user.getId()).
-                title(title).location(location).restaurant(restaurant)
+                .content(content).user_id(user.getId()).id(id).username(user.getEnteredUsername())
+               .title(title).location(location).restaurant(restaurant)
                .created_at(created_at).visitTime(visitTime)
                .build();
     }
