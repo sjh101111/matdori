@@ -1,4 +1,4 @@
-package com.estsoft13.matdori.controller.restaurant;
+package com.estsoft13.matdori.controller;
 
 import com.estsoft13.matdori.domain.*;
 import com.estsoft13.matdori.dto.comment.AddCommentRequestDto;
@@ -123,7 +123,6 @@ public class CommentControllerTest {
         this.review = createReview(user,restaurant);
         this.reviewId = review.getId();
     }
-
 
     //작업중
 //    @WithMockUser(username = "asd@asd", roles = {"ASSOCIATE"})
