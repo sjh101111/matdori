@@ -64,6 +64,13 @@ public class CommentControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    private Long reviewId;
+    private Long meetingId;
+    private Long userId;
+    private Review review;
+    private Meeting meeting;
+    private User user;
+
     private User createUser() {
         User user = new User();
         user.setRole(Role.ROLE_BEGINNER);
@@ -73,13 +80,29 @@ public class CommentControllerTest {
         return userRepository.save(user);
     }
 
-    private Long reviewId;
-    private Long meetingId;
-    private Long userId;
-    private Review review;
-    private Meeting meeting;
-    private User user;
+    private Review createReview(User user, Restaurant restaurant) {
+        AddReviewRequestDto requestDto = new AddReviewRequestDto("title","content", 1.0,restaurant.getId(),1,"1");
+        Review review = new Review(requestDto);
+        review.setRestaurant(restaurant);
+        review.setUser(user);
+        return reviewRepository.save(review);
+    }
 
+    private Meeting createMeeting(Restaurant restaurant) {
+        AddMeetingRequestDto addMeetingRequestDto = new AddMeetingRequestDto();
+        addMeetingRequestDto.setContent("a");
+        addMeetingRequestDto.setTitle("a");
+        addMeetingRequestDto.setLocation("a");
+        addMeetingRequestDto.setVisitTime("1");
+        Meeting meeting = new Meeting(addMeetingRequestDto,restaurant,user);
+        return meetingRepository.save(meeting);
+    }
+
+    private Restaurant createRestaurant() {
+        AddRestaurantRequestDto restRequestDto = new AddRestaurantRequestDto("a","a","a",1.0);
+        Restaurant restaurant = new Restaurant(restRequestDto);
+        return restaurantRepository.save(restaurant);
+    }
 
     @BeforeEach
     public void mockMvcSetUp() {
@@ -87,38 +110,18 @@ public class CommentControllerTest {
 //                .build();
         .apply(SecurityMockMvcConfigurers.springSecurity()).build();
         //given : 저장하고 싶은 블로그 정보
-        User user = createUser();
+        this.user = createUser();
 
 //        UserDetails userDetails = user;
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        AddRestaurantRequestDto restRequestDto = new AddRestaurantRequestDto("a","a","a",1.0);
-        Restaurant restaurant = new Restaurant(restRequestDto);
-        restaurant= restaurantRepository.save(restaurant);
-
-        AddReviewRequestDto requestDto = new AddReviewRequestDto("title","content", 1.0,restaurant.getId(),1,"1");
-        Review review = new Review(requestDto);
-
-        review.setRestaurant(restaurant);
-        review.setUser(user);
-        reviewRepository.save(review);
-        this.reviewId = review.getId();
-
-        AddMeetingRequestDto addMeetingRequestDto = new AddMeetingRequestDto();
-        addMeetingRequestDto.setContent("a");
-        addMeetingRequestDto.setTitle("a");
-        addMeetingRequestDto.setLocation("a");
-        addMeetingRequestDto.setVisitTime("1");
-        Meeting meeting = new Meeting(addMeetingRequestDto,restaurant,user);
-        meetingRepository.save(meeting);
+        Restaurant restaurant = createRestaurant();
+        this.meeting = createMeeting(restaurant);
         this.meetingId = meeting.getId();
-
         this.userId = user.getId();
-
-        this.review = review;
-        this.meeting = meeting;
-        this.user = user;
+        this.review = createReview(user,restaurant);
+        this.reviewId = review.getId();
     }
 
 
