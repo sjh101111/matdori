@@ -87,7 +87,7 @@ public class Meeting {
        return MeetingResponseDto.builder()
                 .content(content).user_id(user.getId()).id(id).username(user.getEnteredUsername())
                .title(title).location(location).restaurant(restaurant)
-               .created_at(created_at).visitTime(visitTime)
+               .created_at(created_at).visitTime(visitTime).role(user.getRole())
                .build();
     }
 }
