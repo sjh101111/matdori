@@ -35,7 +35,7 @@ public class MeetingResponseDto {
     @Builder
     public MeetingResponseDto(Long id, String title, String content, Restaurant restaurant,
                               String location, LocalDateTime created_at, String username, String visitTime
-                                ,Long user_id) {
+                                ,Long user_id, Role role) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -45,6 +45,7 @@ public class MeetingResponseDto {
         this.restaurant = restaurant;
         this.visitTime = visitTime;
         this.user_id = user_id;
+        this.role = role;
     }
 
     public MeetingResponseDto(Meeting meeting) {
