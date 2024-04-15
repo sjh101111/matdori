@@ -52,6 +52,7 @@ public class WebSecurityConfig {
                 .csrf(auth -> auth.disable());
         return httpSecurity.build();
     }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

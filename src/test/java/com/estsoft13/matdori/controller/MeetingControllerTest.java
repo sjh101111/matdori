@@ -33,6 +33,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -107,6 +108,7 @@ public class MeetingControllerTest {
         //then
 
         resultActions.andExpect(status().isOk())
+                .andDo(print())
                 .andExpect(jsonPath("$.title").value("a"));
 
     }

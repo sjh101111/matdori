@@ -1,6 +1,9 @@
 package com.estsoft13.matdori.service;
 
-import com.estsoft13.matdori.domain.*;
+import com.estsoft13.matdori.domain.Meeting;
+import com.estsoft13.matdori.domain.Restaurant;
+import com.estsoft13.matdori.domain.Review;
+import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.user.UserDto;
 import com.estsoft13.matdori.repository.*;
 import com.estsoft13.matdori.util.Role;
@@ -62,6 +65,7 @@ public class UserService {
         return userRepository.findByEmail(email).isEmpty();
     }
 
+    @Transactional
     // 비밀번호 변경
     public void resetPassword(User user, String newPassword) {
         user.setPassword(encoder.encode(newPassword));
