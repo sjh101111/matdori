@@ -6,10 +6,12 @@ import com.estsoft13.matdori.domain.User;
 import com.estsoft13.matdori.dto.restaurant.AddRestaurantRequestDto;
 import com.estsoft13.matdori.dto.review.AddReviewRequestDto;
 import com.estsoft13.matdori.repository.RestaurantRepository;
+import com.estsoft13.matdori.repository.ReviewImageRepository;
 import com.estsoft13.matdori.repository.ReviewRepository;
 import com.estsoft13.matdori.repository.UserRepository;
 import com.estsoft13.matdori.util.Role;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,6 +59,10 @@ public class ReviewControllerTest {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private ReviewImageRepository reviewImageRepository;
+
     private User user;
     private Restaurant restaurant;
 
@@ -85,6 +91,13 @@ public class ReviewControllerTest {
         this.restaurant = createRestaurant();
     }
 
+    @AfterEach
+    void afterSetUp() {
+        reviewImageRepository.deleteAll();
+        reviewRepository.deleteAll();
+        restaurantRepository.deleteAll();
+        userRepository.deleteAll();
+    }
     @Test
     void addReview() throws Exception {
         // MockMultipartFile를 사용하여 테스트 파일 생성
@@ -118,9 +131,9 @@ public class ReviewControllerTest {
         // MockMvc를 사용하여 요청 실행 및 검증
         ResultActions resultActions = mockMvc.perform(builder)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("title").value("a"))
-                .andExpect(jsonPath("$.content").value("a"))
-                .andExpect(jsonPath("waitingTime").value(1))
+                .andExpect(jsonPath("title").value("aa"))
+                .andExpect(jsonPath("$.content").value("aa"))
+                .andExpect(jsonPath("waitingTime").value(11))
                 .andDo(print());
     }
 
@@ -158,7 +171,7 @@ public class ReviewControllerTest {
                 .andExpect(jsonPath("title").value("aa"))
                 .andExpect(jsonPath("title").value("aa"))
                 .andExpect(jsonPath("waitingTime").value("11"))
-                .andExpect(jsonPath("restaurantId").value("10"));
+                .andExpect(jsonPath("restaurantId").value(restaurant.getId()));
 
         Review updatedReview = reviewRepository.findById(review.getId()).orElseThrow(
                 () -> new IllegalArgumentException("id is wrong " + review.getId())

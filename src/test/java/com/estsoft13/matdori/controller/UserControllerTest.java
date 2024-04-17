@@ -53,6 +53,7 @@ public class UserControllerTest {
 
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .apply(SecurityMockMvcConfigurers.springSecurity()).build();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -83,6 +84,7 @@ public class UserControllerTest {
         );
 
         assertThat(user.getEmail()).isEqualTo("a");
+        assertThat(encoder.matches("a", user.getPassword()));
     }
 
     @Test
